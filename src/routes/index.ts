@@ -1,21 +1,31 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Start Game',
-    component: () => import('../views/StartGame.vue'),
+    component: () => import('../views/Start.vue'),
   },
   {
-    path: '/host-connect',
-    name: 'Host-Connect',
-    component: () => import('../views/HostConnect.vue'),
+    path: '/host',
+    name: 'Host',
+    component: () => import('../views/Host.vue'),
   },
+  {
+    path: '/join',
+    name: 'Join',
+    component: () => import('../views/Join.vue'),
+  },
+  {
+    path: '/preparation',
+    name: 'Preparation',
+    component: () => import('../views/Preparation.vue'),
+  }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 })
 

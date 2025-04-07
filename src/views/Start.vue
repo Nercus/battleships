@@ -14,6 +14,6 @@
 const router = useRouter()
 
 function startGame() {
-  router.push({ name: 'Host-Connect' })
+  router.push({ path: '/host' })
 }
 </script>
