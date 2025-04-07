@@ -17,6 +17,9 @@ export function useConnection() {
   dataChannel.onopen = () => {
     connected.value = true
   }
+  dataChannel.onclose = () => {
+    connected.value = false
+  }
 
   async function createOffer() {
     if (peerConnection.iceGatheringState !== 'complete') {
