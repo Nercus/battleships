@@ -17,6 +17,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      grid-layout-plus:
+        specifier: ^1.0.6
+        version: 1.0.6(vue@3.5.13(typescript@5.8.3))
       motion-v:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(vue@3.5.13(typescript@5.8.3))
@@ -453,6 +456,9 @@ packages:
   '@iconify/utils@2.3.0':
     resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
 
+  '@interactjs/types@1.10.27':
+    resolution: {integrity: sha512-BUdv0cvs4H5ODuwft2Xp4eL8Vmi3LcihK42z0Ft/FbVJZoRioBsxH+LlsBdK4tAie7PqlKGy+1oyOncu1nQ6eA==}
+
   '@internationalized/date@3.7.0':
     resolution: {integrity: sha512-VJ5WS3fcVx0bejE/YHfbDKR/yawZgKqn/if+oEeLqNwBtPzVB06olkfcnojTmEMX+gTpH+FlQ69SHNitJ8/erQ==}
 
@@ -461,6 +467,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
+  '@juggle/resize-observer@3.4.0':
+    resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
   '@napi-rs/wasm-runtime@0.2.8':
     resolution: {integrity: sha512-OBlgKdX7gin7OIq4fadsjpg+cp2ZphvAIKucHsNfTdJiqdOmOEwQd/bHi0VwNrcw5xpBJyUw6cK/QilCqy1BSg==}
@@ -846,6 +855,14 @@ packages:
     resolution: {integrity: sha512-hVXaObGI2lGFmrtT77KSbPQ3I+zk9IU500wobjk0+oX59vg/0VqAzABNtt3YSQYgXTC2a/LYxekLfND/wlt0yQ==}
     cpu: [x64]
     os: [win32]
+
+  '@vexip-ui/hooks@2.8.0':
+    resolution: {integrity: sha512-s522zFYSanWVwLCZeOgG+1h5O1TQ04U/RC7Ackb1ZqI0MuDHl9EonPN8fpa8XxtyPES2zlzDybYChizCED7V+A==}
+    peerDependencies:
+      vue: ^3.2.25
+
+  '@vexip-ui/utils@2.16.1':
+    resolution: {integrity: sha512-P0xHHu7j1fXS+DLkVp6ipJNAM2QonymVsBUQai1Ym7/JPyZgHMeEOCMzAfJWwv/qLDfRk5XXJXDjRQDz/qlF7A==}
 
   '@vitejs/plugin-vue@5.2.3':
     resolution: {integrity: sha512-IYSLEQj4LgZZuoVpdSUCw3dIynTWQgPlaRP6iAvMle4My0HdYwr5g5wQAfwOeHQBmYwEkqF70nRpSilr6PoUDg==}
@@ -1476,6 +1493,11 @@ packages:
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
 
+  grid-layout-plus@1.0.6:
+    resolution: {integrity: sha512-LyU2TWNMN4yXy2Y16sWWgghi35711onjkehbIyB8XCN/lSxNK7xoV0iphZ9LWZOw6lAM1+ngF56VVllviM8f4g==}
+    peerDependencies:
+      vue: ^3.0.0
+
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
@@ -1514,6 +1536,9 @@ packages:
   index-to-position@1.0.0:
     resolution: {integrity: sha512-sCO7uaLVhRJ25vz1o8s9IFM3nVS4DkuQnyjMwiQPKvQuBYBDmb8H7zx8ki7nVh4HJQOdVWebyvLE0qt+clruxA==}
     engines: {node: '>=18'}
+
+  interactjs@1.10.27:
+    resolution: {integrity: sha512-y/8RcCftGAF24gSp76X2JS3XpHiUvDQyhF8i7ujemBz77hwiHDuJzftHx7thY8cxGogwGiPJ+o97kWB6eAXnsA==}
 
   is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
@@ -2674,6 +2699,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@interactjs/types@1.10.27': {}
+
   '@internationalized/date@3.7.0':
     dependencies:
       '@swc/helpers': 0.5.15
@@ -2683,6 +2710,8 @@ snapshots:
       '@swc/helpers': 0.5.15
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
+
+  '@juggle/resize-observer@3.4.0': {}
 
   '@napi-rs/wasm-runtime@0.2.8':
     dependencies:
@@ -3016,6 +3045,15 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.4.1':
     optional: true
+
+  '@vexip-ui/hooks@2.8.0(vue@3.5.13(typescript@5.8.3))':
+    dependencies:
+      '@floating-ui/dom': 1.6.13
+      '@juggle/resize-observer': 3.4.0
+      '@vexip-ui/utils': 2.16.1
+      vue: 3.5.13(typescript@5.8.3)
+
+  '@vexip-ui/utils@2.16.1': {}
 
   '@vitejs/plugin-vue@5.2.3(vite@6.2.5(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
     dependencies:
@@ -3747,6 +3785,13 @@ snapshots:
 
   graphemer@1.4.0: {}
 
+  grid-layout-plus@1.0.6(vue@3.5.13(typescript@5.8.3)):
+    dependencies:
+      '@vexip-ui/hooks': 2.8.0(vue@3.5.13(typescript@5.8.3))
+      '@vexip-ui/utils': 2.16.1
+      interactjs: 1.10.27
+      vue: 3.5.13(typescript@5.8.3)
+
   has-flag@4.0.0: {}
 
   hasown@2.0.2:
@@ -3773,6 +3818,10 @@ snapshots:
   indent-string@5.0.0: {}
 
   index-to-position@1.0.0: {}
+
+  interactjs@1.10.27:
+    dependencies:
+      '@interactjs/types': 1.10.27
 
   is-binary-path@2.1.0:
     dependencies:
