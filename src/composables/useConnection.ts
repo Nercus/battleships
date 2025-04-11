@@ -25,12 +25,7 @@ export function useConnection() {
     if (peerConnection.iceGatheringState !== 'complete') {
       const offer = await peerConnection.createOffer()
       await peerConnection.setLocalDescription(offer)
-      push.error({
-        title: 'Error',
-        message: 'Internal error occurred. Please try again!',
-        duration: 5000,
-      })
-      return
+      return offer
     }
     const offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)

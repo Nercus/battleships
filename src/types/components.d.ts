@@ -10,7 +10,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./../components/shared/Button.vue')['default']
     ConnectionIndicator: typeof import('./../components/ConnectionIndicator.vue')['default']
-    GameGrid: typeof import('./../components/GameGrid/GameGrid.vue')['default']
     GameGridHitIndicator: typeof import('./../components/GameGrid/GameGridHitIndicator.vue')['default']
     GameGridHitLayer: typeof import('./../components/GameGrid/GameGridHitLayer.vue')['default']
     GameGridShip: typeof import('./../components/GameGrid/GameGridShip.vue')['default']
