@@ -17,7 +17,7 @@ const router = useRouter()
 
 watch(connected, (val) => {
   if (val) {
-    router.push({ name: 'Preparation' })
+    router.push({ name: 'Setup' })
   }
 })
 </script>

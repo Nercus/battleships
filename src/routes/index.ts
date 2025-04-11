@@ -18,10 +18,10 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../views/Join.vue'),
   },
   {
-    path: '/preparation',
-    name: 'Preparation',
-    component: () => import('../views/Preparation.vue'),
-  }
+    path: '/setup',
+    name: 'Setup',
+    component: () => import('../views/Setup.vue'),
+  },
 ]
 
 const router = createRouter({

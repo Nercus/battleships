@@ -30,6 +30,7 @@
 import { GridLayout } from 'grid-layout-plus'
 
 const shipGrid = useTemplateRef('shipGrid')
+const { gameState, shipsConfirmed, setShipLayout } = useGame()
 
 const layout = ref([
   { x: 0, y: 0, w: 1, h: 3, i: '0', static: false, isResizable: false },
@@ -100,6 +101,33 @@ function getRowHeight() {
   const rowHeight = height / 10
   return rowHeight - 1
 }
+
+watchEffect(() => {
+  if (gameState.value === 'setup' && !shipsConfirmed.value) {
+    layout.value.forEach((el) => {
+      el.static = false
+    })
+  }
+  else {
+    layout.value.forEach((el) => {
+      el.static = true
+    })
+  }
+})
+
+watchEffect(() => {
+  if (!shipsConfirmed.value) return
+  // convert the layout to a 2d array with 10 rows and 10 columns and true for cells that are occupied by a ship
+  const grid = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill(false)) as boolean[][]
+  layout.value.forEach((el) => {
+    for (let i = el.x; i < el.x + el.w; i++) {
+      for (let j = el.y; j < el.y + el.h; j++) {
+        grid[j][i] = true
+      }
+    }
+  })
+  setShipLayout(grid)
+})
 </script>
 
 <style lang="css">
