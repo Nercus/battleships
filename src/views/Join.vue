@@ -6,7 +6,7 @@
     <span>
       Copy this confirmation code and send it to your host.
     </span>
-    <Button type="muted" @click="debouncedCopyConfirmationFn" :disabled="confirmationCode === ''">
+    <Button type="muted" :disabled="confirmationCode === ''" @click="debouncedCopyConfirmationFn">
       <Icon class="fluent--link-24-filled" />
       Copy Confirmation Code
     </Button>
@@ -17,7 +17,7 @@
 import { useJsonCompressor } from '../composables/useJsonCompressor'
 
 const route = useRoute<'Join'>()
-const {copy} = useClipboard()
+const { copy } = useClipboard()
 const jsonCompressor = useJsonCompressor()
 const { applyRemoteSDP } = useConnection()
 const confirmationCode = ref('')
@@ -36,11 +36,6 @@ onMounted(async () => {
     const decompressedCode = jsonCompressor.decompress(code) as RTCSessionDescriptionInit
     const answer = await applyRemoteSDP(decompressedCode)
     confirmationCode.value = jsonCompressor.compress(answer as object)
-    push.success({
-      title: 'Confirmation code decompressed successfully!',
-      message: 'Share your confirmation code with your host now to start the game.',
-      duration: 3000,
-    })
   }
   catch (error) {
     console.error('Error decompressing code:', error)

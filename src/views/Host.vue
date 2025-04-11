@@ -64,11 +64,6 @@ async function connectToClient() {
   try {
     const decompressedCode = jsonCompressor.decompress(clientConfirmationCode.value) as RTCSessionDescriptionInit
     await applyRemoteSDP(decompressedCode)
-    push.success({
-      title: 'Connected to client successfully!',
-      message: 'You can now start the game.',
-      duration: 3000,
-    })
   }
   catch (error) {
     console.error('Error connecting to client:', error)
