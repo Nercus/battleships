@@ -5,7 +5,7 @@
   <div class="w-dvw h-dvh bg-base-100 overflow-hidden flex flex-col items-center justify-center">
     <RouterView />
   </div>
-  <div v-if="connected" class="size-10 bg-success fixed top-0 inset-x-0" />
+  <ConnectionIndicator />
 </template>
 
 <script setup lang="ts">
