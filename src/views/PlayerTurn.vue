@@ -1,7 +1,9 @@
 <template>
-  <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
-    <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)] pointer-events-none" />
-    <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
+  <div class="flex flex-row items-center justify-center w-full h-full gap-4">
+    <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
+    </div>
+    <GameGridShipLayer class="pointer-events-none h-1/4 aspect-square background-grid opacity-70" />
   </div>
 </template>
 

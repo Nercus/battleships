@@ -22,6 +22,16 @@ export const routes: RouteRecordRaw[] = [
     name: 'Setup',
     component: () => import('../views/Setup.vue'),
   },
+  {
+    path: '/players-turn',
+    name: 'Player\'s Turn',
+    component: () => import('../views/PlayerTurn.vue'),
+  },
+  {
+    path: '/opponents-turn',
+    name: 'Opponent\'s Turn',
+    component: () => import('../views/OpponentTurn.vue'),
+  },
 ]
 
 const router = createRouter({

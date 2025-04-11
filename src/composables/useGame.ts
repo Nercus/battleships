@@ -1,4 +1,4 @@
-const gameState = ref<'idle' | 'setup' | 'active'>('setup')
+const gameState = ref<'idle' | 'setup' | 'active'>('active')
 const shipsConfirmed = ref(false)
 const shipLayout = ref<boolean[][]>([])
 
