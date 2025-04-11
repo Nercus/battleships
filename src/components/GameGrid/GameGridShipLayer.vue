@@ -10,7 +10,9 @@
     :prevent-collision="false"
     :vertical-compact="false"
     use-css-transforms
-    :auto-size="false">
+    is-bounded
+    :auto-size="false"
+    @layout-updated="layoutUpdated">
     <template #item="{ item }">
       <div class="w-full h-full p-1 group">
         <div class="w-full bg-primary/70 backdrop-blur-sm border-2 border-primary/5 h-full flex items-center justify-center shadow group-hover:border-primary" :class="item.w === 1 ? 'ship-border-vertical' : 'ship-border-horizontal'">
@@ -37,6 +39,50 @@ const layout = ref([
   { x: 5, y: 0, w: 1, h: 3, i: '4', static: false, isResizable: false },
 ])
 
+function layoutUpdated() {
+  // every time a ship goes out of the 10x10 reset its position
+  layout.value.forEach((el, index) => {
+    // Ensure the ship is within bounds
+    if (el.x + el.w > 10) {
+      el.x = 10 - el.w
+    }
+    if (el.y + el.h > 10) {
+      el.y = 10 - el.h
+    }
+    if (el.x < 0) {
+      el.x = 0
+    }
+    if (el.y < 0) {
+      el.y = 0
+    }
+
+    // Check for overlapping ships
+    let hasOverlap = false
+    do {
+      hasOverlap = false
+      for (let i = 0; i < layout.value.length; i++) {
+        if (i !== index) {
+          const other = layout.value[i]
+          const overlapX = el.x < other.x + other.w && el.x + el.w > other.x
+          const overlapY = el.y < other.y + other.h && el.y + el.h > other.y
+          if (overlapX && overlapY) {
+            hasOverlap = true
+            el.x += 1 // Try shifting right
+            if (el.x + el.w > 10) {
+              el.x = 0 // Wrap around to the left
+              el.y += 1 // Move down
+              if (el.y + el.h > 10) {
+                el.y = 0 // Reset to the top
+              }
+            }
+            break
+          }
+        }
+      }
+    } while (hasOverlap)
+  })
+}
+
 function turnElement(id: number | string) {
   const element = layout.value.find(el => el.i === id)
   if (element) {
@@ -45,6 +91,7 @@ function turnElement(id: number | string) {
     element.w = oldHeight
     element.h = oldWidth
   }
+  layoutUpdated()
 }
 
 function getRowHeight() {
