@@ -35,7 +35,7 @@ const buttonVariants = cva('items-center justify-center inline-flex gap-2 whites
       warning: ['bg-base-800 hover:bg-base-900 text-warning focus:ring-warning shadow-warning'],
       error: ['bg-base-800 hover:bg-base-900 text-error focus:ring-error shadow-error'],
       muted: ['bg-base-800 hover:bg-base-900 text-base-300 focus:ring-base-800 shadow-base-800'],
-      ghost: ['bg-base-300 hover:bg-base-200 text-base-900'],
+      ghost: ['shadow-none hover:bg-base-200 text-base-900'],
     },
     size: {
       small: ['text-sm focus:ring'],
