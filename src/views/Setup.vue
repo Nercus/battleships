@@ -22,6 +22,7 @@ const { shipsConfirmed } = useGame()
 
 const router = useRouter()
 const { sendEvent, onEventReceive } = useMultiplayer()
+const { gameState } = useGame()
 
 const otherPlayerReady = ref(false)
 
@@ -42,6 +43,8 @@ watchEffect(() => {
     router.push('/start')
   }
 })
+
+onMounted(() => gameState.value = 'setup')
 function confirmSelection() {
   shipsConfirmed.value = !shipsConfirmed.value
 }
