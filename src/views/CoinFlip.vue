@@ -1,21 +1,42 @@
 <template>
-  <div class="w-full h-full items-center justify-center flex">
-    <button class="size-40 relative coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
+  <div class="w-full h-full items-center justify-center flex flex-col">
+    <div class="size-40 relative coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
       <div class="bg-error rounded-full size-full absolute z-[100] backface-hidden flex items-center justify-center p-3 drop-shadow-2xl">
         <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
       </div>
       <div class="bg-success rounded-full size-full absolute -rotate-y-180 backface-hidden flex items-center justify-center p-3 drop-shadow-2xl">
         <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white" />
       </div>
-    </button>
+    </div>
+    <div class="flex flex-row items-center justify-center mt-4 gap-2 opacity-70">
+      <span class="font-semibold">You are </span>
+      <div v-if="isHost" class="bg-error rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
+        <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
+      </div>
+      <div v-else class="bg-success rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
+        <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const { sendEvent, onEventReceive } = useMultiplayer()
+const { activePlayer, myTurn } = useGame()
 const { isHost } = useConnection()
+const router = useRouter()
 const isHeads = ref(false)
 const isTails = ref(false)
+
+function navigateToFirstTurn() {
+  if (!activePlayer.value) return
+  if (myTurn.value) {
+    router.push({ path: '/players-turn' })
+  }
+  else {
+    router.push({ path: '/opponents-turn' })
+  }
+}
 
 function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
   let result = Math.random() >= 0.5 ? 'heads' : 'tails' as 'heads' | 'tails'
@@ -32,6 +53,10 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
       isTails.value = true
     }
   }, 100)
+  setTimeout(() => {
+    activePlayer.value = result === 'heads' ? 'host' : 'client'
+    navigateToFirstTurn()
+  }, 5000)
   return result
 }
 
@@ -39,14 +64,13 @@ onMounted(() => {
   if (isHost.value) {
     const flipResult = flipCoin()
     sendEvent({ type: 'coin-flip', data: { hostSide: flipResult } })
-    return
   }
-  onEventReceive((event) => {
-    if (event.type === 'coin-flip') {
-      const { hostSide } = event.data
-      flipCoin(hostSide)
-    }
-  })
+})
+onEventReceive((event) => {
+  if (event.type === 'coin-flip') {
+    const { hostSide } = event.data
+    flipCoin(hostSide)
+  }
 })
 </script>
 
