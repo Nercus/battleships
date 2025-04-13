@@ -24,7 +24,7 @@
 import { useJsonCompressor } from '../composables/useJsonCompressor'
 
 const jsonCompressor = useJsonCompressor()
-const { createOffer, applyRemoteSDP } = useConnection()
+const { createOffer, applyRemoteSDP, isHost } = useConnection()
 const { copy } = useClipboard()
 
 const clientConfirmationCode = ref('')
@@ -64,6 +64,7 @@ async function connectToClient() {
   try {
     const decompressedCode = jsonCompressor.decompress(clientConfirmationCode.value) as RTCSessionDescriptionInit
     await applyRemoteSDP(decompressedCode)
+    isHost.value = true
   }
   catch (error) {
     console.error('Error connecting to client:', error)

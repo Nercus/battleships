@@ -4,9 +4,13 @@
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
     </div>
     <Button :type="shipsConfirmed ? 'ghost' : 'success'" @click="confirmSelection">
-      <span v-if="shipsConfirmed" class="flex items-center gap-2">
-        Waiting for other player
+      <span v-if="shipsConfirmed && !otherPlayerReady" class="flex items-center gap-2">
+        Waiting for other player...
         <Icon class="fluent--spinner-ios-20-filled animate-spin h-4 w-4" />
+      </span>
+      <span v-else-if="!shipsConfirmed && otherPlayerReady" class="flex items-center gap-2">
+        Other player is ready! Are you?
+        <Icon class="fluent--checkmark-24-filled h-4 w-4" />
       </span>
       <span v-else>Confirm</span>
     </Button>
@@ -16,6 +20,28 @@
 <script setup lang="ts">
 const { shipsConfirmed } = useGame()
 
+const router = useRouter()
+const { sendEvent, onEventReceive } = useMultiplayer()
+
+const otherPlayerReady = ref(false)
+
+watch(shipsConfirmed, (newValue) => {
+  if (newValue !== undefined) {
+    sendEvent({ type: 'ready', data: newValue })
+  }
+})
+
+onEventReceive((event) => {
+  if (event.type === 'ready') {
+    otherPlayerReady.value = event.data
+  }
+})
+
+watchEffect(() => {
+  if (otherPlayerReady.value && shipsConfirmed.value) {
+    router.push('/start')
+  }
+})
 function confirmSelection() {
   shipsConfirmed.value = !shipsConfirmed.value
 }

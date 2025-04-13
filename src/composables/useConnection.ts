@@ -5,15 +5,22 @@ const configuration = {
 }
 
 const connected = ref(false)
+const isHost = ref(false)
+
+const messageCallbacks = ref<((message: string) => void)[]>([])
 // TODO: save offer and answer in local storage to reconnect after refresh
+const peerConnection = new RTCPeerConnection(configuration)
+const dataChannel = peerConnection.createDataChannel('chat')
+
+setTimeout(() => {
+  peerConnection.createOffer().then((offer) => {
+    peerConnection.setLocalDescription(offer).then(() => {
+      console.warn('Initial offer set!')
+    })
+  })
+}, 100)
 
 export function useConnection() {
-  const peerConnection = new RTCPeerConnection(configuration)
-  const dataChannel = peerConnection.createDataChannel('chat')
-  setTimeout(async () => {
-    const offer = await peerConnection.createOffer()
-    await peerConnection.setLocalDescription(offer)
-  }, 100)
   dataChannel.onopen = () => {
     connected.value = true
   }
@@ -25,7 +32,6 @@ export function useConnection() {
     if (peerConnection.iceGatheringState !== 'complete') {
       const offer = await peerConnection.createOffer()
       await peerConnection.setLocalDescription(offer)
-      return offer
     }
     const offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)
@@ -43,11 +49,19 @@ export function useConnection() {
   }
 
   async function onMessageReceive(cb: (message: string) => void) {
-    peerConnection.ondatachannel = (event) => {
-      const dataChannel = event.channel
-      dataChannel.onmessage = (event) => {
-        cb(event.data)
-      }
+    messageCallbacks.value.push(cb)
+  }
+
+  // For the data channel created locally
+  dataChannel.onmessage = (event) => {
+    messageCallbacks.value.forEach(cb => cb(event.data))
+  }
+
+  // For incoming remote data channels
+  peerConnection.ondatachannel = (event) => {
+    const channel = event.channel
+    channel.onmessage = (event) => {
+      messageCallbacks.value.forEach(cb => cb(event.data))
     }
   }
 
@@ -63,6 +77,7 @@ export function useConnection() {
   }
 
   return {
+    isHost,
     connected,
     createOffer,
     applyRemoteSDP,
