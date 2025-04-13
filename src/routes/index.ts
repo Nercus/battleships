@@ -23,6 +23,11 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../views/Setup.vue'),
   },
   {
+    path: '/start',
+    name: 'Who Starts?',
+    component: () => import('../views/CoinFlip.vue'),
+  },
+  {
     path: '/players-turn',
     name: 'Player\'s Turn',
     component: () => import('../views/PlayerTurn.vue'),
