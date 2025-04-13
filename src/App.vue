@@ -25,15 +25,15 @@ watch(connected, (val, oldVal) => {
     })
     router.push({ name: 'Setup' })
   }
-  if (!val && oldVal) {
+  if (!val && !!oldVal) {
     push.error({
       title: 'Disconnected',
       message: 'You have been disconnected.',
       duration: 5000,
     })
-    router.push({ name: 'Home' })
+    router.push({ name: 'Start Game' })
   }
-})
+}, { immediate: true })
 
 window.addEventListener('beforeunload', (event) => {
   if (import.meta.env.MODE === 'development') return
