@@ -68,7 +68,6 @@ onMounted(() => {
   }
 })
 onEventReceive((event) => {
-  console.log(event)
   if (event.type === 'coin-flip') {
     const { hostSide } = event.data
     flipCoin(hostSide)

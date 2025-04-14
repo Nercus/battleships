@@ -7,8 +7,8 @@ type GameEvent =
 
 const eventCallbacks = ref<((event: GameEvent) => void)[]>([])
 
+const { sendMessage, onMessageReceive } = useConnection()
 export function useMultiplayer() {
-  const { sendMessage, onMessageReceive } = useConnection()
 
   function sendEvent(event: GameEvent) {
     console.log("Sending event:", event)
@@ -19,20 +19,21 @@ export function useMultiplayer() {
     eventCallbacks.value.push(cb)
   }
 
-  onMessageReceive((message: string) => {
-    try {
-      const event = JSON.parse(message) as GameEvent
-      eventCallbacks.value.forEach((cb) => {
-        cb(event)
-      })
-    }
-    catch (error) {
-      console.error('Failed to parse message:', message, error)
-    }
-  })
-
   return {
     sendEvent,
     onEventReceive,
   }
 }
+
+onMessageReceive((message: string) => {
+  try {
+    console.log("Received event:", message)
+    const event = JSON.parse(message) as GameEvent
+    eventCallbacks.value.forEach((cb) => {
+      cb(event)
+    })
+  }
+  catch (error) {
+    console.error('Failed to parse message:', message, error)
+  }
+})

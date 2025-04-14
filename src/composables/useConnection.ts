@@ -20,14 +20,26 @@ setTimeout(() => {
   })
 }, 100)
 
-export function useConnection() {
-  dataChannel.onopen = () => {
-    connected.value = true
-  }
-  dataChannel.onclose = () => {
-    connected.value = false
-  }
+dataChannel.onopen = () => {
+  connected.value = true
+}
+dataChannel.onclose = () => {
+  connected.value = false
+}
+// For the data channel created locally
+dataChannel.onmessage = (event) => {
+  messageCallbacks.value.forEach(cb => cb(event.data))
+}
 
+// For incoming remote data channels
+peerConnection.ondatachannel = (event) => {
+  const channel = event.channel
+  channel.onmessage = (event) => {
+    messageCallbacks.value.forEach(cb => cb(event.data))
+  }
+}
+
+export function useConnection() {
   async function createOffer() {
     if (peerConnection.iceGatheringState !== 'complete') {
       const offer = await peerConnection.createOffer()
@@ -52,23 +64,7 @@ export function useConnection() {
     messageCallbacks.value.push(cb)
   }
 
-  // For the data channel created locally
-  dataChannel.onmessage = (event) => {
-    console.log('Received message:', event)
-    messageCallbacks.value.forEach(cb => cb(event.data))
-  }
-
-  // For incoming remote data channels
-  peerConnection.ondatachannel = (event) => {
-    console.log('Received message:', event)
-    const channel = event.channel
-    channel.onmessage = (event) => {
-      messageCallbacks.value.forEach(cb => cb(event.data))
-    }
-  }
-
   async function sendMessage(message: string) {
-    console.log('Sending message:', message)
     dataChannel.send(message)
   }
 
