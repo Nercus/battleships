@@ -1,6 +1,6 @@
 <template>
   <motion.button
-    :class="button(props)" :while-hover="{ scale: 1.01 }"
+    :class="button(props, $attrs.class as string | undefined)" :while-hover="{ scale: 1.01 }"
     :while-press="{ scale: 0.95 }">
     <slot />
   </motion.button>
@@ -27,21 +27,21 @@ const props = withDefaults(defineProps<{
   rounded: false,
 })
 
-const buttonVariants = cva('items-center justify-center inline-flex gap-2 whitespace-nowrap rounded-md font-medium cursor-pointer focus:outline-none disabled:pointer-events-none transition-colors duration-200 ease-in-out shadow-md', {
+const buttonVariants = cva('items-center justify-center inline-flex gap-2 whitespace-nowrap rounded-md font-medium cursor-pointer focus-visible:outline-none disabled:pointer-events-none transition-colors duration-200 ease-in-out shadow-md', {
   variants: {
     type: {
-      primary: ['bg-base-800 hover:bg-base-900 text-primary focus:ring-primary shadow-primary'],
-      success: ['bg-base-800 hover:bg-base-900 text-success focus:ring-success shadow-success'],
-      warning: ['bg-base-800 hover:bg-base-900 text-warning focus:ring-warning shadow-warning'],
-      error: ['bg-base-800 hover:bg-base-900 text-error focus:ring-error shadow-error'],
-      muted: ['bg-base-800 hover:bg-base-900 text-base-300 focus:ring-base-800 shadow-base-800'],
+      primary: ['bg-base-800 hover:bg-base-900 text-primary focus-visible:ring-primary shadow-primary'],
+      success: ['bg-base-800 hover:bg-base-900 text-success focus-visible:ring-success shadow-success'],
+      warning: ['bg-base-800 hover:bg-base-900 text-warning focus-visible:ring-warning shadow-warning'],
+      error: ['bg-base-800 hover:bg-base-900 text-error focus-visible:ring-error shadow-error'],
+      muted: ['bg-base-800 hover:bg-base-900 text-base-300 focus-visible:ring-base-800 shadow-base-800'],
       ghost: ['shadow-none hover:bg-base-200 text-base-900'],
     },
     size: {
-      small: ['text-sm focus:ring'],
-      medium: ['text-md focus:ring'],
-      large: ['text-lg focus:ring-2'],
-      huge: ['text-xl focus:ring-2'],
+      small: ['text-sm focus-visible:ring'],
+      medium: ['text-md focus-visible:ring'],
+      large: ['text-lg focus-visible:ring-2'],
+      huge: ['text-xl focus-visible:ring-2'],
     },
     square: {
       true: ['aspect-square'],
@@ -53,7 +53,7 @@ const buttonVariants = cva('items-center justify-center inline-flex gap-2 whites
     },
     disabled: {
       false: [],
-      true: ['opacity-40 focus:ring-0 pointer-events-none select-none shadow-none'],
+      true: ['opacity-40 focus-visible:ring-0 pointer-events-none select-none shadow-none'],
     },
   },
   compoundVariants: [
@@ -102,7 +102,7 @@ const buttonVariants = cva('items-center justify-center inline-flex gap-2 whites
 
 interface ButtonProps extends VariantProps<typeof buttonVariants> {}
 
-function button(variants: ButtonProps) {
-  return twMerge(clsx(buttonVariants(variants)))
+function button(variants: ButtonProps, classes: string = '') {
+  return twMerge(clsx(buttonVariants(variants), classes))
 }
 </script>
