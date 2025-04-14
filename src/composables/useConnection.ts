@@ -54,11 +54,13 @@ export function useConnection() {
 
   // For the data channel created locally
   dataChannel.onmessage = (event) => {
+    console.log('Received message:', event)
     messageCallbacks.value.forEach(cb => cb(event.data))
   }
 
   // For incoming remote data channels
   peerConnection.ondatachannel = (event) => {
+    console.log('Received message:', event)
     const channel = event.channel
     channel.onmessage = (event) => {
       messageCallbacks.value.forEach(cb => cb(event.data))
@@ -66,6 +68,7 @@ export function useConnection() {
   }
 
   async function sendMessage(message: string) {
+    console.log('Sending message:', message)
     dataChannel.send(message)
   }
 

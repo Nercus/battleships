@@ -3,6 +3,7 @@ type GameEvent =
   | { type: 'coin-flip', data: { hostSide: 'heads' | 'tails' } }
   | { type: 'game-over', data: { won: boolean } }
   | { type: 'attack', data: { x: number, y: number } }
+  | { type: 'hit', data: boolean } // returns true if the attack hit, false if it missed
 
 const eventCallbacks = ref<((event: GameEvent) => void)[]>([])
 
@@ -10,6 +11,7 @@ export function useMultiplayer() {
   const { sendMessage, onMessageReceive } = useConnection()
 
   function sendEvent(event: GameEvent) {
+    console.log("Sending event:", event)
     sendMessage(JSON.stringify(event))
   }
 

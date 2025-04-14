@@ -1,6 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 
+const { myTurn } = useGame()
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -31,11 +33,25 @@ export const routes: RouteRecordRaw[] = [
     path: '/players-turn',
     name: 'Player\'s Turn',
     component: () => import('../views/PlayerTurn.vue'),
+    beforeEnter: () => {
+      if (!myTurn.value) {
+        // Redirect to the opponent's turn if it's not the player's turn
+        return { name: 'Opponent\'s Turn' }
+      }
+      return myTurn.value
+    },
   },
   {
     path: '/opponents-turn',
     name: 'Opponent\'s Turn',
     component: () => import('../views/OpponentTurn.vue'),
+    beforeEnter: () => {
+      if (myTurn.value) {
+        // Redirect to the player's turn if it's the player's turn
+        return { name: 'Player\'s Turn' }
+      }
+      return !myTurn.value
+    },
   },
 ]
 

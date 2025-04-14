@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 const { sendEvent, onEventReceive } = useMultiplayer()
-const { activePlayer, myTurn } = useGame()
+const { activePlayer, myTurn, gameState } = useGame()
 const { isHost } = useConnection()
 const router = useRouter()
 const isHeads = ref(false)
@@ -30,7 +30,7 @@ const isTails = ref(false)
 
 function navigateToFirstTurn() {
   if (!activePlayer.value) return
-  if (myTurn.value) {
+  if (myTurn) {
     router.push({ path: '/players-turn' })
   }
   else {
@@ -55,6 +55,7 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
   }, 100)
   setTimeout(() => {
     activePlayer.value = result === 'heads' ? 'host' : 'client'
+    gameState.value = 'active'
     navigateToFirstTurn()
   }, 5000)
   return result
@@ -67,6 +68,7 @@ onMounted(() => {
   }
 })
 onEventReceive((event) => {
+  console.log(event)
   if (event.type === 'coin-flip') {
     const { hostSide } = event.data
     flipCoin(hostSide)
