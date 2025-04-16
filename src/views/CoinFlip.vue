@@ -21,16 +21,15 @@
 </template>
 
 <script setup lang="ts">
-const { sendEvent, onEventReceive } = useMultiplayer()
-const { activePlayer, myTurn, gameState } = useGame()
-const { isHost } = useConnection()
+const { activePlayer, myTurn, gameState } = storeToRefs(useGameStore())
+const { isHost, sendEvent, onEventReceive } = useConnectionStore()
 const router = useRouter()
 const isHeads = ref(false)
 const isTails = ref(false)
 
 function navigateToFirstTurn() {
   if (!activePlayer.value) return
-  if (myTurn) {
+  if (myTurn.value) {
     router.push({ path: '/players-turn' })
   }
   else {
@@ -62,7 +61,7 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
 }
 
 onMounted(() => {
-  if (isHost.value) {
+  if (isHost) {
     const flipResult = flipCoin()
     sendEvent({ type: 'coin-flip', data: { hostSide: flipResult } })
   }

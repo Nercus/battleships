@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-const { connected } = useConnection()
+const { connected } = storeToRefs(useConnectionStore())
 </script>
 
 <style>

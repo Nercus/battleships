@@ -14,12 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { useJsonCompressor } from '../composables/useJsonCompressor'
-
 const route = useRoute<'Join'>()
 const { copy } = useClipboard()
 const jsonCompressor = useJsonCompressor()
-const { applyRemoteSDP } = useConnection()
+const { applyRemoteSDP } = useConnectionStore()
 const confirmationCode = ref('')
 
 onMounted(async () => {

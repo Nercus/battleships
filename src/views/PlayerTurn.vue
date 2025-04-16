@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-const { opponentBoard, playerBoard, setHitStateForOpponent } = useGame()
-const { onEventReceive } = useMultiplayer()
+const { opponentBoard, playerBoard } = storeToRefs(useGameStore())
+const { setHitStateForOpponent } = useGameStore()
+const { onEventReceive } = useConnectionStore()
 
 onEventReceive((event) => {
   if (event.type === 'hit') {

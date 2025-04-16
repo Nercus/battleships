@@ -9,17 +9,23 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./../components/shared/Button.vue')['default']
+    CoinFlip: typeof import('./../views/CoinFlip.vue')['default']
     ConnectionIndicator: typeof import('./../components/ConnectionIndicator.vue')['default']
-    GameGridAimLayer: typeof import('./../components/GameGrid/GameGridAimLayer.vue')['default']
     GameGridHitIndicator: typeof import('./../components/GameGrid/GameGridHitIndicator.vue')['default']
     GameGridHitLayer: typeof import('./../components/GameGrid/GameGridHitLayer.vue')['default']
     GameGridShip: typeof import('./../components/GameGrid/GameGridShip.vue')['default']
     GameGridShipLayer: typeof import('./../components/GameGrid/GameGridShipLayer.vue')['default']
+    Host: typeof import('./../views/Host.vue')['default']
     Icon: typeof import('./../components/shared/Icon.vue')['default']
+    Join: typeof import('./../views/Join.vue')['default']
+    OpponentTurn: typeof import('./../views/OpponentTurn.vue')['default']
+    PlayerTurn: typeof import('./../views/PlayerTurn.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Separator: typeof import('reka-ui')['Separator']
+    Setup: typeof import('./../views/Setup.vue')['default']
     SimpleSeparator: typeof import('./../components/shared/SimpleSeparator.vue')['default']
+    Start: typeof import('./../views/Start.vue')['default']
     Textarea: typeof import('./../components/shared/Textarea.vue')['default']
   }
 }

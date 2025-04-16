@@ -21,17 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import { useJsonCompressor } from '../composables/useJsonCompressor'
-
 const jsonCompressor = useJsonCompressor()
-const { createOffer, applyRemoteSDP, isHost } = useConnection()
+const connectionStore = useConnectionStore()
+const { isHost } = storeToRefs(connectionStore)
 const { copy } = useClipboard()
 
 const clientConfirmationCode = ref('')
 
 async function copyInviteLink() {
   const baseURL = window.location.origin
-  const offer = await createOffer()
+  const offer = await connectionStore.createOffer()
   const compressedOffer = jsonCompressor.compress(offer as object)
   const link = `${baseURL}/join?code=${compressedOffer}`
   try {
@@ -63,7 +62,7 @@ async function connectToClient() {
   }
   try {
     const decompressedCode = jsonCompressor.decompress(clientConfirmationCode.value) as RTCSessionDescriptionInit
-    await applyRemoteSDP(decompressedCode)
+    await connectionStore.applyRemoteSDP(decompressedCode)
     isHost.value = true
   }
   catch (error) {

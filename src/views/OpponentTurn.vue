@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-const { opponentBoard, playerBoard, getHitStateForAttack, switchTurn } = useGame()
-
-const { onEventReceive, sendEvent } = useMultiplayer()
+const { opponentBoard, playerBoard } = storeToRefs(useGameStore())
+const { getHitStateForAttack, switchTurn } = useGameStore()
+const { onEventReceive, sendEvent } = useConnectionStore()
 
 onEventReceive((event) => {
   if (event.type === 'attack') {

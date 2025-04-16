@@ -8,15 +8,15 @@
 </template>
 
 <script setup lang="ts">
-import type { Board, HitType } from '../../composables/useGame'
+import type { Board, HitType } from '../../store/useGameStore'
 
 const props = defineProps<{
   board: Board
   title: string
 }>()
 
-const { target, attackSent, activeAttack } = useGame()
-const { sendEvent } = useMultiplayer()
+const { target, attackSent, activeAttack } = storeToRefs(useGameStore())
+const { sendEvent } = useConnectionStore()
 
 const flatBoard = computed(() => {
   return props.board.flat()

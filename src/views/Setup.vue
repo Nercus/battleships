@@ -18,12 +18,10 @@
 </template>
 
 <script setup lang="ts">
-const { shipsConfirmed } = useGame()
+const { shipsConfirmed, gameState } = storeToRefs(useGameStore())
 
 const router = useRouter()
-const { sendEvent, onEventReceive } = useMultiplayer()
-const { gameState } = useGame()
-
+const { sendEvent, onEventReceive } = useConnectionStore()
 const otherPlayerReady = ref(false)
 
 watch(shipsConfirmed, (newValue) => {

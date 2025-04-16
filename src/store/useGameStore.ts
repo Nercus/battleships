@@ -1,21 +1,22 @@
-const gameState = ref<'idle' | 'setup' | 'coin-flip' | 'active'>('idle')
-const shipsConfirmed = ref(false)
-const shipLayout = ref<boolean[][]>([])
-const activePlayer = ref<'host' | 'client'>()
-
+type GameState = 'idle' | 'setup' | 'coin-flip' | 'active'
 type Length10Array<T> = [T, T, T, T, T, T, T, T, T, T]
 export type HitType = 'hit' | 'miss' | 'none'
 export type Board = Length10Array<Length10Array<HitType>>
 
-const target = ref('')
-const activeAttack = ref<{ x: number, y: number } | null>(null) // the coordinates of the attack
-const attackSent = ref(false) // whether the attack has been sent or not
+export const useGameStore = defineStore('game', () => {
+  const { isHost } = storeToRefs(useConnectionStore())
+  const gameState = ref<GameState>('idle')
+  const shipsConfirmed = ref(false)
+  const shipLayout = ref<boolean[][]>([])
+  const activePlayer = ref<'host' | 'client'>()
 
-const playerBoard = ref<Board>(Array.from({ length: 10 }, () => Array(10).fill('none')) as Board) // the player's board, where the ships are placed and the opponent's attacks are recorded
-const opponentBoard = ref<Board>(Array.from({ length: 10 }, () => Array(10).fill('none')) as Board) // the opponent's board, where the player's attacks are recorded
+  const target = ref('')
+  const activeAttack = ref<{ x: number, y: number } | null>(null) // the coordinates of the attack
+  const attackSent = ref(false) // whether the attack has been sent or not
 
-export function useGame() {
-  const { isHost } = useConnection()
+  const playerBoard = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the player's board, where the ships are placed and the opponent's attacks are recorded
+  const opponentBoard = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the opponent's board, where the player's attacks are recorded
+
   const router = useRouter()
   function setShipLayout(layout: boolean[][]) {
     shipLayout.value = layout
@@ -29,7 +30,8 @@ export function useGame() {
     // set to the opposite player
     if (activePlayer.value === 'host') {
       activePlayer.value = 'client'
-    } else {
+    }
+    else {
       activePlayer.value = 'host'
     }
 
@@ -37,7 +39,8 @@ export function useGame() {
     // route push to the correct page
     if (nextTurnForPlayer) {
       router.push('/players-turn')
-    } else {
+    }
+    else {
       router.push('/opponents-turn')
     }
   }
@@ -62,7 +65,8 @@ export function useGame() {
     const hit = shipLayout.value[x][y]
     if (hit) {
       playerBoard.value[x][y] = 'hit'
-    } else {
+    }
+    else {
       playerBoard.value[x][y] = 'miss'
     }
     return hit
@@ -85,4 +89,4 @@ export function useGame() {
     opponentBoard,
     target,
   }
-}
+})

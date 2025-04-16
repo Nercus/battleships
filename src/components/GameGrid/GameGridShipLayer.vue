@@ -23,7 +23,8 @@
 import { GridLayout } from 'grid-layout-plus'
 
 const shipGrid = useTemplateRef('shipGrid')
-const { gameState, shipsConfirmed, setShipLayout } = useGame()
+const gameStore = useGameStore()
+const { gameState, shipsConfirmed } = storeToRefs(gameStore)
 
 const layout = ref([
   { x: 0, y: 0, w: 1, h: 3, i: '0', static: false, isResizable: false },
@@ -119,7 +120,7 @@ watchEffect(() => {
       }
     }
   })
-  setShipLayout(grid)
+  gameStore.setShipLayout(grid)
 })
 </script>
 

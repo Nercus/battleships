@@ -3,11 +3,6 @@
     <Notification :item="item" />
   </Notivue>
 
-  <div class="fixed top-0 w-fit max-w-1/2 h-fit bg-base-100 mx-auto inset-x-0 p-2 drop-shadow rounded-b">
-
-    {{ gameDebug }}
-  </div>
-
   <div class="w-dvw h-dvh bg-base-100 overflow-hidden flex flex-col items-center justify-center">
     <RouterView />
   </div>
@@ -18,16 +13,7 @@
 import { Notification, Notivue } from 'notivue'
 import { RouterView } from 'vue-router'
 
-const game = useGame()
-const gameDebug = computed(() => {
-
-  // return an object without the ones that are arrays
-  return Object.fromEntries(
-    Object.entries(game).filter(([key]) => key != 'playerBoard'&& key != 'opponentBoard')
-  )
-})
-
-const { connected } = useConnection()
+const { connected } = storeToRefs(useConnectionStore())
 const router = useRouter()
 
 watch(connected, (val, oldVal) => {
@@ -70,7 +56,7 @@ const showWarningDebounced = useDebounceFn(showWarning, 200, {
 
 document.addEventListener('keydown', (event) => {
   if (import.meta.env.MODE === 'development') return
-  if (!connected.value) return
+  if (!connected) return
   if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
     event.preventDefault()
     showWarningDebounced()

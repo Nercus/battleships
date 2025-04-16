@@ -14,9 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HitType } from '../../composables/useGame'
-
-const { myTurn } = useGame()
+import type { HitType } from '../../store/useGameStore'
 
 const props = defineProps<{
   type: HitType
@@ -24,7 +22,7 @@ const props = defineProps<{
   index: number
 }>()
 
-const { target } = useGame()
+const { myTurn, target } = storeToRefs(useGameStore())
 
 const isTarget = computed(() => {
   return target.value === `${props.boardTitle}-${props.index}`

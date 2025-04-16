@@ -19,5 +19,5 @@ const props = defineProps({
 
 const emit = defineEmits(['turnElement'])
 
-const { gameState } = useGame()
+const { gameState } = storeToRefs(useGameStore())
 </script>
