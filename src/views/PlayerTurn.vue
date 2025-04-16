@@ -16,13 +16,21 @@ const { setHitStateForOpponent, switchTurn } = useGameStore()
 const { onEventReceive } = useConnectionStore()
 const { sendEvent } = useConnectionStore()
 
-onEventReceive((event) => {
-  if (event.type === 'attack-response') {
-    const success = setHitStateForOpponent(event.data) // sets the state of the hit on the opponent's board
-    if (!success) return
-    switchTurn()
-    sendEvent({ type: 'acknowledge' })
-  }
+let removeListener: () => void
+
+onMounted(() => {
+  removeListener = onEventReceive((event) => {
+    if (event.type === 'attack-response') {
+      const success = setHitStateForOpponent(event.data) // sets the state of the hit on the opponent's board
+      if (!success) return
+      switchTurn()
+      sendEvent({ type: 'acknowledge' })
+    }
+  })
+})
+
+onUnmounted(() => {
+  if (removeListener) removeListener()
 })
 
 function onShoot(x: number, y: number) {

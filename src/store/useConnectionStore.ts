@@ -99,8 +99,14 @@ export const useConnectionStore = defineStore('connection', () => {
   }
 
   // Register callback for game events
-  function onEventReceive(cb: (event: GameEvent) => void) {
+  function onEventReceive(cb: (event: GameEvent) => void): () => void {
     eventListeners.push(cb)
+    return () => {
+      const index = eventListeners.indexOf(cb)
+      if (index > -1) {
+        eventListeners.splice(index, 1)
+      }
+    }
   }
 
   return {

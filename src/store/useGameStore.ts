@@ -35,8 +35,9 @@ export const useGameStore = defineStore('game', () => {
       activePlayer.value = 'host'
     }
 
+    const isMyTurn = activePlayer.value === (isHost.value ? 'host' : 'client')
     // route push to the correct page
-    if (myTurn.value) {
+    if (isMyTurn) {
       router.push('/players-turn')
     }
     else {

@@ -2,7 +2,9 @@
   <Notivue v-slot="item">
     <Notification :item="item" />
   </Notivue>
-
+  <div class="fixed top-0 right-0 bg-base-300 p-2 drop-shadow-2xl">
+    {{ activePlayer }}
+  </div>
   <div class="w-dvw h-dvh bg-base-100 overflow-hidden flex flex-col items-center justify-center">
     <RouterView />
   </div>
@@ -14,6 +16,7 @@ import { Notification, Notivue } from 'notivue'
 import { RouterView } from 'vue-router'
 
 const { connected } = storeToRefs(useConnectionStore())
+const { activePlayer } = storeToRefs(useGameStore())
 const router = useRouter()
 
 watch(connected, (val, oldVal) => {

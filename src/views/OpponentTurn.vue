@@ -13,15 +13,23 @@ const { opponentBoard, playerBoard } = storeToRefs(useGameStore())
 const { getHitStateForAttack, switchTurn } = useGameStore()
 const { onEventReceive, sendEvent } = useConnectionStore()
 
-onEventReceive((event) => {
-  if (event.type === 'attack') {
-    const { x, y } = event.data
-    const isHit = getHitStateForAttack(x, y)
-    sendEvent({ type: 'attack-response', data: !!isHit })
-  }
-  else if (event.type === 'acknowledge') {
-    switchTurn()
-  }
+let removeListener: () => void
+
+onMounted(() => {
+  removeListener = onEventReceive((event) => {
+    if (event.type === 'attack') {
+      const { x, y } = event.data
+      const isHit = getHitStateForAttack(x, y)
+      sendEvent({ type: 'attack-response', data: !!isHit })
+    }
+    else if (event.type === 'acknowledge') {
+      switchTurn()
+    }
+  })
+})
+
+onUnmounted(() => {
+  if (removeListener) removeListener()
 })
 </script>
 
