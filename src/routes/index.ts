@@ -34,6 +34,7 @@ export const routes: RouteRecordRaw[] = [
     beforeEnter: () => {
       const { myTurn } = storeToRefs(useGameStore())
       if (!myTurn.value) {
+        console.warn('Redirecting to opponent\'s turn')
         // Redirect to the opponent's turn if it's not the player's turn
         return { name: 'Opponent\'s Turn' }
       }
@@ -48,6 +49,7 @@ export const routes: RouteRecordRaw[] = [
       const { myTurn } = storeToRefs(useGameStore())
       if (myTurn.value) {
         // Redirect to the player's turn if it's the player's turn
+        console.warn('Redirecting to player\'s turn')
         return { name: 'Player\'s Turn' }
       }
       return !myTurn.value

@@ -4,7 +4,8 @@ export type HitType = 'hit' | 'miss' | 'none'
 export type Board = Length10Array<Length10Array<HitType>>
 
 export const useGameStore = defineStore('game', () => {
-  const { isHost } = storeToRefs(useConnectionStore())
+  const connectionStore = useConnectionStore()
+  const { isHost } = storeToRefs(connectionStore)
   const gameState = ref<GameState>('idle')
   const shipsConfirmed = ref(false)
   const shipLayout = ref<boolean[][]>([])
@@ -12,7 +13,6 @@ export const useGameStore = defineStore('game', () => {
 
   const target = ref('')
   const activeAttack = ref<{ x: number, y: number } | null>(null) // the coordinates of the attack
-  const attackSent = ref(false) // whether the attack has been sent or not
 
   const playerBoard = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the player's board, where the ships are placed and the opponent's attacks are recorded
   const opponentBoard = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the opponent's board, where the player's attacks are recorded
@@ -35,9 +35,8 @@ export const useGameStore = defineStore('game', () => {
       activePlayer.value = 'host'
     }
 
-    const nextTurnForPlayer = activePlayer.value === (isHost.value ? 'host' : 'client')
     // route push to the correct page
-    if (nextTurnForPlayer) {
+    if (myTurn.value) {
       router.push('/players-turn')
     }
     else {
@@ -45,7 +44,7 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  function setHitStateForOpponent(isHit: boolean) {
+  function setHitStateForOpponent(isHit: boolean): boolean | undefined {
     if (!activePlayer.value) return
     if (gameState.value !== 'active') return
     if (!activeAttack.value) return
@@ -54,8 +53,7 @@ export const useGameStore = defineStore('game', () => {
     opponentBoard.value[x][y] = isHit ? 'hit' : 'miss'
     activeAttack.value = null
     target.value = ''
-    attackSent.value = false
-    switchTurn()
+    return true
   }
 
   function getHitStateForAttack(x: number, y: number) {
@@ -84,7 +82,6 @@ export const useGameStore = defineStore('game', () => {
     switchTurn,
     setHitStateForOpponent,
     getHitStateForAttack,
-    attackSent,
     playerBoard,
     opponentBoard,
     target,

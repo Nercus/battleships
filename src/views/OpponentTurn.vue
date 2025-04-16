@@ -17,7 +17,9 @@ onEventReceive((event) => {
   if (event.type === 'attack') {
     const { x, y } = event.data
     const isHit = getHitStateForAttack(x, y)
-    sendEvent({ type: 'hit', data: !!isHit })
+    sendEvent({ type: 'attack-response', data: !!isHit })
+  }
+  else if (event.type === 'acknowledge') {
     switchTurn()
   }
 })

@@ -7,7 +7,8 @@ type GameEvent =
   | { type: 'coin-flip', data: { hostSide: 'heads' | 'tails' } }
   | { type: 'game-over', data: { won: boolean } }
   | { type: 'attack', data: { x: number, y: number } }
-  | { type: 'hit', data: boolean } // returns true if the attack hit, false if it missed
+  | { type: 'attack-response', data: boolean } // returns true if the attack hit, false if it missed
+  | { type: 'acknowledge' } // used to acknowledge the receipt of a message
 
 export const useConnectionStore = defineStore('connection', () => {
   const connected = ref(false)

@@ -15,8 +15,11 @@ const props = defineProps<{
   title: string
 }>()
 
-const { target, attackSent, activeAttack } = storeToRefs(useGameStore())
-const { sendEvent } = useConnectionStore()
+const emit = defineEmits<{
+  (e: 'shoot', x: number, y: number): void
+}>()
+
+const { target } = storeToRefs(useGameStore())
 
 const flatBoard = computed(() => {
   return props.board.flat()
@@ -31,13 +34,9 @@ function onDoubleClick(hitType: HitType, index: number) {
   if (hitType !== 'none') return
   if (!target.value) return
   if (target.value !== `${props.title}-${index}`) return
-  // shoot here
-  attackSent.value = true
-
   // split index into x and y
   const x = Math.floor(index / 10)
   const y = index % 10
-  sendEvent({ type: 'attack', data: { x, y } })
-  activeAttack.value = { x, y }
+  emit('shoot', x, y)
 }
 </script>

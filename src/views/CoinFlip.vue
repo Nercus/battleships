@@ -21,21 +21,11 @@
 </template>
 
 <script setup lang="ts">
-const { activePlayer, myTurn, gameState } = storeToRefs(useGameStore())
+const gameStore = useGameStore()
+const { activePlayer, gameState } = storeToRefs(gameStore)
 const { isHost, sendEvent, onEventReceive } = useConnectionStore()
-const router = useRouter()
 const isHeads = ref(false)
 const isTails = ref(false)
-
-function navigateToFirstTurn() {
-  if (!activePlayer.value) return
-  if (myTurn.value) {
-    router.push({ path: '/players-turn' })
-  }
-  else {
-    router.push({ path: '/opponents-turn' })
-  }
-}
 
 function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
   let result = Math.random() >= 0.5 ? 'heads' : 'tails' as 'heads' | 'tails'
@@ -53,9 +43,9 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
     }
   }, 100)
   setTimeout(() => {
-    activePlayer.value = result === 'heads' ? 'host' : 'client'
+    activePlayer.value = result !== 'heads' ? 'host' : 'client'
     gameState.value = 'active'
-    navigateToFirstTurn()
+    gameStore.switchTurn()
   }, 5000)
   return result
 }
