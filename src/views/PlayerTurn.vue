@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoard" title="Your turn (Double click to shoot!)" @shoot="onShoot" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoard" title="Your turn (Double click to shoot!)" board-type="opponent" @shoot="onShoot" />
     </div>
     <div class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative">
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
@@ -23,7 +23,9 @@ onMounted(() => {
     if (event.type === 'attack-response') {
       const success = setHitStateForOpponent(event.data) // sets the state of the hit on the opponent's board
       if (!success) return
-      switchTurn()
+      setTimeout(() => {
+        switchTurn()
+      }, 1000)
       sendEvent({ type: 'acknowledge' })
     }
   })

@@ -9,6 +9,7 @@ type GameEvent =
   | { type: 'attack', data: { x: number, y: number } }
   | { type: 'attack-response', data: boolean } // returns true if the attack hit, false if it missed
   | { type: 'acknowledge' } // used to acknowledge the receipt of a message
+  | { type: 'target', data: { x: number, y: number } } // used to send the target coordinates to the opponent
 
 export const useConnectionStore = defineStore('connection', () => {
   const connected = ref(false)
@@ -117,7 +118,6 @@ export const useConnectionStore = defineStore('connection', () => {
   return {
     isHost,
     connected,
-    $reset,
     createOffer,
     applyRemoteSDP,
     closeConnection,

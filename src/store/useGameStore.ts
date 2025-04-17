@@ -11,7 +11,8 @@ export const useGameStore = defineStore('game', () => {
   const shipLayout = ref<boolean[][]>([])
   const activePlayer = ref<'host' | 'client'>()
 
-  const target = ref('')
+  const target = ref<{ x: number, y: number } | null>(null) // the coordinates of the target
+  const enemyTarget = ref<{ x: number, y: number } | null>(null)
   const activeAttack = ref<{ x: number, y: number } | null>(null) // the coordinates of the attack
 
   const playerBoard = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the player's board, where the ships are placed and the opponent's attacks are recorded
@@ -53,7 +54,7 @@ export const useGameStore = defineStore('game', () => {
     const { x, y } = activeAttack.value
     opponentBoard.value[x][y] = isHit ? 'hit' : 'miss'
     activeAttack.value = null
-    target.value = ''
+    target.value = null
     return true
   }
 
@@ -98,6 +99,7 @@ export const useGameStore = defineStore('game', () => {
     playerBoard,
     opponentBoard,
     target,
+    enemyTarget,
     $reset,
   }
 })
