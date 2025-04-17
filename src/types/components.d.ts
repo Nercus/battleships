@@ -30,7 +30,6 @@ declare module 'vue' {
     Join: typeof import('./../views/Join.vue')['default']
     OpponentTurn: typeof import('./../views/OpponentTurn.vue')['default']
     PlayerTurn: typeof import('./../views/PlayerTurn.vue')['default']
-    ResetGame: typeof import('./../components/ResetGame.vue')['default']
     ResetGamePopup: typeof import('./../components/ResetGamePopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -38,6 +37,7 @@ declare module 'vue' {
     Setup: typeof import('./../views/Setup.vue')['default']
     SimpleSeparator: typeof import('./../components/shared/SimpleSeparator.vue')['default']
     Start: typeof import('./../views/Start.vue')['default']
+    Test: typeof import('./../views/Test.vue')['default']
     Textarea: typeof import('./../components/shared/Textarea.vue')['default']
     Toolbar: typeof import('./../components/Toolbar.vue')['default']
   }

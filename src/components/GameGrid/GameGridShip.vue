@@ -13,8 +13,8 @@
 <script setup lang="ts">
 const props = defineProps({
   item: {
-    type: Object,
     required: true,
+    type: Object,
   },
 })
 const emit = defineEmits(['turnElement'])

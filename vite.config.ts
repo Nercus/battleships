@@ -19,16 +19,16 @@ export default defineConfig({
     tailwindcss(),
     // vueDevTools(),
     Components({
-      dts: './src/types/components.d.ts',
       dirs: ['./src/components', './src/views'],
+      dts: './src/types/components.d.ts',
       resolvers: [
         RekaUIResolver(),
         MotionResolver(),
       ],
     }),
     AutoImport({
-      dts: './src/types/auto-imports.d.ts',
       dirs: ['./src/composables', './src/store'],
+      dts: './src/types/auto-imports.d.ts',
       imports: [
         'vue',
         'vue-router',
@@ -44,7 +44,5 @@ export default defineConfig({
     alias: {
       'simple-peer': 'simple-peer/simplepeer.min.js',
     },
-    target: 'esnext',
   },
-  clearScreen: false,
 })

@@ -84,21 +84,21 @@ export const useGameStore = defineStore('game', () => {
 
   const isReady = computed(() => shipsConfirmed.value && shipLayout.value.length > 0)
   return {
+    $reset,
+    activeAttack,
+    activePlayer,
+    enemyTarget,
     gameState,
+    getHitStateForAttack,
     isReady,
     myTurn,
-    shipsConfirmed,
-    activePlayer,
-    shipLayout,
-    activeAttack,
-    switchTurn,
-    setHitStateForOpponent,
-    getHitStateForAttack,
-    playerBoard,
     opponentBoard,
-    target,
-    enemyTarget,
+    playerBoard,
+    setHitStateForOpponent,
     shipArray,
-    $reset,
+    shipLayout,
+    shipsConfirmed,
+    switchTurn,
+    target,
   }
 })

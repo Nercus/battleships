@@ -25,7 +25,7 @@ import { GridLayout } from 'grid-layout-plus'
 
 const shipGrid = useTemplateRef('shipGrid')
 const gameStore = useGameStore()
-const { gameState, shipsConfirmed, shipLayout, shipArray } = storeToRefs(gameStore)
+const { gameState, shipArray, shipLayout, shipsConfirmed } = storeToRefs(gameStore)
 const route = useRoute()
 
 const layout = ref<Layout>([])
@@ -67,7 +67,7 @@ function initLayout() {
 
       // Check if the ship fits in the grid and doesn't overlap with existing ships
       if (x + w <= 10 && y + h <= 10 && !isOverlapping(newLayout, x, y, w, h)) {
-        newLayout.push({ x, y, w, h, i: ship.name, static: false, isResizable: false })
+        newLayout.push({ h, i: ship.name, isResizable: false, static: false, w, x, y })
         placed = true
       }
     }

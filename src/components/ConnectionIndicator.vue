@@ -32,17 +32,17 @@ const currentRouteNeedsConnection = computed(() => {
 watch(connected, (val) => {
   if (val) {
     push.success({
-      title: 'Connected',
-      message: 'You are now connected.',
       duration: 5000,
+      message: 'You are now connected.',
+      title: 'Connected',
     })
     router.push({ name: 'Setup' })
   }
   if (!val && currentRouteNeedsConnection.value) {
     push.error({
-      title: 'Disconnected',
-      message: 'You have been disconnected.',
       duration: 5000,
+      message: 'You have been disconnected.',
+      title: 'Disconnected',
     })
     router.push({ name: 'Start Game' })
   }

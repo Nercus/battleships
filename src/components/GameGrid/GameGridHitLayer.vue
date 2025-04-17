@@ -34,7 +34,7 @@ function setTarget(hitType: HitType, index: number) {
   const x = Math.floor(index / 10)
   const y = index % 10
   target.value = { x, y }
-  sendEvent({ type: 'target', data: { x, y } })
+  sendEvent({ data: { x, y }, type: 'target' })
 }
 
 function onDoubleClick(hitType: HitType, index: number) {

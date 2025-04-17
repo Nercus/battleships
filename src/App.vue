@@ -23,9 +23,9 @@ window.addEventListener('beforeunload', (event) => {
 
 function showWarning() {
   push.warning({
-    title: 'Warning',
-    message: 'Refreshing the page will end the connection. Please use the browser\'s reload button instead, if you insist on refreshing.',
     duration: 5000,
+    message: 'Refreshing the page will end the connection. Please use the browser\'s reload button instead, if you insist on refreshing.',
+    title: 'Warning',
   })
 }
 
@@ -34,7 +34,7 @@ const showWarningDebounced = useDebounceFn(showWarning, 200, {
 })
 
 document.addEventListener('keydown', (event) => {
-if (import.meta.env.MODE === 'development') return
+  if (import.meta.env.MODE === 'development') return
   if (!connected.value) return
   if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
     event.preventDefault()

@@ -1,27 +1,32 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
-  type: 'app',
-  typescript: true,
-  vue: true,
   rules: {
+    'antfu/if-newline': 'off',
+    'node/prefer-global/process': 'off',
+    'perfectionist/sort-objects': ['error', {
+      ignoreCase: true,
+      order: 'asc',
+    }],
     'vue/block-order': ['error', {
       order: ['template', 'script', 'style'],
     }],
     'vue/first-attribute-linebreak': ['error', {
-      singleline: 'ignore',
       multiline: 'below',
+      singleline: 'ignore',
     }],
     'vue/html-closing-bracket-newline': ['error', {
-      singleline: 'never',
       multiline: 'never',
       selfClosingTag: {
-        singleline: 'never',
         multiline: 'never',
+        singleline: 'never',
       },
+      singleline: 'never',
     }],
     'vue/multiline-html-element-content-newline': 'error',
-    'antfu/if-newline': 'off',
-    'node/prefer-global/process': 'off',
+    'yaml/plain-scalar': 'off',
   },
+  type: 'app',
+  typescript: true,
+  vue: true,
 })
