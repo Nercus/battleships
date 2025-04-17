@@ -4,14 +4,14 @@
       Host Connect
     </h1>
     <SimpleSeparator />
-    <Button v-if="!isSupported" type="muted" @click="debouncedCopyLinkFn">
+    <Button v-if="isSupported" type="muted" @click="debouncedCopyLinkFn">
       <Icon class="fluent--link-24-filled" />
       Copy Invite Link
     </Button>
     <div v-else class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
-      <h2 class="text-xl font-bold">
-        Copy invite link
-      </h2>
+      <Button type="muted" @click="debouncedCopyLinkFn">
+        Generate Invite Link
+      </Button>
       <Textarea v-model="inviteLink" />
     </div>
     <div class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">

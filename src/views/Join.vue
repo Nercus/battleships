@@ -11,9 +11,9 @@
       Copy Confirmation Code
     </Button>
     <div v-else class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
-      <h2 class="text-xl font-bold">
-        Confirmation Code
-      </h2>
+      <Button type="muted" :disabled="confirmationCode === ''" @click="debouncedCopyConfirmationFn">
+        Generate Confirmation Code
+      </Button>
       <Textarea v-model="confirmationCode" />
     </div>
   </div>
