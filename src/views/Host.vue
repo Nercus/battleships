@@ -32,7 +32,7 @@ async function copyInviteLink() {
   const baseURL = window.location.origin
   const offer = await connectionStore.createOffer()
   const compressedOffer = jsonCompressor.compress(offer as object)
-  const link = `${baseURL}/join?code=${compressedOffer}`
+  const link = `${baseURL}/#/join?code=${compressedOffer}`
   try {
     copy(link)
     // Logic to copy the invite link to the clipboard
