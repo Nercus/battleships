@@ -1,5 +1,5 @@
 <template>
-    <textarea v-model="model" :class="textarea(props)" autocomplete="false" />
+  <textarea v-model="model" :class="textarea(props)" autocomplete="false" />
 </template>
 
 <script setup lang="ts">
@@ -11,11 +11,9 @@ import { twMerge } from 'tailwind-merge'
 const props = withDefaults(defineProps<{
   variant?: 'default' | 'error' | 'success' | 'warning'
   size?: 'small' | 'medium' | 'large' | 'huge'
-  copyPasteButton?: boolean
 }>(), {
   variant: 'default',
   size: 'medium',
-  copyPasteButton: true,
 })
 
 const model = defineModel({

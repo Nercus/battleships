@@ -4,10 +4,16 @@
       Host Connect
     </h1>
     <SimpleSeparator />
-    <Button type="muted" @click="debouncedCopyLinkFn">
+    <Button v-if="!isSupported" type="muted" @click="debouncedCopyLinkFn">
       <Icon class="fluent--link-24-filled" />
       Copy Invite Link
     </Button>
+    <div v-else class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
+      <h2 class="text-xl font-bold">
+        Copy invite link
+      </h2>
+      <Textarea v-model="inviteLink" />
+    </div>
     <div class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
       <h2 class="text-xl font-bold">
         Paste confirmation code
@@ -24,23 +30,28 @@
 const jsonCompressor = useJsonCompressor()
 const connectionStore = useConnectionStore()
 const { isHost } = storeToRefs(connectionStore)
-const { copy } = useClipboard()
+const { copy, isSupported, copied } = useClipboard()
+const inviteLink = ref('')
 
 const clientConfirmationCode = ref('')
+watch(copied, (newValue) => {
+  if (newValue) {
+    push.success({
+      title: 'Invite link copied to clipboard!',
+      message: 'You can now share this link with your battleship buddy.',
+      duration: 3000,
+    })
+  }
+})
 
 async function copyInviteLink() {
   const baseURL = window.location.origin
   const offer = await connectionStore.createOffer()
   const compressedOffer = jsonCompressor.compress(offer as object)
   const link = `${baseURL}/#/join?code=${compressedOffer}`
+  inviteLink.value = link
   try {
     copy(link)
-    // Logic to copy the invite link to the clipboard
-    push.success({
-      title: 'Invite link copied to clipboard!',
-      message: 'You can now share this link with your battleship buddy.',
-      duration: 3000,
-    })
   }
   catch {
     push.error({
