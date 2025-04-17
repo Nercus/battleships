@@ -4,7 +4,7 @@
       Host Connect
     </h1>
     <SimpleSeparator />
-    <Button v-if="!isSupported" type="muted" @click="debouncedCopyLinkFn">
+    <Button v-if="isSupported" type="muted" @click="debouncedCopyLinkFn">
       <Icon class="fluent--link-24-filled" />
       Copy Invite Link
     </Button>
@@ -30,7 +30,9 @@
 const jsonCompressor = useJsonCompressor()
 const connectionStore = useConnectionStore()
 const { isHost } = storeToRefs(connectionStore)
-const { copy, isSupported, copied } = useClipboard()
+const { copy, isSupported, copied } = useClipboard({
+  legacy: true,
+})
 const inviteLink = ref('')
 
 const clientConfirmationCode = ref('')
