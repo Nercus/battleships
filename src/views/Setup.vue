@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full" :class="{ 'pointer-events-none': shipsConfirmed }">
+      <GameGridLabels vertical />
+      <GameGridLabels horizontal />
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
     </div>
     <Button :type="shipsConfirmed ? 'ghost' : 'success'" @click="confirmSelection">

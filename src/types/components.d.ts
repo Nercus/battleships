@@ -22,6 +22,7 @@ declare module 'vue' {
     ConnectionIndicator: typeof import('./../components/ConnectionIndicator.vue')['default']
     GameGridHitIndicator: typeof import('./../components/GameGrid/GameGridHitIndicator.vue')['default']
     GameGridHitLayer: typeof import('./../components/GameGrid/GameGridHitLayer.vue')['default']
+    GameGridLabels: typeof import('./../components/GameGrid/GameGridLabels.vue')['default']
     GameGridShip: typeof import('./../components/GameGrid/GameGridShip.vue')['default']
     GameGridShipLayer: typeof import('./../components/GameGrid/GameGridShipLayer.vue')['default']
     Host: typeof import('./../views/Host.vue')['default']
