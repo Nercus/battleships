@@ -7,7 +7,8 @@
     "dev": "vite",
     "dev:force": "vite --force",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "eslint:fix": "eslint --cache --fix"
   },
   "dependencies": {
     "@vueuse/core": "^13.1.0",
@@ -19,6 +20,7 @@
     "pako": "^2.1.0",
     "pinia": "^3.0.2",
     "reka-ui": "^2.2.0",
+    "simple-peer": "^9.11.1",
     "tailwind-merge": "^3.2.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -31,6 +33,7 @@
     "@tailwindcss/vite": "^4.1.4",
     "@types/node": "^22.14.1",
     "@types/pako": "^2.0.3",
+    "@types/simple-peer": "^9.11.8",
     "@types/webrtc": "^0.0.46",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",

@@ -11,15 +11,15 @@
 </template>
 
 <script setup lang="ts">
-const { opponentBoard, playerBoard, activeAttack } = storeToRefs(useGameStore())
+const { activeAttack, opponentBoard, playerBoard } = storeToRefs(useGameStore())
 const { setHitStateForOpponent, switchTurn } = useGameStore()
-const { onEventReceive } = useConnectionStore()
+const { eventBus } = useConnectionStore()
 const { sendEvent } = useConnectionStore()
 
 let removeListener: () => void
 
 onMounted(() => {
-  removeListener = onEventReceive((event) => {
+  removeListener = eventBus.on((event) => {
     if (event.type === 'attack-response') {
       const success = setHitStateForOpponent(event.data) // sets the state of the hit on the opponent's board
       if (!success) return
@@ -37,7 +37,7 @@ onUnmounted(() => {
 
 function onShoot(x: number, y: number) {
   activeAttack.value = { x, y }
-  sendEvent({ type: 'attack', data: { x, y } })
+  sendEvent({ data: { x, y }, type: 'attack' })
 }
 </script>
 

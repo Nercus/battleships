@@ -9,18 +9,18 @@
 </template>
 
 <script setup lang="ts">
-const { opponentBoard, playerBoard, enemyTarget } = storeToRefs(useGameStore())
+const { enemyTarget, opponentBoard, playerBoard } = storeToRefs(useGameStore())
 const { getHitStateForAttack, switchTurn } = useGameStore()
-const { onEventReceive, sendEvent } = useConnectionStore()
+const { eventBus, sendEvent } = useConnectionStore()
 
 let removeListener: () => void
 
 onMounted(() => {
-  removeListener = onEventReceive((event) => {
+  removeListener = eventBus.on((event) => {
     if (event.type === 'attack') {
       const { x, y } = event.data
       const isHit = getHitStateForAttack(x, y)
-      sendEvent({ type: 'attack-response', data: !!isHit })
+      sendEvent({ data: !!isHit, type: 'attack-response' })
       enemyTarget.value = null
     }
     else if (event.type === 'acknowledge') {

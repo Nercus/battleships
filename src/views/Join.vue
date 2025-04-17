@@ -4,6 +4,7 @@
       Join Game
     </h1>
     <span>
+      {{ waitingForCode ? 'Waiting for confirmation code...' : 'Confirmation code generated!' }}
       Copy this confirmation code and send it to your host.
     </span>
     <Button v-if="isSupported" type="muted" :disabled="confirmationCode === ''" @click="debouncedCopyConfirmationFn">
@@ -21,44 +22,53 @@
 
 <script setup lang="ts">
 const route = useRoute<'Join'>()
-const { copy, isSupported, copied } = useClipboard({
+const { copied, copy, isSupported } = useClipboard({
   legacy: true,
 })
 const jsonCompressor = useJsonCompressor()
-const { applyRemoteSDP } = useConnectionStore()
+const connectionStore = useConnectionStore()
+const webRTC = useWebRTC()
 const confirmationCode = ref('')
+const waitingForCode = ref(false)
 
-watch(copied, (newValue) => {
-  if (newValue) {
-    push.success({
-      title: 'Confirmation code copied to clipboard!',
-      message: 'You can now share this code with your host.',
-      duration: 3000,
-    })
-  }
-})
+onMounted(() => {
+  connectionStore.initConnection(false)
 
-onMounted(async () => {
+  webRTC.signalBus.on((signal) => {
+    confirmationCode.value = jsonCompressor.compress(signal)
+    waitingForCode.value = false
+  })
+
   const code = route.query.code as string
   if (!code) {
     push.error({
-      title: 'No confirmation code provided',
-      message: 'Please provide a confirmation code to join the game.',
       duration: 3000,
+      message: 'Please provide a confirmation code to join the game.',
+      title: 'No confirmation code provided',
     })
     return
   }
   try {
     const decompressedCode = jsonCompressor.decompress(code) as RTCSessionDescriptionInit
-    const answer = await applyRemoteSDP(decompressedCode)
-    confirmationCode.value = jsonCompressor.compress(answer as object)
+    webRTC.sendSignal(decompressedCode)
+    waitingForCode.value = true
   }
   catch (error) {
     console.error('Error decompressing code:', error)
     push.error({
-      title: 'Error decompressing code',
-      message: 'Please check the confirmation code and try again.',
       duration: 3000,
+      message: 'Please check the confirmation code and try again.',
+      title: 'Error decompressing code',
+    })
+  }
+})
+
+watch(copied, (newValue) => {
+  if (newValue) {
+    push.success({
+      duration: 3000,
+      message: 'You can now share this code with your host.',
+      title: 'Confirmation code copied to clipboard!',
     })
   }
 })
@@ -66,9 +76,9 @@ onMounted(async () => {
 function copyConfirmationCode() {
   if (!confirmationCode.value) {
     push.error({
-      title: 'No confirmation code to copy',
-      message: 'Please wait for the confirmation code to be generated.',
       duration: 3000,
+      message: 'Please wait for the confirmation code to be generated.',
+      title: 'No confirmation code to copy',
     })
     return
   }

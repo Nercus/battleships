@@ -7,6 +7,13 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  build: {
+    commonjsOptions: {
+      include: ['node_modules/**'],
+    },
+    target: 'esnext',
+  },
+  clearScreen: false,
   plugins: [
     vue(),
     tailwindcss(),
@@ -33,9 +40,9 @@ export default defineConfig({
       ],
     }),
   ],
-  build: {
-    commonjsOptions: {
-      include: ['tailwind.config.js', 'node_modules/**'],
+  resolve: {
+    alias: {
+      'simple-peer': 'simple-peer/simplepeer.min.js',
     },
     target: 'esnext',
   },

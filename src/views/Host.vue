@@ -4,9 +4,10 @@
       Host Connect
     </h1>
     <SimpleSeparator />
-    <Button v-if="isSupported" type="muted" @click="debouncedCopyLinkFn">
-      <Icon class="fluent--link-24-filled" />
-      Copy Invite Link
+    <Button v-if="isSupported" type="muted" :disabled="waitingForCode" @click="debouncedCopyLinkFn">
+      <Icon v-if="waitingForCode" class="fluent--spinner-ios-20-filled animate-spin" />
+      <Icon v-else class="fluent--link-24-filled" />
+      {{ waitingForCode ? 'Generating invite link...' : 'Copy Invite Link' }}
     </Button>
     <div v-else class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
       <Button type="muted" @click="debouncedCopyLinkFn">
@@ -29,37 +30,57 @@
 <script setup lang="ts">
 const jsonCompressor = useJsonCompressor()
 const connectionStore = useConnectionStore()
-const { isHost } = storeToRefs(connectionStore)
-const { copy, isSupported, copied } = useClipboard({
+const webRTC = useWebRTC()
+const { copied, copy, isSupported } = useClipboard({
   legacy: true,
 })
 const inviteLink = ref('')
+const waitingForCode = ref(false)
+const inviteCode = ref<string | null>(null)
 
 const clientConfirmationCode = ref('')
 watch(copied, (newValue) => {
   if (newValue) {
     push.success({
-      title: 'Invite link copied to clipboard!',
-      message: 'You can now share this link with your battleship buddy.',
       duration: 3000,
+      message: 'You can now share this link with your battleship buddy.',
+      title: 'Invite link copied to clipboard!',
     })
   }
 })
 
+onMounted(() => {
+  connectionStore.initConnection(true)
+  webRTC.signalBus.on((signal) => {
+    inviteCode.value = jsonCompressor.compress(signal)
+    waitingForCode.value = false
+  })
+  waitingForCode.value = true
+})
+
 async function copyInviteLink() {
+  if (waitingForCode.value) {
+    return
+  }
+  if (!inviteCode.value) {
+    push.error({
+      duration: 3000,
+      message: 'Error generating invite link.',
+      title: 'No invite link generated',
+    })
+    return
+  }
   const baseURL = window.location.origin
-  const offer = await connectionStore.createOffer()
-  const compressedOffer = jsonCompressor.compress(offer as object)
-  const link = `${baseURL}/#/join?code=${compressedOffer}`
+  const link = `${baseURL}/#/join?code=${inviteCode.value}`
   inviteLink.value = link
   try {
     copy(link)
   }
   catch {
     push.error({
-      title: 'Error copying link',
-      message: 'Please try again.',
       duration: 3000,
+      message: 'Please try again.',
+      title: 'Error copying link',
     })
   }
 }
@@ -67,23 +88,22 @@ async function copyInviteLink() {
 async function connectToClient() {
   if (!clientConfirmationCode.value) {
     push.error({
-      title: 'No confirmation code provided',
-      message: 'Please provide a confirmation code to connect to the client.',
       duration: 3000,
+      message: 'Please provide a confirmation code to connect to the client.',
+      title: 'No confirmation code provided',
     })
     return
   }
   try {
     const decompressedCode = jsonCompressor.decompress(clientConfirmationCode.value) as RTCSessionDescriptionInit
-    await connectionStore.applyRemoteSDP(decompressedCode)
-    isHost.value = true
+    webRTC.sendSignal(decompressedCode)
   }
   catch (error) {
     console.error('Error connecting to client:', error)
     push.error({
-      title: 'Error connecting to client',
-      message: 'Please check the confirmation code and try again.',
       duration: 3000,
+      message: 'Please check the confirmation code and try again.',
+      title: 'Error connecting to client',
     })
   }
 }

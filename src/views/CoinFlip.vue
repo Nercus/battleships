@@ -23,7 +23,7 @@
 <script setup lang="ts">
 const gameStore = useGameStore()
 const { activePlayer } = storeToRefs(gameStore)
-const { isHost, sendEvent, onEventReceive } = useConnectionStore()
+const { eventBus, isHost, sendEvent } = useConnectionStore()
 const isHeads = ref(false)
 const isTails = ref(false)
 
@@ -53,9 +53,9 @@ let removeListener: () => void
 onMounted(() => {
   if (isHost) {
     const flipResult = flipCoin()
-    sendEvent({ type: 'coin-flip', data: { hostSide: flipResult } })
+    sendEvent({ data: { hostSide: flipResult }, type: 'coin-flip' })
   }
-  removeListener = onEventReceive((event) => {
+  removeListener = eventBus.on((event) => {
     if (event.type === 'coin-flip') {
       const { hostSide } = event.data
       flipCoin(hostSide)

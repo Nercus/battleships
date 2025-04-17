@@ -23,18 +23,18 @@
 const { shipsConfirmed } = storeToRefs(useGameStore())
 
 const router = useRouter()
-const { sendEvent, onEventReceive } = useConnectionStore()
+const { eventBus, sendEvent } = useConnectionStore()
 const otherPlayerReady = ref(false)
 
 watch(shipsConfirmed, (newValue) => {
   if (newValue !== undefined) {
-    sendEvent({ type: 'ready', data: newValue })
+    sendEvent({ data: newValue, type: 'ready' })
   }
 })
 
 let removeListener: () => void
 onMounted(() => {
-  removeListener = onEventReceive((event) => {
+  removeListener = eventBus.on((event) => {
     if (event.type === 'ready') {
       otherPlayerReady.value = event.data
     }

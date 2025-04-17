@@ -28,8 +28,8 @@ const props = defineProps<{
   index: number
 }>()
 
-const { myTurn, target, enemyTarget } = storeToRefs(useGameStore())
-const { onEventReceive } = useConnectionStore()
+const { enemyTarget, myTurn, target } = storeToRefs(useGameStore())
+const { eventBus } = useConnectionStore()
 
 const x = computed(() => {
   return Math.floor(props.index / 10)
@@ -56,7 +56,7 @@ const isAttackTarget = computed(() => {
 })
 const flashTarget = ref(false)
 
-onEventReceive((event) => {
+eventBus.on((event) => {
   if (event.type === 'attack') {
     attackTarget.value = event.data
     flashTarget.value = true
@@ -65,5 +65,4 @@ onEventReceive((event) => {
     }, 1000)
   }
 })
-// TODO: show highlight where the player was attacked
 </script>
