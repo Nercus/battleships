@@ -6,16 +6,28 @@ export const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Start Game',
     component: () => import('../views/Start.vue'),
+    beforeEnter: () => {
+      useGameStore().$reset()
+      useConnectionStore().$reset()
+    },
   },
   {
     path: '/host',
     name: 'Host',
     component: () => import('../views/Host.vue'),
+    beforeEnter: () => {
+      useGameStore().$reset()
+      useConnectionStore().$reset()
+    },
   },
   {
     path: '/join',
     name: 'Join',
     component: () => import('../views/Join.vue'),
+    beforeEnter: () => {
+      useGameStore().$reset()
+      useConnectionStore().$reset()
+    },
   },
   {
     path: '/setup',

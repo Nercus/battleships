@@ -109,13 +109,20 @@ export const useConnectionStore = defineStore('connection', () => {
     }
   }
 
+  function $reset() {
+    connected.value = false
+    isHost.value = false
+  }
+
   return {
     isHost,
     connected,
+    $reset,
     createOffer,
     applyRemoteSDP,
     closeConnection,
     sendEvent,
     onEventReceive,
+    $reset,
   }
 })

@@ -71,6 +71,18 @@ export const useGameStore = defineStore('game', () => {
     return hit
   }
 
+  function $reset() {
+    gameState.value = 'idle'
+    shipsConfirmed.value = false
+    shipLayout.value = []
+    activePlayer.value = undefined
+    target.value = null
+    enemyTarget.value = null
+    activeAttack.value = null
+    playerBoard.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
+    opponentBoard.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
+  }
+
   const isReady = computed(() => shipsConfirmed.value && shipLayout.value.length > 0)
   return {
     gameState,
@@ -86,5 +98,6 @@ export const useGameStore = defineStore('game', () => {
     playerBoard,
     opponentBoard,
     target,
+    $reset,
   }
 })
