@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 const gameStore = useGameStore()
-const { activePlayer, gameState } = storeToRefs(gameStore)
+const { activePlayer } = storeToRefs(gameStore)
 const { isHost, sendEvent, onEventReceive } = useConnectionStore()
 const isHeads = ref(false)
 const isTails = ref(false)
@@ -44,23 +44,26 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
   }, 100)
   setTimeout(() => {
     activePlayer.value = result !== 'heads' ? 'host' : 'client'
-    gameState.value = 'active'
     gameStore.switchTurn()
   }, 5000)
   return result
 }
 
+let removeListener: () => void
 onMounted(() => {
   if (isHost) {
     const flipResult = flipCoin()
     sendEvent({ type: 'coin-flip', data: { hostSide: flipResult } })
   }
+  removeListener = onEventReceive((event) => {
+    if (event.type === 'coin-flip') {
+      const { hostSide } = event.data
+      flipCoin(hostSide)
+    }
+  })
 })
-onEventReceive((event) => {
-  if (event.type === 'coin-flip') {
-    const { hostSide } = event.data
-    flipCoin(hostSide)
-  }
+onUnmounted(() => {
+  if (removeListener) removeListener()
 })
 </script>
 

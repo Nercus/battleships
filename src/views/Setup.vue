@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-const { shipsConfirmed, gameState } = storeToRefs(useGameStore())
+const { shipsConfirmed } = storeToRefs(useGameStore())
 
 const router = useRouter()
 const { sendEvent, onEventReceive } = useConnectionStore()
@@ -30,10 +30,16 @@ watch(shipsConfirmed, (newValue) => {
   }
 })
 
-onEventReceive((event) => {
-  if (event.type === 'ready') {
-    otherPlayerReady.value = event.data
-  }
+let removeListener: () => void
+onMounted(() => {
+  removeListener = onEventReceive((event) => {
+    if (event.type === 'ready') {
+      otherPlayerReady.value = event.data
+    }
+  })
+})
+onUnmounted(() => {
+  if (removeListener) removeListener()
 })
 
 watchEffect(() => {
@@ -42,7 +48,6 @@ watchEffect(() => {
   }
 })
 
-onMounted(() => gameState.value = 'setup')
 function confirmSelection() {
   shipsConfirmed.value = !shipsConfirmed.value
 }
