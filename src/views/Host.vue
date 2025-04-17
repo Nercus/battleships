@@ -4,7 +4,7 @@
       Host Connect
     </h1>
     <SimpleSeparator />
-    <Button v-if="isSupported" type="muted" @click="debouncedCopyLinkFn">
+    <Button v-if="!isSupported" type="muted" @click="debouncedCopyLinkFn">
       <Icon class="fluent--link-24-filled" />
       Copy Invite Link
     </Button>

@@ -6,7 +6,7 @@
     <span>
       Copy this confirmation code and send it to your host.
     </span>
-    <Button v-if="isSupported" type="muted" :disabled="confirmationCode === ''" @click="debouncedCopyConfirmationFn">
+    <Button v-if="!isSupported" type="muted" :disabled="confirmationCode === ''" @click="debouncedCopyConfirmationFn">
       <Icon class="fluent--link-24-filled" />
       Copy Confirmation Code
     </Button>
