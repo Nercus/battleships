@@ -25,7 +25,8 @@ import { GridLayout } from 'grid-layout-plus'
 
 const shipGrid = useTemplateRef('shipGrid')
 const gameStore = useGameStore()
-const { gameState, shipsConfirmed } = storeToRefs(gameStore)
+const { gameState, shipsConfirmed, shipLayout, shipArray } = storeToRefs(gameStore)
+const route = useRoute()
 
 const layout = ref<Layout>([])
 
@@ -46,7 +47,12 @@ function isOverlapping(layout: Layout, x: number, y: number, w: number, h: numbe
   return false
 }
 
-function initRandomLayout() {
+function initLayout() {
+  if (gameState.value !== 'setup') {
+    layout.value = shipArray.value
+    return
+  }
+
   const newLayout = [] as Layout
 
   // Randomly place ships on the grid
@@ -72,7 +78,7 @@ function initRandomLayout() {
 
 onMounted(() => {
   // Initialize the layout with random ship positions
-  initRandomLayout()
+  initLayout()
 })
 
 function layoutUpdated() {
@@ -143,32 +149,28 @@ function getRowHeight() {
   return rowHeight - 1
 }
 
-watchEffect(() => {
-  if (gameState.value === 'setup' && !shipsConfirmed.value) {
-    layout.value.forEach((el) => {
-      el.static = false
-    })
-  }
-  else {
-    layout.value.forEach((el) => {
-      el.static = true
-    })
-  }
-})
+watch(() => gameState.value === 'setup' && !shipsConfirmed.value, (newValue) => {
+  layout.value.forEach((el) => {
+    el.static = !newValue
+  })
+}, { immediate: true })
 
+const shipsPositionsActive = ref(false)
 watchEffect(() => {
   if (!shipsConfirmed.value) return
+  if (route.name !== 'Setup') return
   // convert the layout to a 2d array with 10 rows and 10 columns and true for cells that are occupied by a ship
   const grid = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill(false)) as boolean[][]
-
   layout.value.forEach((el) => {
     for (let i = el.x; i < el.x + el.w; i++) {
       for (let j = el.y; j < el.y + el.h; j++) {
         grid[j][i] = true
+        shipsPositionsActive.value = true
       }
     }
   })
-  gameStore.setShipLayout(grid)
+  shipArray.value = layout.value
+  shipLayout.value = grid
 })
 </script>
 

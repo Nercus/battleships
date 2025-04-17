@@ -1,3 +1,5 @@
+import type { Layout } from 'grid-layout-plus'
+
 type GameState = 'idle' | 'setup' | 'coin-flip' | 'active'
 type Length10Array<T> = [T, T, T, T, T, T, T, T, T, T]
 export type HitType = 'hit' | 'miss' | 'none'
@@ -9,6 +11,7 @@ export const useGameStore = defineStore('game', () => {
   const gameState = ref<GameState>('idle')
   const shipsConfirmed = ref(false)
   const shipLayout = ref<boolean[][]>([])
+  const shipArray = ref<Layout>([]) // the ships that are placed on the board, used for the layout of the ships
   const activePlayer = ref<'host' | 'client'>()
 
   const target = ref<{ x: number, y: number } | null>(null) // the coordinates of the target
@@ -19,14 +22,9 @@ export const useGameStore = defineStore('game', () => {
   const opponentBoard = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the opponent's board, where the player's attacks are recorded
 
   const router = useRouter()
-  function setShipLayout(layout: boolean[][]) {
-    shipLayout.value = layout
-  }
-
   const myTurn = computed(() => activePlayer.value === (isHost.value ? 'host' : 'client'))
 
   function switchTurn() {
-    if (gameState.value !== 'active') return
     if (!activePlayer.value) return
     // set to the opposite player
     if (activePlayer.value === 'host') {
@@ -91,7 +89,7 @@ export const useGameStore = defineStore('game', () => {
     myTurn,
     shipsConfirmed,
     activePlayer,
-    setShipLayout,
+    shipLayout,
     activeAttack,
     switchTurn,
     setHitStateForOpponent,
@@ -100,6 +98,7 @@ export const useGameStore = defineStore('game', () => {
     opponentBoard,
     target,
     enemyTarget,
+    shipArray,
     $reset,
   }
 })
