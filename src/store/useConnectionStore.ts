@@ -31,6 +31,7 @@ export const useConnectionStore = defineStore('connection', () => {
 
   // Update the onmessage to parse and trigger event handlers.
   dataChannel.onmessage = (event) => {
+    // Check if the message is a JSON string and parse it
     try {
       const gameEvent: GameEvent = JSON.parse(event.data)
       eventListeners.forEach(callback => callback(gameEvent))
