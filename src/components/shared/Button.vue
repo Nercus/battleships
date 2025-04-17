@@ -1,6 +1,6 @@
 <template>
   <motion.button
-    :class="button(props, $attrs.class as string | undefined)" :while-hover="{ scale: 1.01 }"
+    :class="button(props, $attrs.class as string | undefined)"
     :while-press="{ scale: 0.95 }">
     <slot />
   </motion.button>
