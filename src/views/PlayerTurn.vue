@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-row items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoard" title="Your attacks (Double click to shoot!)" @shoot="onShoot" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoard" title="Your turn (Double click to shoot!)" @shoot="onShoot" />
     </div>
     <div class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative">
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoard" title="Opponent's attacks" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoard" title="" />
     </div>
   </div>
 </template>

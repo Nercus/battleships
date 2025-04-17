@@ -2,9 +2,9 @@
   <div class="flex flex-row items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)] pointer-events-none" />
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoard" title="Opponent's attacks" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoard" title="Opponent's turn" />
     </div>
-    <GameGridHitLayer class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative" :board="opponentBoard" title="Your attacks" />
+    <GameGridHitLayer class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative" :board="opponentBoard" title="" />
   </div>
 </template>
 
