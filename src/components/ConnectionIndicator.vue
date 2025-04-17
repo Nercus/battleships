@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-2 left-2 z-50">
+  <div v-if="isGameStarted">
     <Transition name="rotate" mode="out-in">
       <div v-if="connected" class="bg-success text-white size-6 p-0.5 rounded-full">
         <Icon
@@ -15,6 +15,12 @@
 
 <script setup lang="ts">
 const { connected } = storeToRefs(useConnectionStore())
+
+const gameStore = useGameStore()
+const { gameState } = storeToRefs(gameStore)
+const isGameStarted = computed(() => {
+  return gameState.value !== 'idle'
+})
 </script>
 
 <style>

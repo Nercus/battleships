@@ -8,6 +8,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AlertDialogAction: typeof import('reka-ui')['AlertDialogAction']
+    AlertDialogCancel: typeof import('reka-ui')['AlertDialogCancel']
+    AlertDialogContent: typeof import('reka-ui')['AlertDialogContent']
+    AlertDialogDescription: typeof import('reka-ui')['AlertDialogDescription']
+    AlertDialogOverlay: typeof import('reka-ui')['AlertDialogOverlay']
+    AlertDialogPortal: typeof import('reka-ui')['AlertDialogPortal']
+    AlertDialogRoot: typeof import('reka-ui')['AlertDialogRoot']
+    AlertDialogTitle: typeof import('reka-ui')['AlertDialogTitle']
+    AlertDialogTrigger: typeof import('reka-ui')['AlertDialogTrigger']
     Button: typeof import('./../components/shared/Button.vue')['default']
     CoinFlip: typeof import('./../views/CoinFlip.vue')['default']
     ConnectionIndicator: typeof import('./../components/ConnectionIndicator.vue')['default']
@@ -20,6 +29,8 @@ declare module 'vue' {
     Join: typeof import('./../views/Join.vue')['default']
     OpponentTurn: typeof import('./../views/OpponentTurn.vue')['default']
     PlayerTurn: typeof import('./../views/PlayerTurn.vue')['default']
+    ResetGame: typeof import('./../components/ResetGame.vue')['default']
+    ResetGamePopup: typeof import('./../components/ResetGamePopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Separator: typeof import('reka-ui')['Separator']
@@ -27,5 +38,6 @@ declare module 'vue' {
     SimpleSeparator: typeof import('./../components/shared/SimpleSeparator.vue')['default']
     Start: typeof import('./../views/Start.vue')['default']
     Textarea: typeof import('./../components/shared/Textarea.vue')['default']
+    Toolbar: typeof import('./../components/Toolbar.vue')['default']
   }
 }
