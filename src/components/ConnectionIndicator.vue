@@ -21,6 +21,32 @@ const { gameState } = storeToRefs(gameStore)
 const isGameStarted = computed(() => {
   return gameState.value !== 'idle'
 })
+
+const router = useRouter()
+const route = useRoute()
+
+const currentRouteNeedsConnection = computed(() => {
+  return route.meta.requiresConnection
+})
+
+watch(connected, (val) => {
+  if (val) {
+    push.success({
+      title: 'Connected',
+      message: 'You are now connected.',
+      duration: 5000,
+    })
+    router.push({ name: 'Setup' })
+  }
+  if (!val && currentRouteNeedsConnection.value) {
+    push.error({
+      title: 'Disconnected',
+      message: 'You have been disconnected.',
+      duration: 5000,
+    })
+    router.push({ name: 'Start Game' })
+  }
+}, { immediate: true })
 </script>
 
 <style>

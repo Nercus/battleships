@@ -13,26 +13,6 @@ import { Notification, Notivue } from 'notivue'
 import { RouterView } from 'vue-router'
 
 const { connected } = storeToRefs(useConnectionStore())
-const router = useRouter()
-
-watch(connected, (val, oldVal) => {
-  if (val) {
-    push.success({
-      title: 'Connected',
-      message: 'You are now connected.',
-      duration: 5000,
-    })
-    router.push({ name: 'Setup' })
-  }
-  if (!val && !!oldVal) {
-    push.error({
-      title: 'Disconnected',
-      message: 'You have been disconnected.',
-      duration: 5000,
-    })
-    router.push({ name: 'Start Game' })
-  }
-}, { immediate: true })
 
 window.addEventListener('beforeunload', (event) => {
   if (import.meta.env.MODE === 'development') return
@@ -54,8 +34,8 @@ const showWarningDebounced = useDebounceFn(showWarning, 200, {
 })
 
 document.addEventListener('keydown', (event) => {
-  if (import.meta.env.MODE === 'development') return
-  if (!connected) return
+if (import.meta.env.MODE === 'development') return
+  if (!connected.value) return
   if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
     event.preventDefault()
     showWarningDebounced()

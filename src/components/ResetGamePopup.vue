@@ -36,19 +36,30 @@ import Button from '../components/shared/Button.vue'
 const router = useRouter()
 
 const gameStore = useGameStore()
+const {connected} = storeToRefs(useConnectionStore())
 const { gameState } = storeToRefs(gameStore)
 const isGameStarted = computed(() => {
   return gameState.value !== 'idle'
 })
 
 function handleAction() {
+  if (!connected.value) {
+    push.error({
+      title: 'Disconnected',
+      message: 'You have been disconnected.',
+      duration: 5000,
+    })
+    router.push({ name: 'Start Game' })
+    return
+  }
   gameStore.$reset()
-  useConnectionStore().$reset()
-  router.push({ name: 'Start Game' })
   push.success({
     title: 'Game exited',
     message: 'You have exited the game.',
     duration: 5000,
+  })
+  router.push({
+    name: 'Setup'
   })
 }
 </script>
