@@ -4,10 +4,7 @@ export default antfu({
   rules: {
     'antfu/if-newline': 'off',
     'node/prefer-global/process': 'off',
-    'perfectionist/sort-objects': ['error', {
-      ignoreCase: true,
-      order: 'asc',
-    }],
+    'perfectionist/sort-objects': ['error'],
     'vue/block-order': ['error', {
       order: ['template', 'script', 'style'],
     }],
