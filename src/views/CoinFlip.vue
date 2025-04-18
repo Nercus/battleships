@@ -69,25 +69,41 @@ onUnmounted(() => {
 
 <style>
 @-webkit-keyframes flipHeads {
-  from { -webkit-transform: rotateY(0); -moz-transform: rotateY(0); transform: rotateY(0); }
-  to { -webkit-transform: rotateY(1800deg); -moz-transform: rotateY(1800deg); transform: rotateY(1800deg); }
+  from {
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+    transform: rotateY(0);
+  }
+  to {
+    -webkit-transform: rotateY(1800deg);
+    -moz-transform: rotateY(1800deg);
+    transform: rotateY(1800deg);
+  }
 }
 @-webkit-keyframes flipTails {
-  from { -webkit-transform: rotateY(0); -moz-transform: rotateY(0); transform: rotateY(0); }
-  to { -webkit-transform: rotateY(1980deg); -moz-transform: rotateY(1980deg); transform: rotateY(1980deg); }
+  from {
+    -webkit-transform: rotateY(0);
+    -moz-transform: rotateY(0);
+    transform: rotateY(0);
+  }
+  to {
+    -webkit-transform: rotateY(1980deg);
+    -moz-transform: rotateY(1980deg);
+    transform: rotateY(1980deg);
+  }
 }
 
 .heads {
   -webkit-animation: flipHeads 3s ease-out forwards;
   -moz-animation: flipHeads 3s ease-out forwards;
-    -o-animation: flipHeads 3s ease-out forwards;
-       animation: flipHeads 3s ease-out forwards;
+  -o-animation: flipHeads 3s ease-out forwards;
+  animation: flipHeads 3s ease-out forwards;
 }
 .tails {
   -webkit-animation: flipTails 3s ease-out forwards;
   -moz-animation: flipTails 3s ease-out forwards;
-    -o-animation: flipTails 3s ease-out forwards;
-       animation: flipTails 3s ease-out forwards;
+  -o-animation: flipTails 3s ease-out forwards;
+  animation: flipTails 3s ease-out forwards;
 }
 .coin {
   transition: -webkit-transform 1s ease-in;

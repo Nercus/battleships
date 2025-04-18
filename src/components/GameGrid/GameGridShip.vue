@@ -33,6 +33,6 @@ function setRotation() {
   border-radius: 53% 47% 38% 39% / 85% 88% 10% 10%;
 }
 .ship-border-horizontal {
-  border-radius:  95% 11% 12% 83% / 49% 43% 55% 51%;
+  border-radius: 95% 11% 12% 83% / 49% 43% 55% 51%;
 }
 </style>

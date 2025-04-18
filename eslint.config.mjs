@@ -1,6 +1,7 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
+  formatters: true,
   rules: {
     'antfu/if-newline': 'off',
     'node/prefer-global/process': 'off',
