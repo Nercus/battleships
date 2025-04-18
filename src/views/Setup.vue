@@ -20,11 +20,10 @@
 </template>
 
 <script setup lang="ts">
-const { shipsConfirmed } = storeToRefs(useGameStore())
-
 const router = useRouter()
-const { eventBus, sendEvent } = useConnectionStore()
+const { eventBus, sendEvent } = useConnection()
 const otherPlayerReady = ref(false)
+const shipsConfirmed = ref(false)
 
 watch(shipsConfirmed, (newValue) => {
   if (newValue !== undefined) {

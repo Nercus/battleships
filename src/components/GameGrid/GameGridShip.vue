@@ -17,9 +17,12 @@ const props = defineProps({
     type: Object,
   },
 })
+
 const emit = defineEmits(['turnElement'])
-const { isHost } = storeToRefs(useConnectionStore())
-const { gameState } = storeToRefs(useGameStore())
+
+const { gameState } = useGame()
+const { isHost } = useWebRTC()
+
 const rawRotation = ref(0)
 const rotation = refDefault(rawRotation, props.item.w === 1 ? 0 : 90)
 

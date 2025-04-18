@@ -26,7 +26,7 @@ const { copied, copy, isSupported } = useClipboard({
   legacy: true,
 })
 const jsonCompressor = useJsonCompressor()
-const connectionStore = useConnectionStore()
+const connectionStore = useConnection()
 const webRTC = useWebRTC()
 const confirmationCode = ref('')
 const waitingForCode = ref(false)

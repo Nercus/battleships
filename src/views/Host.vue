@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 const jsonCompressor = useJsonCompressor()
-const connectionStore = useConnectionStore()
+const connectionStore = useConnection()
 const webRTC = useWebRTC()
 const { copied, copy, isSupported } = useClipboard({
   legacy: true,

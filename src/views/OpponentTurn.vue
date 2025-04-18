@@ -2,16 +2,16 @@
   <div class="flex flex-row items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)] pointer-events-none" />
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoard" title="Opponent's turn" board-type="player" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoardHitStates" title="Opponent's turn" board-type="player" />
     </div>
-    <GameGridHitLayer class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative" :board="opponentBoard" title="" />
+    <GameGridHitLayer class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative" :board="opponentBoardHitStates" title="" />
   </div>
 </template>
 
 <script setup lang="ts">
-const { enemyTarget, opponentBoard, playerBoard } = storeToRefs(useGameStore())
-const { getHitStateForAttack, switchTurn } = useGameStore()
-const { eventBus, sendEvent } = useConnectionStore()
+const { opponentBoardHitStates, opponentTarget, playerBoardHitStates } = useGame()
+const { getHitStateForAttack, switchTurn } = useGame()
+const { eventBus, sendEvent } = useConnection()
 
 let removeListener: () => void
 
@@ -21,7 +21,7 @@ onMounted(() => {
       const { x, y } = event.data
       const isHit = getHitStateForAttack(x, y)
       sendEvent({ data: !!isHit, type: 'attack-response' })
-      enemyTarget.value = null
+      opponentTarget.value = null
     }
     else if (event.type === 'acknowledge') {
       setTimeout(() => {
@@ -30,7 +30,7 @@ onMounted(() => {
     }
     else if (event.type === 'target') {
       const { x, y } = event.data
-      enemyTarget.value = { x, y }
+      opponentTarget.value = { x, y }
     }
   })
 })

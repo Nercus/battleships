@@ -12,7 +12,7 @@
 import { Notification, Notivue } from 'notivue'
 import { RouterView } from 'vue-router'
 
-const { connected } = storeToRefs(useConnectionStore())
+const { connected } = useConnection()
 
 window.addEventListener('beforeunload', (event) => {
   if (import.meta.env.MODE === 'development') return

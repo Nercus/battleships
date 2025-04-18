@@ -8,11 +8,9 @@ type GameEvent =
   | { type: 'target', data: { x: number, y: number } } // used to send the target coordinates to the opponent
 
 const eventBus = useEventBus<GameEvent>('game-event')
-export const useConnectionStore = defineStore('connection', () => {
-  const webRTC = useWebRTC()
-  const connected = ref(false)
-  const isHost = ref(false)
-
+const webRTC = useWebRTC()
+const connected = ref(false)
+export function useConnection() {
   function sendEvent(event: GameEvent) {
     webRTC.sendMessage(JSON.stringify(event))
   }
@@ -40,25 +38,21 @@ export const useConnectionStore = defineStore('connection', () => {
     connected.value = false
   }
 
-  function $reset() {
+  function reset() {
     webRTC.closePeer()
     connected.value = false
-    isHost.value = false
   }
 
   function initConnection(host: boolean) {
-    isHost.value = host
     webRTC.createPeer(host)
   }
 
-  const a = {
-    $reset,
+  return {
     closeConnection,
     connected,
     eventBus,
     initConnection,
-    isHost,
+    reset,
     sendEvent,
   }
-  return a
-})
+}

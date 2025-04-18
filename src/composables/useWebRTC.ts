@@ -10,10 +10,8 @@ const dataBus = useEventBus<any>('data')
 const errorBus = useEventBus<Error>('error')
 
 export function useWebRTC() {
-  function createPeer(isHostValue?: boolean) {
-    if (isHostValue !== undefined && isHostValue !== null) {
-      isHost.value = isHostValue
-    }
+  function createPeer(isHostValue: boolean) {
+    isHost.value = isHostValue
     if (isHost.value === null) {
       console.error('isHost must be set before initializing peer')
       return

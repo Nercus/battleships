@@ -21,11 +21,13 @@
 </template>
 
 <script setup lang="ts">
-const gameStore = useGameStore()
-const { activePlayer } = storeToRefs(gameStore)
-const { eventBus, isHost, sendEvent } = useConnectionStore()
+const { playersTurn, switchTurn } = useGame()
+const { eventBus, sendEvent } = useConnection()
+const { isHost } = useWebRTC()
 const isHeads = ref(false)
 const isTails = ref(false)
+
+// the host will always be heads, the client will always be tails
 
 function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
   let result = Math.random() >= 0.5 ? 'heads' : 'tails' as 'heads' | 'tails'
@@ -43,8 +45,10 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
     }
   }, 100)
   setTimeout(() => {
-    activePlayer.value = result !== 'heads' ? 'host' : 'client'
-    gameStore.switchTurn()
+    // set init active player
+    const wonCoinFlip = result === 'heads' ? isHost.value : !isHost.value
+    playersTurn.value = !wonCoinFlip // set the losing player to the active player, so the winning player can start the game
+    switchTurn()
   }, 5000)
   return result
 }

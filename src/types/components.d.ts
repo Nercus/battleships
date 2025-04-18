@@ -37,7 +37,6 @@ declare module 'vue' {
     Setup: typeof import('./../views/Setup.vue')['default']
     SimpleSeparator: typeof import('./../components/shared/SimpleSeparator.vue')['default']
     Start: typeof import('./../views/Start.vue')['default']
-    Test: typeof import('./../views/Test.vue')['default']
     Textarea: typeof import('./../components/shared/Textarea.vue')['default']
     Toolbar: typeof import('./../components/Toolbar.vue')['default']
   }

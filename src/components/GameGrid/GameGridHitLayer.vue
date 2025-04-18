@@ -10,20 +10,18 @@
 </template>
 
 <script setup lang="ts">
-import type { Board, HitType } from '../../store/useGameStore'
+import type { Board, HitType } from '../../composables/useGame'
 
 const props = defineProps<{
   board: Board
   title: string
   boardType?: 'opponent' | 'player'
 }>()
-
 const emit = defineEmits<{
   (e: 'shoot', x: number, y: number): void
 }>()
-
-const { sendEvent } = useConnectionStore()
-const { target } = storeToRefs(useGameStore())
+const { playerTarget } = useGame()
+const { sendEvent } = useConnection()
 
 const flatBoard = computed(() => {
   return props.board.flat()
@@ -33,16 +31,16 @@ function setTarget(hitType: HitType, index: number) {
   if (hitType !== 'none') return
   const x = Math.floor(index / 10)
   const y = index % 10
-  target.value = { x, y }
+  playerTarget.value = { x, y }
   sendEvent({ data: { x, y }, type: 'target' })
 }
 
 function onDoubleClick(hitType: HitType, index: number) {
   if (hitType !== 'none') return
-  if (!target.value) return
+  if (!playerTarget.value) return
   const x = Math.floor(index / 10)
   const y = index % 10
-  if (target.value.x !== x || target.value.y !== y) return
+  if (playerTarget.value.x !== x || playerTarget.value.y !== y) return
   emit('shoot', x, y)
 }
 </script>

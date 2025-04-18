@@ -22,21 +22,13 @@
 <script setup lang="ts">
 import type { Layout } from 'grid-layout-plus'
 import { GridLayout } from 'grid-layout-plus'
+import { AVAILABLE_SHIPS } from '../../composables/useGame'
 
 const shipGrid = useTemplateRef('shipGrid')
-const gameStore = useGameStore()
-const { gameState, shipArray, shipLayout, shipsConfirmed } = storeToRefs(gameStore)
+const { boardHitMap, gameState, shipLayout } = useGame()
 const route = useRoute()
 
 const layout = ref<Layout>([])
-
-const AVAILABLE_SHIPS = [
-  { name: 'Carrier', size: 5 },
-  { name: 'Battleship', size: 4 },
-  { name: 'Cruiser', size: 3 },
-  { name: 'Submarine', size: 3 },
-  { name: 'Destroyer', size: 2 },
-]
 
 function isOverlapping(layout: Layout, x: number, y: number, w: number, h: number) {
   for (const el of layout) {
@@ -49,7 +41,7 @@ function isOverlapping(layout: Layout, x: number, y: number, w: number, h: numbe
 
 function initLayout() {
   if (gameState.value !== 'setup') {
-    layout.value = shipArray.value
+    layout.value = shipLayout.value
     return
   }
 
@@ -149,7 +141,7 @@ function getRowHeight() {
   return rowHeight - 1
 }
 
-watch(() => gameState.value === 'setup' && !shipsConfirmed.value, (newValue) => {
+watch(() => gameState.value === 'setup', (newValue) => {
   layout.value.forEach((el) => {
     el.static = !newValue
   })
@@ -157,20 +149,18 @@ watch(() => gameState.value === 'setup' && !shipsConfirmed.value, (newValue) => 
 
 const shipsPositionsActive = ref(false)
 watchEffect(() => {
-  if (!shipsConfirmed.value) return
   if (route.name !== 'Setup') return
+  // reset the ship layout if the game is not in setup mode
   // convert the layout to a 2d array with 10 rows and 10 columns and true for cells that are occupied by a ship
-  const grid = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill(false)) as boolean[][]
   layout.value.forEach((el) => {
     for (let i = el.x; i < el.x + el.w; i++) {
       for (let j = el.y; j < el.y + el.h; j++) {
-        grid[j][i] = true
+        boardHitMap.value[j][i] = el.i as typeof AVAILABLE_SHIPS[number]['name']
         shipsPositionsActive.value = true
       }
     }
   })
-  shipArray.value = layout.value
-  shipLayout.value = grid
+  shipLayout.value = layout.value
 })
 </script>
 

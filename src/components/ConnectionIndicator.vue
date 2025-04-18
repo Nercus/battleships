@@ -14,10 +14,9 @@
 </template>
 
 <script setup lang="ts">
-const { connected } = storeToRefs(useConnectionStore())
+const { connected } = useConnection()
 
-const gameStore = useGameStore()
-const { gameState } = storeToRefs(gameStore)
+const { gameState } = useGame()
 const isGameStarted = computed(() => {
   return gameState.value !== 'idle'
 })

@@ -4,8 +4,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 export const routes: RouteRecordRaw[] = [
   {
     beforeEnter: () => {
-      useGameStore().$reset()
-      useConnectionStore().$reset()
+      useGame().reset()
+      useConnection().reset()
     },
     component: () => import('../views/Start.vue'),
     name: 'Start Game',
@@ -13,8 +13,8 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     beforeEnter: () => {
-      useGameStore().$reset()
-      useConnectionStore().$reset()
+      useGame().reset()
+      useConnection().reset()
     },
     component: () => import('../views/Host.vue'),
     name: 'Host',
@@ -22,8 +22,8 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     beforeEnter: () => {
-      useGameStore().$reset()
-      useConnectionStore().$reset()
+      useGame().reset()
+      useConnection().reset()
     },
     component: () => import('../views/Join.vue'),
     name: 'Join',
@@ -31,7 +31,7 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     beforeEnter: () => {
-      const { gameState } = storeToRefs(useGameStore())
+      const { gameState } = useGame()
       gameState.value = 'setup'
       return gameState.value === 'setup'
     },
@@ -44,7 +44,7 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     beforeEnter: () => {
-      const { gameState } = storeToRefs(useGameStore())
+      const { gameState } = useGame()
       gameState.value = 'coin-flip'
       return gameState.value === 'coin-flip'
     },
@@ -54,14 +54,14 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     beforeEnter: () => {
-      const { gameState, myTurn } = storeToRefs(useGameStore())
+      const { gameState, playersTurn } = useGame()
       gameState.value = 'active'
-      if (!myTurn.value) {
+      if (!playersTurn.value) {
         console.warn('Redirecting to opponent\'s turn')
         // Redirect to the opponent's turn if it's not the player's turn
         return { name: 'Opponent\'s Turn' }
       }
-      return myTurn.value
+      return playersTurn.value
     },
     component: () => import('../views/PlayerTurn.vue'),
     meta: {
@@ -72,14 +72,14 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     beforeEnter: () => {
-      const { gameState, myTurn } = storeToRefs(useGameStore())
+      const { gameState, playersTurn } = useGame()
       gameState.value = 'active'
-      if (myTurn.value) {
+      if (playersTurn.value) {
         // Redirect to the player's turn if it's the player's turn
         console.warn('Redirecting to player\'s turn')
         return { name: 'Player\'s Turn' }
       }
-      return !myTurn.value
+      return !playersTurn.value
     },
     component: () => import('../views/OpponentTurn.vue'),
     meta: {
