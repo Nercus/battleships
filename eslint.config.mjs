@@ -4,6 +4,7 @@ export default antfu({
   formatters: true,
   rules: {
     'antfu/if-newline': 'off',
+    'format/prettier': ['off'],
     'node/prefer-global/process': 'off',
     'perfectionist/sort-objects': ['error'],
     'vue/block-order': ['error', {

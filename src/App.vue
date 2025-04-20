@@ -2,8 +2,12 @@
   <Notivue v-slot="item">
     <Notification :item="item" />
   </Notivue>
-  <div class="w-dvw h-dvh bg-base-100 overflow-hidden flex flex-col items-center justify-center">
-    <RouterView />
+  <div class="size-full flex flex-col items-center justify-center">
+    <RouterView v-slot="{ Component, route }">
+      <transition :name="(route.meta.transition as string) || 'fade'" mode="out-in">
+        <component :is="Component" class="overflow-hidden" />
+      </transition>
+    </RouterView>
   </div>
   <Toolbar />
 </template>
@@ -46,3 +50,65 @@ document.addEventListener('keydown', (event) => {
   }
 })
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-right-enter-to {
+  position: absolute;
+  right: 0;
+}
+
+.slide-right-enter-from {
+  position: absolute;
+  right: -100%;
+}
+
+.slide-right-leave-to {
+  position: absolute;
+  left: -100%;
+}
+
+.slide-right-leave-from {
+  position: absolute;
+  left: 0;
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-left-enter-to {
+  position: absolute;
+  left: 0;
+}
+
+.slide-left-enter-from {
+  position: absolute;
+  left: -100%;
+}
+
+.slide-left-leave-to {
+  position: absolute;
+  right: -100%;
+}
+
+.slide-left-leave-from {
+  position: absolute;
+  right: 0;
+}
+</style>
