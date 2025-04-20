@@ -52,9 +52,10 @@ export function useGame() {
     if (!opponentTarget.value) return
     const { x: targetX, y: targetY } = opponentTarget.value
     if (x === targetX && y === targetY) {
-      opponentBoardHitStates.value[x][y] = 'hit'
+      const hitState = boardHitMap.value[x][y]
+      opponentBoardHitStates.value[x][y] = hitState ? 'hit' : 'miss'
       opponentTarget.value = null
-      return true
+      return hitState
     }
   }
 

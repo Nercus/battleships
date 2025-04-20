@@ -10,28 +10,29 @@ type GameEvent =
 const eventBus = useEventBus<GameEvent>('game-event')
 const webRTC = useWebRTC()
 const connected = ref(false)
+
+webRTC.dataBus.on((data: string) => {
+  try {
+    const gameEvent: GameEvent = JSON.parse(data)
+    eventBus.emit(gameEvent)
+  }
+  catch (error) {
+    console.error('Error parsing message:', error)
+  }
+})
+
+webRTC.connectBus.on(() => {
+  connected.value = true
+})
+
+webRTC.closeBus.on(() => {
+  connected.value = false
+})
+
 export function useConnection() {
   function sendEvent(event: GameEvent) {
     webRTC.sendMessage(JSON.stringify(event))
   }
-
-  webRTC.dataBus.on((data: string) => {
-    try {
-      const gameEvent: GameEvent = JSON.parse(data)
-      eventBus.emit(gameEvent)
-    }
-    catch (error) {
-      console.error('Error parsing message:', error)
-    }
-  })
-
-  webRTC.connectBus.on(() => {
-    connected.value = true
-  })
-
-  webRTC.closeBus.on(() => {
-    connected.value = false
-  })
 
   async function closeConnection() {
     webRTC.closePeer()

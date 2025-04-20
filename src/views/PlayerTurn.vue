@@ -13,8 +13,7 @@
 <script setup lang="ts">
 const { opponentBoardHitStates, playerBoardHitStates, playerTarget } = useGame()
 const { setHitStateForOpponent, switchTurn } = useGame()
-const { eventBus } = useConnection()
-const { sendEvent } = useConnection()
+const { eventBus, sendEvent } = useConnection()
 
 let removeListener: () => void
 
