@@ -128,6 +128,10 @@ export function useGame() {
     shipLayout.value = []
     playerBoardHitStates.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
     opponentBoardHitStates.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
+
+    destroyedShips.value = []
+    playerColor.value = null
+    opponentColor.value = null
   }
 
   function isOverlapping(layout: Layout, x: number, y: number, w: number, h: number) {
