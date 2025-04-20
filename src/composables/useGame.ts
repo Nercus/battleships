@@ -8,6 +8,19 @@ export const AVAILABLE_SHIPS = [
   { name: 'destroyer', size: 2 },
 ] as const
 
+export const AVAILABLE_COLORS = [
+  'orange',
+  'yellow',
+  'green',
+  'emerald',
+  'teal',
+  'blue',
+  'indigo',
+  'violet',
+  'rose',
+] as const
+export type Color = typeof AVAILABLE_COLORS[number]
+
 export type Length10Array<T> = [T, T, T, T, T, T, T, T, T, T]
 export type HitType = 'hit' | 'miss' | 'none'
 export type Board = Length10Array<Length10Array<HitType>>
@@ -15,6 +28,9 @@ export type Board = Length10Array<Length10Array<HitType>>
 const gameState = ref<'idle' | 'setup' | 'coin-flip' | 'active'>('idle')
 const boardHitMap = ref<Length10Array<Length10Array<typeof AVAILABLE_SHIPS[number]['name'] | false>>>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill(false)) as Length10Array<Length10Array<false>>)
 const shipLayout = ref<Layout>([])
+
+const playerColor = ref<Color | null>(null)
+const opponentColor = ref<Color | null>(null)
 
 const playersTurn = ref<boolean>(false) // the player whose turn it is
 const isTurnPending = ref<boolean>(false) // indicates if the player's turn is pending information exchange to switch the turnplayerTarget = ref<{ x: number, y: number } | null>(null) // the coordinates of the target
@@ -77,8 +93,10 @@ export function useGame() {
     getHitStateForAttack,
     isTurnPending,
     opponentBoardHitStates,
+    opponentColor,
     opponentTarget,
     playerBoardHitStates,
+    playerColor,
     playersTurn,
     playerTarget,
     reset,

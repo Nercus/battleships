@@ -1,3 +1,5 @@
+import type { Color } from './useGame'
+
 type GameEvent =
   | { type: 'ready', data: boolean }
   | { type: 'coin-flip', data: { hostSide: 'heads' | 'tails' } }
@@ -6,6 +8,7 @@ type GameEvent =
   | { type: 'attack-response', data: boolean } // returns true if the attack hit, false if it missed
   | { type: 'acknowledge' } // used to acknowledge the receipt of a message
   | { type: 'target', data: { x: number, y: number } } // used to send the target coordinates to the opponent
+  | { type: 'color', data: Color }
 
 const eventBus = useEventBus<GameEvent>('game-event')
 const webRTC = useWebRTC()

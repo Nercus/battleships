@@ -16,6 +16,16 @@
   --color-error: #d04e4e;
   --color-warning: #d0ba49;
 
+  --color-distinct-1: #CE9C4F;
+  --color-distinct-2: #B5CE4F;
+  --color-distinct-3: #69CE4F;
+  --color-distinct-4: #4FCE82;
+  --color-distinct-5: #4FCECE;
+  --color-distinct-6: #4F82CE;
+  --color-distinct-7: #694FCE;
+  --color-distinct-8: #B54FCE;
+  --color-distinct-9: #CE4F9C;
+
   --radius-blob: 86% 14% 62% 38% / 62% 57% 43% 38%;
 }
 

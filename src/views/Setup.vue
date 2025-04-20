@@ -5,7 +5,8 @@
       <GameGridLabels horizontal />
       <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
     </div>
-    <Button :type="shipsConfirmed ? 'ghost' : 'success'" @click="confirmSelection">
+    <ColorSelectMenu />
+    <Button :type="shipsConfirmed ? 'ghost' : 'success'" :disabled="!playerColor" @click="confirmSelection">
       <span v-if="shipsConfirmed && !otherPlayerReady" class="flex items-center gap-2">
         Waiting for other player...
         <Icon class="fluent--spinner-ios-20-filled animate-spin h-4 w-4" />
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 const router = useRouter()
 const { eventBus, sendEvent } = useConnection()
+const { playerColor } = useGame()
 const otherPlayerReady = ref(false)
 const shipsConfirmed = ref(false)
 
