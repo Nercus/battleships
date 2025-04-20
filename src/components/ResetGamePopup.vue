@@ -35,7 +35,7 @@ import Button from '../components/shared/Button.vue'
 
 const router = useRouter()
 
-const { gameState, reset } = useGame()
+const { gameState } = useGame()
 const { connected } = useConnection()
 
 const isGameStarted = computed(() => {
@@ -50,16 +50,15 @@ function handleAction() {
       title: 'Disconnected',
     })
     router.push({ name: 'Start Game' })
-    return
   }
-  reset()
-  push.success({
-    duration: 5000,
-    message: 'You have exited the game.',
-    title: 'Game exited',
-  })
-  router.push({
-    name: 'Setup',
-  })
+  // reset()
+  // push.success({
+  //   duration: 5000,
+  //   message: 'You have exited the game.',
+  //   title: 'Game exited',
+  // })
+  // router.push({
+  //   name: 'Setup',
+  // })
 }
 </script>
