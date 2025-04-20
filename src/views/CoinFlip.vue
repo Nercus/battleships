@@ -55,7 +55,7 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
 
 let removeListener: () => void
 onMounted(() => {
-  if (isHost) {
+  if (isHost.value) {
     const flipResult = flipCoin()
     sendEvent({ data: { hostSide: flipResult }, type: 'coin-flip' })
   }
