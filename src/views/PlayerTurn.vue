@@ -1,10 +1,11 @@
 <template>
   <div class="flex flex-row items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
+      <GameGridShipLayer v-model:layout="destroyedShips" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
       <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHitStates" title="Your turn (Double click to shoot!)" board-type="opponent" @shoot="onShoot" />
     </div>
-    <div class="pointer-events-none h-1/4 aspect-square background-grid opacity-70 relative">
-      <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
+    <div class="pointer-events-none h-1/5 aspect-square background-grid opacity-70 relative">
+      <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" :is-draggable="false" />
       <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoardHitStates" title="" />
     </div>
   </div>
@@ -12,7 +13,7 @@
 
 <script setup lang="ts">
 const { opponentBoardHitStates, playerBoardHitStates, playerTarget } = useGame()
-const { setHitStateForOpponent, switchTurn } = useGame()
+const { destroyedShips, opponentColor, playerColor, setHitStateForOpponent, shipLayout, switchTurn } = useGame()
 const { eventBus, sendEvent } = useConnection()
 
 let removeListener: () => void
@@ -26,6 +27,10 @@ onMounted(() => {
         switchTurn()
       }, 1000)
       sendEvent({ type: 'acknowledge' })
+    }
+    else if (event.type === 'ship-destroyed') {
+      // convert the received data back to a layout entry
+      destroyedShips.value.push(event.data)
     }
   })
 })

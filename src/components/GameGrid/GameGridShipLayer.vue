@@ -14,64 +14,27 @@
     :auto-size="false"
     @layout-updated="layoutUpdated">
     <template #item="{ item }">
-      <GameGridShip :item="item" @turn-element="turnElement(item.i)" />
+      <GameGridShip :item="item" :color="color" :disabled="!isDraggable" @turn-element="turnElement(item.i)" />
     </template>
   </GridLayout>
 </template>
 
 <script setup lang="ts">
 import type { Layout } from 'grid-layout-plus'
+import type { Color } from '../../composables/useGame'
 import { GridLayout } from 'grid-layout-plus'
-import { AVAILABLE_SHIPS } from '../../composables/useGame'
+
+const props = defineProps<{
+  color: Color | null
+  isDraggable: boolean
+}>()
+
+const layout = defineModel('layout', {
+  required: true,
+  type: Array as () => Layout,
+})
 
 const shipGrid = useTemplateRef('shipGrid')
-const { boardHitMap, gameState, shipLayout } = useGame()
-const route = useRoute()
-
-const layout = ref<Layout>([])
-
-function isOverlapping(layout: Layout, x: number, y: number, w: number, h: number) {
-  for (const el of layout) {
-    if (el.x < x + w && el.x + el.w > x && el.y < y + h && el.y + el.h > y) {
-      return true
-    }
-  }
-  return false
-}
-
-function initLayout() {
-  if (gameState.value !== 'setup') {
-    layout.value = shipLayout.value
-    return
-  }
-
-  const newLayout = [] as Layout
-
-  // Randomly place ships on the grid
-  for (const ship of AVAILABLE_SHIPS) {
-    let placed = false
-    while (!placed) {
-      const x = Math.floor(Math.random() * 10)
-      const y = Math.floor(Math.random() * 10)
-      const isHorizontal = Math.random() < 0.5
-      const w = isHorizontal ? ship.size : 1
-      const h = isHorizontal ? 1 : ship.size
-
-      // Check if the ship fits in the grid and doesn't overlap with existing ships
-      if (x + w <= 10 && y + h <= 10 && !isOverlapping(newLayout, x, y, w, h)) {
-        newLayout.push({ h, i: ship.name, isResizable: false, static: false, w, x, y })
-        placed = true
-      }
-    }
-  }
-
-  layout.value = newLayout as Layout
-}
-
-onMounted(() => {
-  // Initialize the layout with random ship positions
-  initLayout()
-})
 
 function layoutUpdated() {
   // every time a ship goes out of the 10x10 reset its position
@@ -141,27 +104,11 @@ function getRowHeight() {
   return rowHeight - 1
 }
 
-watch(() => gameState.value === 'setup', (newValue) => {
+watch(() => props.isDraggable, (newValue) => {
   layout.value.forEach((el) => {
     el.static = !newValue
   })
 }, { immediate: true })
-
-const shipsPositionsActive = ref(false)
-watchEffect(() => {
-  if (route.name !== 'Setup') return
-  // reset the ship layout if the game is not in setup mode
-  // convert the layout to a 2d array with 10 rows and 10 columns and true for cells that are occupied by a ship
-  layout.value.forEach((el) => {
-    for (let i = el.x; i < el.x + el.w; i++) {
-      for (let j = el.y; j < el.y + el.h; j++) {
-        boardHitMap.value[j][i] = el.i as typeof AVAILABLE_SHIPS[number]['name']
-        shipsPositionsActive.value = true
-      }
-    }
-  })
-  shipLayout.value = layout.value
-})
 </script>
 
 <style lang="css">

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full p-1 group relative">
-    <div :class="shipVariants({ flipped: rotation >= 180, orientation: props.item.w === 1 ? 'vertical' : 'horizontal', color: playerColor })">
-      <Button v-if="gameState === 'setup'" type="ghost" size="small" square @click="emit('turnElement', props.item.i); setRotation()">
+    <div :class="shipVariants({ flipped: rotation >= 180, orientation: props.item.w === 1 ? 'vertical' : 'horizontal', color })">
+      <Button v-if="!disabled" type="ghost" size="small" square @click="emit('turnElement', props.item.i); setRotation()">
         <Icon class="fluent--arrow-rotate-clockwise-16-filled " />
       </Button>
       <div />
@@ -10,18 +10,17 @@
 </template>
 
 <script setup lang="ts">
+import type { LayoutItem } from 'grid-layout-plus'
+import type { Color } from '../../composables/useGame'
 import { cva } from 'class-variance-authority'
 
-const props = defineProps({
-  item: {
-    required: true,
-    type: Object,
-  },
-})
+const props = defineProps<{
+  item: LayoutItem
+  color: Color | null
+  disabled: boolean
+}>()
 
 const emit = defineEmits(['turnElement'])
-
-const { gameState, playerColor } = useGame()
 
 const shipVariants = cva(
   'w-full backdrop-blur-sm border-2 h-full flex items-center justify-center shadow',

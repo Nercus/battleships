@@ -6,6 +6,7 @@
 // biome-ignore lint: disable
 export {}
 declare global {
+  const AVAILABLE_COLORS: typeof import('../composables/useGame')['AVAILABLE_COLORS']
   const AVAILABLE_SHIPS: typeof import('../composables/useGame')['AVAILABLE_SHIPS']
   const EffectScope: typeof import('vue')['EffectScope']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
@@ -321,6 +322,6 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { Length10Array, HitType, Board } from '../composables/useGame'
+  export type { Color, Length10Array, HitType, Board } from '../composables/useGame'
   import('../composables/useGame')
 }

@@ -3,7 +3,7 @@
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full" :class="{ 'pointer-events-none': shipsConfirmed }">
       <GameGridLabels vertical />
       <GameGridLabels horizontal />
-      <GameGridShipLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" />
+      <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" is-draggable />
     </div>
     <ColorSelectMenu />
     <Button :type="shipsConfirmed ? 'ghost' : 'success'" :disabled="!playerColor" @click="confirmSelection">
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 const router = useRouter()
 const { eventBus, sendEvent } = useConnection()
-const { playerColor } = useGame()
+const { getRandomLayout, playerColor, shipLayout } = useGame()
 const otherPlayerReady = ref(false)
 const shipsConfirmed = ref(false)
 
@@ -35,6 +35,8 @@ watch(shipsConfirmed, (newValue) => {
 
 let removeListener: () => void
 onMounted(() => {
+  // set a random layout here
+  shipLayout.value = getRandomLayout()
   removeListener = eventBus.on((event) => {
     if (event.type === 'ready') {
       otherPlayerReady.value = event.data

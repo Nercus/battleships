@@ -1,3 +1,4 @@
+import type { LayoutItem } from 'grid-layout-plus'
 import type { Color } from './useGame'
 
 type GameEvent =
@@ -9,6 +10,7 @@ type GameEvent =
   | { type: 'acknowledge' } // used to acknowledge the receipt of a message
   | { type: 'target', data: { x: number, y: number } } // used to send the target coordinates to the opponent
   | { type: 'color', data: Color }
+  | { type: 'ship-destroyed', data: LayoutItem } // used to notify the opponent that a ship has been destroyed and sends the coordinates of the ship
 
 const eventBus = useEventBus<GameEvent>('game-event')
 const webRTC = useWebRTC()
