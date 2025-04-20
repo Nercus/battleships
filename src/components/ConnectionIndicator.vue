@@ -24,10 +24,6 @@ const isGameStarted = computed(() => {
 const router = useRouter()
 const route = useRoute()
 
-const currentRouteNeedsConnection = computed(() => {
-  return route.meta.requiresConnection
-})
-
 watch(connected, (val) => {
   if (val) {
     push.success({
@@ -37,7 +33,7 @@ watch(connected, (val) => {
     })
     router.push({ name: 'Setup' })
   }
-  if (!val && currentRouteNeedsConnection.value) {
+  if (!val && route.meta.requiresConnection) {
     push.error({
       duration: 5000,
       message: 'You have been disconnected.',
