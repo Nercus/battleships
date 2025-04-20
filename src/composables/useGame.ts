@@ -53,7 +53,7 @@ export function useGame() {
     const { x: targetX, y: targetY } = opponentTarget.value
     if (x === targetX && y === targetY) {
       const hitState = boardHitMap.value[x][y]
-      opponentBoardHitStates.value[x][y] = hitState ? 'hit' : 'miss'
+      playerBoardHitStates.value[x][y] = hitState ? 'hit' : 'miss'
       opponentTarget.value = null
       return hitState
     }
