@@ -2,7 +2,7 @@
   <div class="flex flex-row items-center justify-center w-full h-full gap-4">
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
       <GameGridShipLayer v-model:layout="destroyedShips" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHitStates" title="Your turn (Double click to shoot!)" board-type="opponent" @shoot="onShoot" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHitStates" title="Your turn (Double click to shoot!)" board-type="opponent" :class="{ 'pointer-events-none': attackBlocked }" @shoot="onShoot" />
     </div>
     <div class="pointer-events-none h-1/5 aspect-square background-grid opacity-70 relative">
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" :is-draggable="false" />
@@ -16,8 +16,8 @@ const { opponentBoardHitStates, playerBoardHitStates, playerTarget } = useGame()
 const { destroyedShips, opponentColor, playerColor, setHitStateForOpponent, shipLayout, switchTurn } = useGame()
 const { eventBus, sendEvent } = useConnection()
 
+const attackBlocked = ref(false)
 let removeListener: () => void
-
 onMounted(() => {
   removeListener = eventBus.on((event) => {
     if (event.type === 'attack-response') {
@@ -25,6 +25,7 @@ onMounted(() => {
       if (!success) return
       setTimeout(() => {
         switchTurn()
+        attackBlocked.value = false
       }, 1000)
       sendEvent({ type: 'acknowledge' })
     }
@@ -40,9 +41,11 @@ onUnmounted(() => {
 })
 
 function onShoot(x: number, y: number) {
+  if (attackBlocked.value) return
   if (!playerTarget.value) return
   if (playerTarget.value.x !== x || playerTarget.value.y !== y) return
   sendEvent({ data: { x, y }, type: 'attack' })
+  attackBlocked.value = true
 }
 </script>
 
