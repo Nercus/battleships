@@ -17,6 +17,7 @@ declare module 'vue' {
     AlertDialogRoot: typeof import('reka-ui')['AlertDialogRoot']
     AlertDialogTitle: typeof import('reka-ui')['AlertDialogTitle']
     AlertDialogTrigger: typeof import('reka-ui')['AlertDialogTrigger']
+    AnimatedSeparator: typeof import('./../components/AnimatedSeparator.vue')['default']
     Button: typeof import('./../components/shared/Button.vue')['default']
     CoinFlip: typeof import('./../views/CoinFlip.vue')['default']
     ColorSelectMenu: typeof import('./../components/ColorSelectMenu.vue')['default']
