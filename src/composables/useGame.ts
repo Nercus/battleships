@@ -25,7 +25,7 @@ export type Length10Array<T> = [T, T, T, T, T, T, T, T, T, T]
 export type HitType = 'hit' | 'miss' | 'none'
 export type Board = Length10Array<Length10Array<HitType>>
 
-const gameState = ref<'idle' | 'setup' | 'coin-flip' | 'active'>('idle')
+const gameState = ref<'idle' | 'setup' | 'coin-flip' | 'active' | 'ended'>('idle')
 const shipLayout = ref<Layout>([])
 
 const playerColor = ref<Color | null>(null)
@@ -41,6 +41,7 @@ const playerBoardHitStates = ref<Board>(Array.from({ length: 10 }, () => Array.f
 const opponentBoardHitStates = ref<Board>(Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board) // the opponent's board, where the player's attacks are recorded
 
 const destroyedShips = ref<Layout>([])
+const lostShips = ref<Layout>([])
 
 const { sendEvent } = useConnection()
 export function useGame() {
@@ -103,6 +104,12 @@ export function useGame() {
       const destroyedShipLayoutItem = shipLayout.value.find(el => el.i === shipName)
       if (!destroyedShipLayoutItem) return // Ship layout item not found
       sendEvent({ data: destroyedShipLayoutItem, type: 'ship-destroyed' })
+      lostShips.value.push(destroyedShipLayoutItem)
+
+      if (lostShips.value.length === shipLayout.value.length) {
+        sendEvent({ type: 'game-over' })
+        gameState.value = 'ended'
+      }
     }
   }
 

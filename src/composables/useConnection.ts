@@ -11,6 +11,7 @@ type GameEvent =
   | { type: 'target', data: { x: number, y: number } } // used to send the target coordinates to the opponent
   | { type: 'color', data: Color }
   | { type: 'ship-destroyed', data: LayoutItem } // used to notify the opponent that a ship has been destroyed and sends the coordinates of the ship
+  | { type: 'game-over' } // notify the opponent that the game is over, because all the player's ships have been destroyed
 
 const eventBus = useEventBus<GameEvent>('game-event')
 const webRTC = useWebRTC()

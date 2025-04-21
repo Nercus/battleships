@@ -10,6 +10,7 @@
     </RouterView>
   </div>
   <Toolbar />
+  <GameEndPopup />
 </template>
 
 <script setup lang="ts">
