@@ -8,9 +8,6 @@ export const routes: RouteRecordRaw[] = [
       useConnection().reset()
     },
     component: () => import('../views/Start.vue'),
-    meta: {
-      transition: 'fade',
-    },
     name: 'Start Game',
     path: '/',
   },
@@ -20,9 +17,6 @@ export const routes: RouteRecordRaw[] = [
       useConnection().reset()
     },
     component: () => import('../views/Host.vue'),
-    meta: {
-      transition: 'fade',
-    },
     name: 'Host',
     path: '/host',
   },
@@ -32,9 +26,6 @@ export const routes: RouteRecordRaw[] = [
       useConnection().reset()
     },
     component: () => import('../views/Join.vue'),
-    meta: {
-      transition: 'fade',
-    },
     name: 'Join',
     path: '/join',
   },
@@ -47,7 +38,6 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../views/Setup.vue'),
     meta: {
       requiresConnection: true,
-      transition: 'fade',
     },
     name: 'Setup',
     path: '/setup',
@@ -76,7 +66,6 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../views/PlayerTurn.vue'),
     meta: {
       requiresConnection: true,
-      transition: 'slide-left',
     },
     name: 'Player\'s Turn',
     path: '/players-turn',
@@ -95,7 +84,6 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('../views/OpponentTurn.vue'),
     meta: {
       requiresConnection: true,
-      transition: 'slide-right',
     },
     name: 'Opponent\'s Turn',
     path: '/opponents-turn',
