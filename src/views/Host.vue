@@ -28,7 +28,8 @@
 </template>
 
 <script setup lang="ts">
-const jsonCompressor = useJsonCompressor()
+import * as spdCompact from 'sdp-compact'
+
 const connectionStore = useConnection()
 const webRTC = useWebRTC()
 const { copied, copy, isSupported } = useClipboard({
@@ -52,7 +53,7 @@ watch(copied, (newValue) => {
 onMounted(() => {
   connectionStore.initConnection(true)
   webRTC.signalBus.on((signal) => {
-    inviteCode.value = jsonCompressor.compress(signal)
+    inviteCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
     waitingForCode.value = false
   })
   waitingForCode.value = true
@@ -71,7 +72,7 @@ async function copyInviteLink() {
     return
   }
   const baseURL = window.location.origin
-  const link = `${baseURL}/#/join?code=${inviteCode.value}`
+  const link = `${baseURL}/#/join?code=${encodeURIComponent(inviteCode.value)}`
   inviteLink.value = link
   try {
     copy(link)
@@ -95,7 +96,7 @@ async function connectToClient() {
     return
   }
   try {
-    const decompressedCode = jsonCompressor.decompress(clientConfirmationCode.value) as RTCSessionDescriptionInit
+    const decompressedCode = spdCompact.decompact(clientConfirmationCode.value, { compress: true }) as RTCSessionDescriptionInit
     webRTC.sendSignal(decompressedCode)
   }
   catch (error) {

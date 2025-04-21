@@ -21,6 +21,7 @@
     "notivue": "^2.4.5",
     "pako": "^2.1.0",
     "reka-ui": "^2.2.0",
+    "sdp-compact": "^0.0.6",
     "simple-peer": "^9.11.1",
     "tailwind-merge": "^3.2.0",
     "vue": "^3.5.13",
