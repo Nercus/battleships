@@ -23,11 +23,17 @@ onMounted(() => {
     if (event.type === 'attack-response') {
       const success = setHitStateForOpponent(event.data) // sets the hit state where the player shot on the opponent's board
       if (!success) return
+      // if the attack was a hit then the player can shoot again, switch turn though when it's a miss
+      if (event.data) {
+        attackBlocked.value = false
+        return
+      }
+      // miss
       setTimeout(() => {
         switchTurn()
         attackBlocked.value = false
-      }, 1000)
-      sendEvent({ type: 'acknowledge' })
+      }, 500)
+      sendEvent({ type: 'acknowledge' }) // acknowledge the attack response so the opponent can switch turn
     }
     else if (event.type === 'ship-destroyed') {
       // convert the received data back to a layout entry

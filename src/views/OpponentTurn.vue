@@ -29,7 +29,7 @@ onMounted(() => {
     else if (event.type === 'acknowledge') {
       setTimeout(() => {
         switchTurn()
-      }, 1000)
+      }, 500)
     }
     else if (event.type === 'target') {
       const { x, y } = event.data
