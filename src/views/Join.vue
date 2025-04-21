@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-black tracking-wide">
       Join Game
     </h1>
-    <span>
+    <span class="text-center">
       {{ waitingForCode ? 'Waiting for confirmation code...' : 'Confirmation code generated!' }}
       Copy this confirmation code and send it to your host.
     </span>

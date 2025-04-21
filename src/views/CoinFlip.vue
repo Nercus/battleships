@@ -1,11 +1,11 @@
 <template>
   <div class="w-full h-full items-center justify-center flex flex-col relative">
     <div v-if="!waitingForCoinFlip" class="size-40 relative coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
-      <div class="bg-error rounded-full size-full absolute z-[100] backface-hidden flex items-center justify-center p-3 drop-shadow-2xl">
+      <div class="bg-error rounded-full size-full absolute z-[100] backface-hidden flex items-center justify-center p-3 drop-shadow-2xl outline-8 outline-offset-4 outline-error">
         <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
       </div>
-      <div class="bg-success rounded-full size-full absolute -rotate-y-180 backface-hidden flex items-center justify-center p-3 drop-shadow-2xl">
-        <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white" />
+      <div class="bg-success rounded-full size-full absolute -rotate-y-180 backface-hidden flex items-center justify-center p-3 drop-shadow-2xl outline-8 outline-offset-4 outline-success">
+        <Icon class="fluent--number-circle-7-16-regular w-full h-full text-white" />
       </div>
     </div>
     <div v-if="!waitingForCoinFlip" class="flex flex-row items-center justify-center mt-4 gap-2 opacity-70">
@@ -14,7 +14,7 @@
         <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
       </div>
       <div v-else class="bg-success rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
-        <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white " />
+        <Icon class="fluent--number-circle-7-16-regular w-full h-full text-white " />
       </div>
     </div>
     <Icon v-else class="fluent--spinner-ios-20-filled animate-spin size-40" />
