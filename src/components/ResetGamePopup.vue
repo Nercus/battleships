@@ -21,7 +21,7 @@
           </AlertDialogCancel>
           <AlertDialogAction
             :as="Button" type="error"
-            @click="handleAction">
+            @click="exitGame">
             Exit Game
           </AlertDialogAction>
         </div>
@@ -41,7 +41,7 @@ const isGameStarted = computed(() => {
   return gameState.value !== 'idle'
 })
 
-function handleAction() {
+function exitGame() {
   push.error({
     duration: 5000,
     message: 'You have been disconnected.',
