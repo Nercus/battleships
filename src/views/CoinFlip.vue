@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-full items-center justify-center flex flex-col">
-    <div class="size-40 relative coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
+  <div class="w-full h-full items-center justify-center flex flex-col relative">
+    <div v-if="!waitingForCoinFlip" class="size-40 relative coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
       <div class="bg-error rounded-full size-full absolute z-[100] backface-hidden flex items-center justify-center p-3 drop-shadow-2xl">
         <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
       </div>
@@ -8,15 +8,16 @@
         <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white" />
       </div>
     </div>
-    <div class="flex flex-row items-center justify-center mt-4 gap-2 opacity-70">
+    <div v-if="!waitingForCoinFlip" class="flex flex-row items-center justify-center mt-4 gap-2 opacity-70">
       <span class="font-semibold">You are </span>
       <div v-if="isHost" class="bg-error rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
         <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
       </div>
       <div v-else class="bg-success rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
-        <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white" />
+        <Icon class="fluent--number-circle-1-16-regular w-full h-full text-white " />
       </div>
     </div>
+    <Icon v-else class="fluent--spinner-ios-20-filled animate-spin size-40" />
   </div>
 </template>
 
@@ -26,6 +27,7 @@ const { eventBus, sendEvent } = useConnection()
 const { isHost } = useWebRTC()
 const isHeads = ref(false)
 const isTails = ref(false)
+const waitingForCoinFlip = ref(true)
 
 // the host will always be heads, the client will always be tails
 
@@ -55,16 +57,20 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
 
 let removeListener: () => void
 onMounted(() => {
-  if (isHost.value) {
-    const flipResult = flipCoin()
-    sendEvent({ data: { hostSide: flipResult }, type: 'coin-flip' })
-  }
   removeListener = eventBus.on((event) => {
     if (event.type === 'coin-flip') {
       const { hostSide } = event.data
       flipCoin(hostSide)
+      waitingForCoinFlip.value = false
     }
   })
+  if (isHost.value) {
+    const flipResult = flipCoin()
+    setTimeout(() => {
+      sendEvent({ data: { hostSide: flipResult }, type: 'coin-flip' })
+      waitingForCoinFlip.value = false
+    }, 1000)
+  }
 })
 onUnmounted(() => {
   if (removeListener) removeListener()
