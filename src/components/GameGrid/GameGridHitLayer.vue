@@ -1,11 +1,21 @@
 <template>
-  <div class="aspect-square grid-cols-10 grid grid-rows-10 place-items-center ">
-    <h1 class="absolute -top-10 height-6 w-full text-center font-semibold left-2 text-xl">
+  <div class="aspect-square grid-cols-10 grid grid-rows-10 place-items-center">
+    <h1
+      class="absolute -top-10 height-6 w-full text-center font-semibold left-2 text-xl">
       {{ props.title }}
     </h1>
     <GameGridLabels vertical />
     <GameGridLabels horizontal />
-    <GameGridHitIndicator v-for="(hitType, index) in flatBoard" :key="index" :type="hitType" :board-title="props.title" :index="index" :board-type="boardType" @click="setTarget(hitType, index)" @dblclick="onDoubleClick(hitType, index)" />
+    <GameGridHitIndicator
+      v-for="(hitType, index) in flatBoard"
+      :key="index"
+      class="w-[80%] h-[80%]"
+      :type="hitType"
+      :board-title="props.title"
+      :index="index"
+      :board-type="boardType"
+      @click="setTarget(hitType, index)"
+      @dblclick="onDoubleClick(hitType, index)" />
   </div>
 </template>
 
