@@ -39,7 +39,7 @@
     "@types/webrtc": "^0.0.46",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.25.0",
+    "eslint": "^9.25.1",
     "eslint-plugin-format": "^1.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
@@ -54,6 +54,7 @@
     "onlyBuiltDependencies": [
       "core-js",
       "esbuild",
+      "unrs-resolver",
       "vue-demi"
     ]
   }
