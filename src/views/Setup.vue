@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col items-center justify-center w-full h-full gap-4">
+    <h1 class="text-3xl font-black tracking-wide z-10">
+      Setup your ships
+    </h1>
     <div class="relative background-grid aspect-square max-h-full max-w-xl w-full" :class="{ 'pointer-events-none': shipsConfirmed }">
       <GameGridLabels vertical />
       <GameGridLabels horizontal />
