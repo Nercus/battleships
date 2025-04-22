@@ -139,6 +139,7 @@ export function useGame() {
     destroyedShips.value = []
     playerColor.value = null
     opponentColor.value = null
+    lostShips.value = []
   }
 
   function isOverlapping(layout: Layout, x: number, y: number, w: number, h: number) {

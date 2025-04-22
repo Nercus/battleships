@@ -12,6 +12,7 @@ type GameEvent =
   | { type: 'color', data: Color }
   | { type: 'ship-destroyed', data: LayoutItem } // used to notify the opponent that a ship has been destroyed and sends the coordinates of the ship
   | { type: 'game-over' } // notify the opponent that the game is over, because all the player's ships have been destroyed
+  | { type: 'new-game' } // used to notify to play a new game
 
 const eventBus = useEventBus<GameEvent>('game-event')
 const webRTC = useWebRTC()
