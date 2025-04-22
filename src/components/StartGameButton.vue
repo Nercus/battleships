@@ -25,7 +25,7 @@
           clip-rule="evenodd" />
       </svg>
     </button>
-    <Button size="huge" class="w-full max-w-sm z-10 relative -mt-2">
+    <Button size="huge" class="w-full max-w-sm z-10 relative -mt-2" @click="emit('startGame')">
       Start Game
       <div class="absolute top-0 w-full h-4 rotate-180">
         <svg
@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(['startGame'])
 const boatAttacked = ref(false)
 const boatSunk = ref(false)
 

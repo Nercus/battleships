@@ -4,7 +4,7 @@
     <h1 class="text-3xl font-black tracking-wide z-10">
       Battleships
     </h1>
-    <StartGameButton @click="startGame" />
+    <StartGameButton @start-game="startGame" />
   </div>
 </template>
 
