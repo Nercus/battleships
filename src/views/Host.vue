@@ -16,10 +16,34 @@
       </Button>
       <Textarea v-model="inviteLink" />
     </div>
+    <QRCodePopover v-if="!waitingForCode">
+      <template #trigger>
+        <Button size="small">
+          <Icon class="fluent--qr-code-20-filled" />
+          or show QR code instead
+        </Button>
+      </template>
+      <template #content>
+        <QRCode :data="inviteLink" />
+      </template>
+    </QRCodePopover>
+
     <div class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
       <h2 class="text-xl font-bold">
         Paste confirmation code
       </h2>
+      <QRCodePopover v-if="!waitingForCode">
+        <template #trigger>
+          <Button size="small" type="success" @click="requestAccess()">
+            <Icon class="fluent--qr-code-20-filled" />
+            or read confirmation code from QR code
+          </Button>
+        </template>
+        <template #content>
+          <qrcode-stream v-if="accessState === 'granted'" class="w-full max-w-screen border bg-base-300" @detect="onDetect" />
+          <span v-else>Camera access not granted!</span>
+        </template>
+      </QRCodePopover>
       <Textarea v-model="clientConfirmationCode" />
       <Button type="success" :disabled="clientConfirmationCode === ''" @click="connectToClient()">
         Connect
@@ -29,7 +53,12 @@
 </template>
 
 <script setup lang="ts">
+import type { DetectedBarcode } from 'vue-qrcode-reader'
 import * as spdCompact from 'sdp-compact'
+
+const { query: requestAccess, state: accessState } = usePermission('camera', {
+  controls: true,
+})
 
 const connectionStore = useConnection()
 const webRTC = useWebRTC()
@@ -52,6 +81,7 @@ watch(copied, (newValue) => {
 })
 
 onMounted(() => {
+  // request camera access
   connectionStore.initConnection(true)
   webRTC.signalBus.on((signal) => {
     inviteCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
@@ -113,6 +143,13 @@ async function connectToClient() {
       title: 'Error connecting to client',
     })
   }
+}
+
+function onDetect(qrData: DetectedBarcode[]) {
+  if (!qrData?.length || qrData.length === 0) return
+  const data = qrData[0].rawValue
+  clientConfirmationCode.value = data
+  connectToClient()
 }
 
 const debouncedCopyLinkFn = useDebounceFn(copyInviteLink, 200, {

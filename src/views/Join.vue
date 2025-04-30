@@ -17,6 +17,17 @@
       </Button>
       <Textarea v-model="confirmationCode" />
     </div>
+    <QRCodePopover v-if="!waitingForCode">
+      <template #trigger>
+        <Button size="small">
+          <Icon class="fluent--qr-code-20-filled" />
+          or show QR code instead
+        </Button>
+      </template>
+      <template #content>
+        <QRCode :data="confirmationCode" class="max-w-full" />
+      </template>
+    </QRCodePopover>
   </div>
 </template>
 
