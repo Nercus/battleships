@@ -4,6 +4,7 @@
       Host Connect
     </h1>
     <SimpleSeparator />
+    <!-- <QRCode :data="inviteLink" /> -->
     <Button v-if="isSupported" type="muted" :disabled="waitingForCode" @click="debouncedCopyLinkFn">
       <Icon v-if="waitingForCode" class="fluent--spinner-ios-20-filled animate-spin" />
       <Icon v-else class="fluent--link-24-filled" />
@@ -55,11 +56,12 @@ onMounted(() => {
   webRTC.signalBus.on((signal) => {
     inviteCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
     waitingForCode.value = false
+    generateInviteLink()
   })
   waitingForCode.value = true
 })
 
-async function copyInviteLink() {
+async function generateInviteLink() {
   if (waitingForCode.value) {
     return
   }
@@ -74,8 +76,12 @@ async function copyInviteLink() {
   const baseURL = window.location.origin
   const link = `${baseURL}/#/join?code=${encodeURIComponent(inviteCode.value)}`
   inviteLink.value = link
+}
+
+async function copyInviteLink() {
+  await generateInviteLink()
   try {
-    copy(link)
+    copy(inviteLink.value)
   }
   catch {
     push.error({
