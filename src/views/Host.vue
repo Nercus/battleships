@@ -1,15 +1,15 @@
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 w-full max-w-lg lg:max-w-2xl p-4 lg:p-20">
-    <h1 class="text-xl font-black tracking-wide">
+  <div class="flex flex-col justify-center items-center gap-4 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
+    <h1 class="font-black text-xl tracking-wide">
       Host Connect
     </h1>
     <SimpleSeparator />
     <Button v-if="isSupported" type="muted" :disabled="waitingForCode" @click="debouncedCopyLinkFn">
-      <Icon v-if="waitingForCode" class="fluent--spinner-ios-20-filled animate-spin" />
+      <Icon v-if="waitingForCode" class="animate-spin fluent--spinner-ios-20-filled" />
       <Icon v-else class="fluent--link-24-filled" />
       {{ waitingForCode ? 'Generating invite link...' : 'Copy Invite Link' }}
     </Button>
-    <div v-else class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
+    <div v-else class="flex flex-col justify-center items-center gap-2 p-4 lg:p-10 w-full">
       <Button type="muted" @click="debouncedCopyLinkFn">
         Generate Invite Link
       </Button>
@@ -27,8 +27,8 @@
       </template>
     </QRCodePopover>
     <SimpleSeparator />
-    <div class="flex flex-col items-center justify-center gap-2 w-full p-4 ">
-      <h2 class="text-xl font-bold">
+    <div class="flex flex-col justify-center items-center gap-2 p-4 w-full">
+      <h2 class="font-bold text-xl">
         Paste confirmation code
       </h2>
       <QRCodePopover v-if="!waitingForCode">
@@ -39,7 +39,7 @@
           </Button>
         </template>
         <template #content>
-          <qrcode-stream v-if="accessState === 'granted'" class="w-full max-w-screen border bg-base-300" @detect="onDetect" />
+          <qrcode-stream v-if="accessState === 'granted'" class="bg-base-300 border w-full max-w-screen" @detect="onDetect" />
           <span v-else>Camera access not granted!</span>
         </template>
       </QRCodePopover>

@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full h-full p-1 group relative">
+  <div class="group relative p-1 w-full h-full">
     <div :class="shipVariants({ flipped: rotation >= 180, orientation: props.item.w === 1 ? 'vertical' : 'horizontal', color })">
       <Button v-if="!disabled" type="ghost" size="small" square @click="emit('turnElement', props.item.i); setRotation()">
-        <Icon class="fluent--arrow-rotate-clockwise-16-filled " />
+        <Icon class="fluent--arrow-rotate-clockwise-16-filled" />
       </Button>
       <div />
     </div>
@@ -23,7 +23,7 @@ const props = defineProps<{
 const emit = defineEmits(['turnElement'])
 
 const shipVariants = cva(
-  'w-full backdrop-blur-sm border-2 h-full flex items-center justify-center shadow',
+  'flex justify-center items-center shadow backdrop-blur-sm border-2 w-full h-full',
   {
     defaultVariants: {
       color: 'blue',

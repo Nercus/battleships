@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<{
   type: 'primary',
 })
 
-const buttonVariants = cva('items-center justify-center inline-flex gap-2 whitespace-nowrap rounded-md font-medium cursor-pointer focus-visible:outline-none disabled:pointer-events-none transition-colors duration-200 ease-in-out shadow-md', {
+const buttonVariants = cva('inline-flex justify-center items-center gap-2 shadow-md rounded-md focus-visible:outline-none font-medium whitespace-nowrap transition-colors duration-200 ease-in-out cursor-pointer disabled:pointer-events-none', {
   compoundVariants: [
     {
       class: ['p-1'],

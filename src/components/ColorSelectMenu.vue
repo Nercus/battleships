@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-wrap gap-2 justify-center">
+  <div class="flex flex-row flex-wrap justify-center gap-2">
     <ColorSelectMenuButton v-for="(colorname, i) in AVAILABLE_COLORS" :key="colorname" :color-number="i" :is-selected="colorname === playerColor" :is-opponent-selected="colorname === opponentColor" @click="selectColor(colorname)" />
   </div>
 </template>

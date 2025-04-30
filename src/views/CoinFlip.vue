@@ -1,23 +1,23 @@
 <template>
-  <div class="w-full h-full items-center justify-center flex flex-col relative">
-    <div v-if="!waitingForCoinFlip" class="size-40 relative coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
-      <div class="bg-error rounded-full size-full absolute z-[100] backface-hidden flex items-center justify-center p-3 drop-shadow-2xl outline-8 outline-offset-4 outline-error">
-        <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
+  <div class="relative flex flex-col justify-center items-center w-full h-full">
+    <div v-if="!waitingForCoinFlip" class="relative size-40 coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
+      <div class="z-[100] absolute flex justify-center items-center bg-error drop-shadow-2xl p-3 rounded-full outline-8 outline-error outline-offset-4 size-full backface-hidden">
+        <Icon class="w-full h-full text-white fluent--vehicle-ship-16-filled" />
       </div>
-      <div class="bg-success rounded-full size-full absolute -rotate-y-180 backface-hidden flex items-center justify-center p-3 drop-shadow-2xl outline-8 outline-offset-4 outline-success">
-        <Icon class="fluent--number-circle-7-16-regular w-full h-full text-white" />
+      <div class="absolute flex justify-center items-center bg-success drop-shadow-2xl p-3 rounded-full outline-8 outline-success outline-offset-4 size-full -rotate-y-180 backface-hidden">
+        <Icon class="w-full h-full text-white fluent--number-circle-7-16-regular" />
       </div>
     </div>
-    <div v-if="!waitingForCoinFlip" class="flex flex-row items-center justify-center mt-4 gap-2 opacity-70">
+    <div v-if="!waitingForCoinFlip" class="flex flex-row justify-center items-center gap-2 opacity-70 mt-4">
       <span class="font-semibold">You are </span>
-      <div v-if="isHost" class="bg-error rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
-        <Icon class="fluent--vehicle-ship-16-filled w-full h-full text-white" />
+      <div v-if="isHost" class="flex justify-center items-center bg-error drop-shadow-2xl p-1 rounded-full size-10">
+        <Icon class="w-full h-full text-white fluent--vehicle-ship-16-filled" />
       </div>
-      <div v-else class="bg-success rounded-full size-10 flex items-center justify-center p-1 drop-shadow-2xl">
-        <Icon class="fluent--number-circle-7-16-regular w-full h-full text-white " />
+      <div v-else class="flex justify-center items-center bg-success drop-shadow-2xl p-1 rounded-full size-10">
+        <Icon class="w-full h-full text-white fluent--number-circle-7-16-regular" />
       </div>
     </div>
-    <Icon v-else class="fluent--spinner-ios-20-filled animate-spin size-40" />
+    <Icon v-else class="size-40 animate-spin fluent--spinner-ios-20-filled" />
   </div>
 </template>
 

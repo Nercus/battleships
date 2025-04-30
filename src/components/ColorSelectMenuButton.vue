@@ -1,9 +1,9 @@
 <template>
   <Button type="primary" square size="huge" :class="[coloredButtonClass(colorNumber, isSelected), isSelected ? '' : '']" :disabled="isOpponentSelected">
-    <div v-if="isOpponentSelected" class="relative flex items-center justify-center w-full h-full bg-base-100 rounded-full">
+    <div v-if="isOpponentSelected" class="relative flex justify-center items-center bg-base-100 rounded-full w-full h-full">
       <Icon class="fluent--presence-blocked-20-regular bg-error" />
     </div>
-    <Icon v-else-if="isSelected" class="fluent--checkmark-12-filled bg-base-100 size-full" />
+    <Icon v-else-if="isSelected" class="bg-base-100 size-full fluent--checkmark-12-filled" />
   </Button>
 </template>
 

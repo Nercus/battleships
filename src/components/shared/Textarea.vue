@@ -21,7 +21,7 @@ const model = defineModel({
   type: String,
 })
 
-const textareaVariants = cva('resize-none flex min-h-20 w-full rounded-md border border-base-800 px-3 py-2 text-sm ring-offset-2 placeholder:text-muted-base-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-base-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50', {
+const textareaVariants = cva('flex disabled:opacity-50 px-3 py-2 border border-base-800 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-base-900 ring-offset-2 focus-visible:ring-offset-2 w-full min-h-20 placeholder:text-muted-base-900 text-sm resize-none disabled:cursor-not-allowed', {
   defaultVariants: {
     size: 'medium',
     variant: 'default',

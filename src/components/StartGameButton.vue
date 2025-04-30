@@ -1,18 +1,18 @@
 <template>
-  <div class="w-full z-10 relative max-w-xs">
+  <div class="z-10 relative w-full max-w-xs">
     <button
-      class="inset-x-0 top-0 animated-boat"
+      class="top-0 inset-x-0 animated-boat"
       :disabled="boatSunk"
       @click="handleBoatHit">
       <GameGridHitIndicator
         v-if="boatAttacked"
-        class="size-full z-10 absolute animate-pulse"
+        class="z-10 absolute size-full animate-pulse"
         board-title=""
         board-type="player"
         :index="0"
         type="hit" />
       <svg
-        class="text-base-700 size-14"
+        class="size-14 text-base-700"
         :class="boatSunk ? 'animated-sunken-boat' : ''"
         xmlns="http://www.w3.org/2000/svg"
         width="14"
@@ -25,9 +25,9 @@
           clip-rule="evenodd" />
       </svg>
     </button>
-    <Button size="huge" class="w-full max-w-sm z-10 relative -mt-2" @click="emit('startGame')">
+    <Button size="huge" class="z-10 relative -mt-2 w-full max-w-sm" @click="emit('startGame')">
       Start Game
-      <div class="absolute -top-0.5 w-full h-4 rotate-180">
+      <div class="-top-0.5 absolute w-full h-4 rotate-180">
         <svg
           class="w-full h-full"
           xmlns="http://www.w3.org/2000/svg"

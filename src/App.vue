@@ -2,7 +2,7 @@
   <Notivue v-slot="item">
     <Notification :item="item" />
   </Notivue>
-  <div class="size-full flex flex-col items-center justify-center p-2">
+  <div class="flex flex-col justify-center items-center p-2 size-full">
     <RouterView v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" class="overflow-hidden" />

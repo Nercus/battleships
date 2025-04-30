@@ -1,7 +1,7 @@
 <template>
-  <div class="aspect-square grid-cols-10 grid grid-rows-10 place-items-center">
+  <div class="place-items-center grid grid-cols-10 grid-rows-10 aspect-square">
     <h1
-      class="absolute -top-10 height-6 w-full text-center font-semibold left-2 text-xl">
+      class="-top-10 left-2 absolute w-full font-semibold text-xl text-center height-6">
       {{ props.title }}
     </h1>
     <GameGridLabels vertical />

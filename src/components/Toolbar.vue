@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-2 left-2 z-50 flex flex-row items-center justify-center gap-2">
+  <div class="top-2 left-2 z-50 fixed flex flex-row justify-center items-center gap-2">
     <ConnectionIndicator />
     <ResetGamePopup />
   </div>

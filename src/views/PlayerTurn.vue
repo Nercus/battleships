@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col md:flex-row items-center justify-center w-full h-full gap-4 p-4">
-    <div class="relative background-grid aspect-square max-h-full max-w-xl w-full">
+  <div class="flex md:flex-row flex-col justify-center items-center gap-4 p-4 w-full h-full">
+    <div class="relative background-grid w-full max-w-xl max-h-full aspect-square">
       <GameGridShipLayer v-model:layout="destroyedShips" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
       <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHitStates" title="Your turn (Double click to shoot!)" board-type="opponent" :class="{ 'pointer-events-none': attackBlocked }" @shoot="onShoot" />
     </div>
-    <div class="pointer-events-none h-1/5 lg:h-2/5 aspect-square background-grid opacity-70 relative hidden lg:block">
+    <div class="hidden lg:block relative background-grid opacity-70 h-1/5 lg:h-2/5 aspect-square pointer-events-none">
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" :is-draggable="false" />
       <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoardHitStates" title="" />
     </div>

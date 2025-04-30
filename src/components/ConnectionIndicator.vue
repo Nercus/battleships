@@ -1,13 +1,13 @@
 <template>
   <div v-if="isGameStarted">
     <Transition name="rotate" mode="out-in">
-      <div v-if="connected" class="bg-success text-white size-6 p-0.5 rounded-full">
+      <div v-if="connected" class="bg-success p-0.5 rounded-full size-6 text-white">
         <Icon
-          class="fluent--plug-connected-20-regular w-full h-full" />
+          class="w-full h-full fluent--plug-connected-20-regular" />
       </div>
-      <div v-else class="bg-error text-white size-6 p-0.5 rounded-full">
+      <div v-else class="bg-error p-0.5 rounded-full size-6 text-white">
         <Icon
-          class="fluent--plug-disconnected-20-regular w-full h-full" />
+          class="w-full h-full fluent--plug-disconnected-20-regular" />
       </div>
     </Transition>
   </div>

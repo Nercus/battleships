@@ -1,9 +1,9 @@
 <template>
   <AlertDialogRoot :open="gameState === 'ended'">
     <AlertDialogPortal>
-      <AlertDialogOverlay class="bg-base-800/50 backdrop-blur-xs fixed inset-0 z-30" />
+      <AlertDialogOverlay class="z-30 fixed inset-0 bg-base-800/50 backdrop-blur-xs" />
       <AlertDialogContent
-        class="z-50 bg-base-100 rounded drop-shadow fixed top-1/2 left-1/2 w-full max-w-xl -translate-1/2 p-8 focus:outline-none">
+        class="top-1/2 left-1/2 z-50 fixed bg-base-100 drop-shadow p-8 rounded focus:outline-none w-full max-w-xl -translate-1/2">
         <AlertDialogTitle class="m-0 font-semibold">
           {{ playerWon ? 'You won!' : 'You lost!' }}
         </AlertDialogTitle>
@@ -15,11 +15,11 @@
             :as="Button" :type="newGameRequested ? 'ghost' : 'success'" @click="newGame">
             <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2">
               Waiting for other player...
-              <Icon class="fluent--spinner-ios-20-filled animate-spin h-4 w-4" />
+              <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
             </span>
             <span v-else-if="!newGameRequested && opponentRequestsNewGame" class="flex items-center gap-2">
               Opponent wants a rematch! Join?
-              <Icon class="fluent--checkmark-24-filled h-4 w-4" />
+              <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
             </span>
             <span v-else>Play Again</span>
           </AlertDialogAction>

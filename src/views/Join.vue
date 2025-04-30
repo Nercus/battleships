@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 lg:gap-10 w-full max-w-lg lg:max-w-2xl p-4 lg:p-20">
-    <h1 class="text-xl font-black tracking-wide">
+  <div class="flex flex-col justify-center items-center gap-4 lg:gap-10 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
+    <h1 class="font-black text-xl tracking-wide">
       Join Game
     </h1>
     <span class="text-center">
@@ -11,7 +11,7 @@
       <Icon class="fluent--link-24-filled" />
       Copy Confirmation Code
     </Button>
-    <div v-else class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
+    <div v-else class="flex flex-col justify-center items-center gap-2 p-4 lg:p-10 w-full">
       <Button type="muted" :disabled="confirmationCode === ''" @click="debouncedCopyConfirmationFn">
         Generate Confirmation Code
       </Button>

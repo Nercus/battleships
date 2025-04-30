@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col items-center justify-center w-full h-full gap-4">
-    <h1 class="text-xl font-black tracking-wide z-10">
+  <div class="flex flex-col justify-center items-center gap-4 w-full h-full">
+    <h1 class="z-10 font-black text-xl tracking-wide">
       Setup your ships
     </h1>
-    <div class="relative background-grid aspect-square max-h-full max-w-xl w-full" :class="{ 'pointer-events-none': shipsConfirmed }">
+    <div class="relative background-grid w-full max-w-xl max-h-full aspect-square" :class="{ 'pointer-events-none': shipsConfirmed }">
       <GameGridLabels vertical />
       <GameGridLabels horizontal />
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" is-draggable />
@@ -12,11 +12,11 @@
     <Button :type="shipsConfirmed ? 'ghost' : 'success'" :disabled="!playerColor" @click="confirmSelection">
       <span v-if="shipsConfirmed && !otherPlayerReady" class="flex items-center gap-2">
         Waiting for other player...
-        <Icon class="fluent--spinner-ios-20-filled animate-spin h-4 w-4" />
+        <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
       </span>
       <span v-else-if="!shipsConfirmed && otherPlayerReady" class="flex items-center gap-2">
         Other player is ready! Are you?
-        <Icon class="fluent--checkmark-24-filled h-4 w-4" />
+        <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
       </span>
       <span v-else>Confirm</span>
     </Button>
