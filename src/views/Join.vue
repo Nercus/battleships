@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center justify-center gap-4 lg:gap-10 w-full max-w-lg lg:max-w-2xl p-4 lg:p-20">
-    <h1 class="text-3xl font-black tracking-wide">
+    <h1 class="text-xl font-black tracking-wide">
       Join Game
     </h1>
     <span class="text-center">

@@ -27,7 +27,7 @@
     </button>
     <Button size="huge" class="w-full max-w-sm z-10 relative -mt-2" @click="emit('startGame')">
       Start Game
-      <div class="absolute top-0 w-full h-4 rotate-180">
+      <div class="absolute -top-0.5 w-full h-4 rotate-180">
         <svg
           class="w-full h-full"
           xmlns="http://www.w3.org/2000/svg"

@@ -92,3 +92,7 @@ details,
 summary {
   font-family: 'Ranade', sans-serif;
 }
+
+* {
+  touch-action: double-tap-zoom;
+}

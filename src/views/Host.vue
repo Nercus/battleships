@@ -1,10 +1,9 @@
 <template>
-  <div class="flex flex-col items-center justify-center gap-4 lg:gap-10 w-full max-w-lg lg:max-w-2xl p-4 lg:p-20">
-    <h1 class="text-3xl font-black tracking-wide">
+  <div class="flex flex-col items-center justify-center gap-4 w-full max-w-lg lg:max-w-2xl p-4 lg:p-20">
+    <h1 class="text-xl font-black tracking-wide">
       Host Connect
     </h1>
     <SimpleSeparator />
-    <!-- <QRCode :data="inviteLink" /> -->
     <Button v-if="isSupported" type="muted" :disabled="waitingForCode" @click="debouncedCopyLinkFn">
       <Icon v-if="waitingForCode" class="fluent--spinner-ios-20-filled animate-spin" />
       <Icon v-else class="fluent--link-24-filled" />
@@ -27,8 +26,8 @@
         <QRCode :data="inviteLink" />
       </template>
     </QRCodePopover>
-
-    <div class="flex flex-col items-center justify-center gap-2 w-full p-4 lg:p-10">
+    <SimpleSeparator />
+    <div class="flex flex-col items-center justify-center gap-2 w-full p-4 ">
       <h2 class="text-xl font-bold">
         Paste confirmation code
       </h2>
