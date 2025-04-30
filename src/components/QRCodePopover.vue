@@ -5,7 +5,7 @@
     </PopoverTrigger>
     <PopoverAnchor />
     <PopoverPortal>
-      <PopoverContent class="bg-base-200">
+      <PopoverContent class="z-50 bg-base-100">
         <slot name="content" />
         <PopoverClose />
       </PopoverContent>
