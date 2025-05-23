@@ -110,6 +110,7 @@ async function generateInviteLink() {
 async function copyInviteLink() {
   await generateInviteLink()
   try {
+    console.warn(inviteLink.value)
     copy(inviteLink.value)
   }
   catch {
