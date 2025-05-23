@@ -32,8 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import * as spdCompact from 'sdp-compact'
-
 const route = useRoute<'Join'>()
 const { copied, copy, isSupported } = useClipboard({
   legacy: true,
@@ -41,6 +39,7 @@ const { copied, copy, isSupported } = useClipboard({
 
 const connectionStore = useConnection()
 const webRTC = useWebRTC()
+const compression = useCompression()
 const confirmationCode = ref('')
 const waitingForCode = ref(false)
 
@@ -48,7 +47,7 @@ onMounted(() => {
   connectionStore.initConnection(false)
 
   webRTC.signalBus.on((signal) => {
-    confirmationCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
+    confirmationCode.value = compression.compress(JSON.stringify(signal))
     waitingForCode.value = false
   })
 
@@ -62,7 +61,7 @@ onMounted(() => {
     return
   }
   try {
-    const decompressedCode = spdCompact.decompact(code, { compress: true }) as RTCSessionDescriptionInit
+    const decompressedCode = JSON.parse(compression.decompress(code)) as RTCSessionDescriptionInit
     webRTC.sendSignal(decompressedCode)
     waitingForCode.value = true
   }

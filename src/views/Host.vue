@@ -53,12 +53,12 @@
 
 <script setup lang="ts">
 import type { DetectedBarcode } from 'vue-qrcode-reader'
-import * as spdCompact from 'sdp-compact'
 
 const { query: requestAccess, state: accessState } = usePermission('camera', {
   controls: true,
 })
 
+const compression = useCompression()
 const connectionStore = useConnection()
 const webRTC = useWebRTC()
 const { copied, copy, isSupported } = useClipboard({
@@ -83,9 +83,7 @@ onMounted(() => {
   // request camera access
   connectionStore.initConnection(true)
   webRTC.signalBus.on((signal) => {
-    console.warn(signal)
-    console.warn(spdCompact.decompact(spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true }), { compress: true }))
-    inviteCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
+    inviteCode.value = compression.compress(JSON.stringify(signal))
     waitingForCode.value = false
     generateInviteLink()
   })
@@ -133,7 +131,7 @@ async function connectToClient() {
     return
   }
   try {
-    const decompressedCode = spdCompact.decompact(clientConfirmationCode.value, { compress: true }) as RTCSessionDescriptionInit
+    const decompressedCode = JSON.parse(compression.decompress(clientConfirmationCode.value)) as RTCSessionDescriptionInit
     webRTC.sendSignal(decompressedCode)
   }
   catch (error) {

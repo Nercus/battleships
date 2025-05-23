@@ -153,6 +153,7 @@ declare global {
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
+  const useCompression: typeof import('../composables/useCompression')['useCompression']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useConnection: typeof import('../composables/useConnection')['useConnection']
   const useConnectionStore: typeof import('../store/useConnectionStore')['useConnectionStore']

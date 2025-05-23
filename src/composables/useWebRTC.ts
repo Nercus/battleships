@@ -1,9 +1,8 @@
-import type { SignalData } from 'simple-peer'
 import SimplePeer from 'simple-peer'
 
 const peer = ref<SimplePeer.Instance | null>(null)
 const isHost = ref<boolean | null>(null)
-const signalBus = useEventBus<SignalData>('signal')
+const signalBus = useEventBus<SimplePeer.SignalData>('signal')
 const connectBus = useEventBus('connect')
 const closeBus = useEventBus('close')
 const dataBus = useEventBus<any>('data')
@@ -65,12 +64,12 @@ export function useWebRTC() {
     peer.value.send(message)
   }
 
-  function sendSignal(signal: any) {
+  function sendSignal(signal: RTCSessionDescriptionInit) {
     if (!peer.value) {
       console.error('Peer is not initialized')
       return
     }
-    console.warn(signal)
+
     peer.value.signal(signal)
   }
 
