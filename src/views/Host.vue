@@ -83,6 +83,7 @@ onMounted(() => {
   // request camera access
   connectionStore.initConnection(true)
   webRTC.signalBus.on((signal) => {
+    console.warn(signal)
     inviteCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
     waitingForCode.value = false
     generateInviteLink()
@@ -103,7 +104,6 @@ async function generateInviteLink() {
     return
   }
   const baseURL = window.location.origin
-  console.warn(inviteCode.value)
   const link = `${baseURL}/#/join?code=${encodeURIComponent(inviteCode.value)}`
   inviteLink.value = link
 }
