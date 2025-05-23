@@ -70,6 +70,7 @@ export function useWebRTC() {
       console.error('Peer is not initialized')
       return
     }
+    console.warn(signal)
     peer.value.signal(signal)
   }
 
