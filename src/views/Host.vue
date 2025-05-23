@@ -84,6 +84,7 @@ onMounted(() => {
   connectionStore.initConnection(true)
   webRTC.signalBus.on((signal) => {
     console.warn(signal)
+    console.warn(spdCompact.decompact(spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true }), { compress: true }))
     inviteCode.value = spdCompact.compact(signal as RTCSessionDescriptionInit, { compress: true })
     waitingForCode.value = false
     generateInviteLink()
