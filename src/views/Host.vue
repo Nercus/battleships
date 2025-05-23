@@ -103,6 +103,7 @@ async function generateInviteLink() {
     return
   }
   const baseURL = window.location.origin
+  console.warn(inviteCode.value)
   const link = `${baseURL}/#/join?code=${encodeURIComponent(inviteCode.value)}`
   inviteLink.value = link
 }
@@ -110,7 +111,6 @@ async function generateInviteLink() {
 async function copyInviteLink() {
   await generateInviteLink()
   try {
-    console.warn(inviteLink.value)
     copy(inviteLink.value)
   }
   catch {
