@@ -1,16 +1,13 @@
 <template>
-  <motion.button
-    :class="button(props, $attrs.class as string | undefined)"
-    :while-press="{ scale: 0.95 }">
+  <button :class="button(props, $attrs.class as string | undefined)">
     <slot />
-  </motion.button>
+  </button>
 </template>
 
 <script setup lang="ts">
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
 import clsx from 'clsx'
-import { motion } from 'motion-v'
 import { twMerge } from 'tailwind-merge'
 
 const props = withDefaults(defineProps<{
@@ -27,7 +24,7 @@ const props = withDefaults(defineProps<{
   type: 'primary',
 })
 
-const buttonVariants = cva('inline-flex justify-center items-center gap-2 shadow-md rounded-md focus-visible:outline-none font-medium whitespace-nowrap transition-colors duration-200 ease-in-out cursor-pointer disabled:pointer-events-none', {
+const buttonVariants = cva('inline-flex justify-center items-center gap-2 shadow-md rounded-md focus-visible:outline-none font-medium whitespace-nowrap transition-all active:translate-y-1 duration-150 ease-in-out cursor-pointer disabled:pointer-events-none transform', {
   compoundVariants: [
     {
       class: ['p-1'],

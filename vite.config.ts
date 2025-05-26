@@ -1,6 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
-import MotionResolver from 'motion-v/resolver'
 import RekaUIResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -23,7 +22,6 @@ export default defineConfig({
       dts: './src/types/components.d.ts',
       resolvers: [
         RekaUIResolver(),
-        MotionResolver(),
       ],
     }),
     AutoImport({
