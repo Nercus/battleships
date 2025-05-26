@@ -55,7 +55,7 @@ document.addEventListener('keydown', (event) => {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: opacity 0.15s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .fade-enter-from,

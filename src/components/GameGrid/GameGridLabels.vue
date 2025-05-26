@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute flex" :class="horizontal ? 'flex-row inset-x-0 -top-4 w-full' : 'flex-col inset-y-0 -left-4 h-full'">
+  <div class="absolute flex select-none" :class="horizontal ? 'flex-row inset-x-0 -top-4 w-full' : 'flex-col inset-y-0 -left-4 h-full'">
     <span
       v-for="label in labels"
       :key="label" class="font-bold text-xs" :class="horizontal ? 'w-full text-center' : 'h-full flex items-center'">
