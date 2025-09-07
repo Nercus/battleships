@@ -39,7 +39,7 @@
           </Button>
         </template>
         <template #content>
-          <qrcode-stream v-if="accessState === 'granted'" class="bg-base-300 border w-full max-w-screen" @detect="onDetect" />
+          <QrcodeStream v-if="accessState === 'granted'" class="bg-base-300 border w-full max-w-screen" @detect="onDetect" />
           <span v-else>Camera access not granted!</span>
         </template>
       </QRCodePopover>

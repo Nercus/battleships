@@ -4,9 +4,9 @@
   </Notivue>
   <div class="flex flex-col justify-center items-center p-2 size-full">
     <RouterView v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
+      <Transition name="fade" mode="out-in">
         <component :is="Component" class="overflow-hidden" />
-      </transition>
+      </Transition>
     </RouterView>
   </div>
   <Toolbar />

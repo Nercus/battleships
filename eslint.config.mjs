@@ -4,11 +4,12 @@ export default antfu({
   formatters: true,
   rules: {
     'antfu/if-newline': 'off',
-    'format/prettier': ['off'],
     'node/prefer-global/process': 'off',
-    'perfectionist/sort-objects': ['error'],
     'vue/block-order': ['error', {
       order: ['template', 'script', 'style'],
+    }],
+    'vue/component-name-in-template-casing': ['error', 'PascalCase', {
+      registeredComponentsOnly: false,
     }],
     'vue/first-attribute-linebreak': ['error', {
       multiline: 'below',
@@ -23,7 +24,11 @@ export default antfu({
       singleline: 'never',
     }],
     'vue/multiline-html-element-content-newline': 'error',
-    'yaml/plain-scalar': 'off',
+  },
+  stylistic: {
+    indent: 2,
+    quotes: 'single',
+    semi: false,
   },
   type: 'app',
   typescript: true,

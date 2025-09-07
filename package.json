@@ -10,7 +10,7 @@
     "build": "vue-tsc -b && vite build",
     "check:types": "vue-tsc --noEmit",
     "preview": "vite preview",
-    "eslint:fix": "eslint --cache --fix .",
+    "lint:fix": "eslint --cache --fix .",
     "lint": "eslint --cache ."
   },
   "dependencies": {
