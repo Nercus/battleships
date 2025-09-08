@@ -88,6 +88,11 @@ export const routes: RouteRecordRaw[] = [
     name: 'Opponent\'s Turn',
     path: '/opponents-turn',
   },
+  {
+    component: () => import('../views/Room.vue'),
+    name: 'Room',
+    path: '/room',
+  },
 ]
 
 const router = createRouter({

@@ -42,6 +42,7 @@ declare module 'vue' {
     QRCode: typeof import('./../components/shared/QRCode.vue')['default']
     QRCodePopover: typeof import('./../components/QRCodePopover.vue')['default']
     ResetGamePopup: typeof import('./../components/ResetGamePopup.vue')['default']
+    Room: typeof import('./../views/Room.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Separator: typeof import('reka-ui')['Separator']
