@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .eslintcache
+tsconfig.app.json
+tsconfig.node.tsbuildinfo
+tsconfig.tsbuildinfo
+vite.config.js
