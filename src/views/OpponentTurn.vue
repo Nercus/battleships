@@ -14,12 +14,12 @@
 <script setup lang="ts">
 const { opponentBoardHitStates, opponentTarget, playerBoardHitStates } = useGame()
 const { destroyedShips, getHitStateForAttack, opponentColor, playerColor, shipLayout, switchTurn } = useGame()
-const { eventBus, sendEvent } = useConnection()
+const { onEvent, sendEvent } = useEvent()
 
 let removeListener: () => void
 
 onMounted(() => {
-  removeListener = eventBus.on((event) => {
+  removeListener = onEvent((event) => {
     if (event.type === 'attack') {
       const { x, y } = event.data
       const isHit = getHitStateForAttack(x, y)

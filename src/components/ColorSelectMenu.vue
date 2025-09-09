@@ -9,7 +9,7 @@ import type { Color } from '../composables/useGame'
 import { AVAILABLE_COLORS } from '../composables/useGame'
 
 const { opponentColor, playerColor } = useGame()
-const { eventBus, sendEvent } = useConnection()
+const { onEvent, sendEvent } = useEvent()
 
 function selectColor(name: Color) {
   playerColor.value = name
@@ -18,7 +18,7 @@ function selectColor(name: Color) {
 
 let removeListener: () => void
 onMounted(() => {
-  removeListener = eventBus.on((event) => {
+  removeListener = onEvent((event) => {
     if (event.type === 'color') {
       opponentColor.value = event.data
     }

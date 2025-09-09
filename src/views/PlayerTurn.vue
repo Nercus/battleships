@@ -14,12 +14,12 @@
 <script setup lang="ts">
 const { opponentBoardHitStates, playerBoardHitStates, playerTarget } = useGame()
 const { destroyedShips, opponentColor, playerColor, setHitStateForOpponent, shipLayout, switchTurn } = useGame()
-const { eventBus, sendEvent } = useConnection()
+const { onEvent, sendEvent } = useEvent()
 
 const attackBlocked = ref(false)
 let removeListener: () => void
 onMounted(() => {
-  removeListener = eventBus.on((event) => {
+  removeListener = onEvent((event) => {
     if (event.type === 'attack-response') {
       const success = setHitStateForOpponent(event.data) // sets the hit state where the player shot on the opponent's board
       if (!success) return

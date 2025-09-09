@@ -23,8 +23,8 @@
 
 <script setup lang="ts">
 const { playersTurn, switchTurn } = useGame()
-const { eventBus, sendEvent } = useConnection()
-const { isHost } = useWebRTC()
+const { onEvent, sendEvent } = useEvent()
+const { isHost } = useConnection()
 const isHeads = ref(false)
 const isTails = ref(false)
 const waitingForCoinFlip = ref(true)
@@ -57,7 +57,7 @@ function flipCoin(forcedResult?: 'heads' | 'tails'): 'heads' | 'tails' {
 
 let removeListener: () => void
 onMounted(() => {
-  removeListener = eventBus.on((event) => {
+  removeListener = onEvent((event) => {
     if (event.type === 'coin-flip') {
       const { hostSide } = event.data
       flipCoin(hostSide)

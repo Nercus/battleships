@@ -1,7 +1,7 @@
 <template>
   <div v-if="isGameStarted">
     <Transition name="rotate" mode="out-in">
-      <div v-if="connected" class="bg-success p-0.5 rounded-full size-6 text-white">
+      <div v-if="isConnected" class="bg-success p-0.5 rounded-full size-6 text-white">
         <Icon
           class="w-full h-full fluent--plug-connected-20-regular" />
       </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-const { connected } = useConnection()
+const { isConnected } = useConnection()
 
 const { gameState } = useGame()
 const isGameStarted = computed(() => {
@@ -24,8 +24,8 @@ const isGameStarted = computed(() => {
 const router = useRouter()
 const route = useRoute()
 
-watch(connected, (val) => {
-  if (val) {
+watch(isConnected, () => {
+  if (isConnected.value) {
     push.success({
       duration: 5000,
       message: 'You are now connected.',
@@ -33,7 +33,7 @@ watch(connected, (val) => {
     })
     router.push({ name: 'Setup' })
   }
-  if (!val && route.meta.requiresConnection) {
+  if (!isConnected.value && route.meta.requiresConnection) {
     push.error({
       duration: 5000,
       message: 'You have been disconnected.',

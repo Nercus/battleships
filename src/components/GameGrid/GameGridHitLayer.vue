@@ -31,7 +31,7 @@ const emit = defineEmits<{
   (e: 'shoot', x: number, y: number): void
 }>()
 const { playerTarget } = useGame()
-const { sendEvent } = useConnection()
+const { sendEvent } = useEvent()
 
 const flatBoard = computed(() => {
   return props.board.flat()

@@ -1,7 +1,7 @@
 {
   "name": "battleship",
   "type": "module",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -19,13 +19,10 @@
     "clsx": "^2.1.1",
     "grid-layout-plus": "^1.1.0",
     "notivue": "^2.4.5",
-    "pako": "^2.1.0",
-    "qr-code-styling": "^1.9.2",
     "reka-ui": "^2.5.0",
     "simple-peer": "^9.11.1",
     "tailwind-merge": "^3.3.1",
     "vue": "^3.5.21",
-    "vue-qrcode-reader": "^5.7.3",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
@@ -35,9 +32,7 @@
     "@stylistic/eslint-plugin": "^5.3.1",
     "@tailwindcss/vite": "^4.1.13",
     "@types/node": "^24.3.1",
-    "@types/pako": "^2.0.4",
     "@types/simple-peer": "^9.11.8",
-    "@types/webrtc": "^0.0.46",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^9.35.0",

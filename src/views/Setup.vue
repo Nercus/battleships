@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 const router = useRouter()
-const { eventBus, sendEvent } = useConnection()
+const { onEvent, sendEvent } = useEvent()
 const { getRandomLayout, playerColor, shipLayout } = useGame()
 const otherPlayerReady = ref(false)
 const shipsConfirmed = ref(false)
@@ -40,7 +40,7 @@ let removeListener: () => void
 onMounted(() => {
   // set a random layout here
   shipLayout.value = getRandomLayout()
-  removeListener = eventBus.on((event) => {
+  removeListener = onEvent((event) => {
     if (event.type === 'ready') {
       otherPlayerReady.value = event.data
     }

@@ -28,7 +28,7 @@ const props = defineProps<{
   index: number
 }>()
 
-const { eventBus } = useConnection()
+const { onEvent } = useEvent()
 const { opponentTarget, playersTurn, playerTarget } = useGame()
 
 const x = computed(() => {
@@ -56,7 +56,7 @@ const isAttackTarget = computed(() => {
 })
 const flashTarget = ref(false)
 
-eventBus.on((event) => {
+onEvent((event) => {
   if (event.type === 'attack') {
     attackTarget.value = event.data
     flashTarget.value = true

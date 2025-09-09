@@ -37,7 +37,7 @@
 import Button from './shared/Button.vue'
 
 const { gameState, reset } = useGame()
-const { eventBus, sendEvent } = useConnection()
+const { onEvent, sendEvent } = useEvent()
 const opponentRequestsNewGame = ref(false)
 const newGameRequested = ref(false)
 const playerWon = ref(false)
@@ -45,7 +45,7 @@ const router = useRouter()
 
 let removeListener: () => void
 onMounted(() => {
-  removeListener = eventBus.on((event) => {
+  removeListener = onEvent((event) => {
     if (event.type === 'game-over') {
       gameState.value = 'ended'
       playerWon.value = true

@@ -1,66 +1,131 @@
-import type { LayoutItem } from 'grid-layout-plus'
-import type { Color } from './useGame'
+import SimplePeer from 'simple-peer'
 
-type GameEvent
-  = | { type: 'ready', data: boolean }
-    | { type: 'coin-flip', data: { hostSide: 'heads' | 'tails' } }
-    | { type: 'game-over', data: { won: boolean } }
-    | { type: 'attack', data: { x: number, y: number } }
-    | { type: 'attack-response', data: boolean } // returns true if the attack hit, false if it missed
-    | { type: 'acknowledge' } // used to acknowledge the receipt of a message
-    | { type: 'target', data: { x: number, y: number } } // used to send the target coordinates to the opponent
-    | { type: 'color', data: Color }
-    | { type: 'ship-destroyed', data: LayoutItem } // used to notify the opponent that a ship has been destroyed and sends the coordinates of the ship
-    | { type: 'game-over' } // notify the opponent that the game is over, because all the player's ships have been destroyed
-    | { type: 'new-game' } // used to notify to play a new game
+const SERVER_URL = `webrtc.wintersperger.dev`
 
-const eventBus = useEventBus<GameEvent>('game-event')
-const webRTC = useWebRTC()
-const connected = ref(false)
+const isConnected = ref(false)
+const isHost = ref<boolean | null>()
+const roomId = ref<string>('')
+const peer = ref<SimplePeer.Instance | null>(null)
+const wsUrl = computed(() => roomId.value ? `wss://${SERVER_URL}/ws?roomId=${roomId.value}` : undefined)
+const { data, send, close } = useWebSocket<{ type: 'join' | 'signal', data: object | null }>(wsUrl)
+const userOffer = ref<RTCSessionDescriptionInit | null>(null)
+const userAnswer = ref<RTCSessionDescriptionInit | null>(null)
+const dataBus = useEventBus<SimplePeer.SimplePeerData>('data')
 
-webRTC.dataBus.on((data: string) => {
-  try {
-    const gameEvent: GameEvent = JSON.parse(data)
-    eventBus.emit(gameEvent)
+watch(data, (message) => {
+  message = JSON.parse(message as unknown as string)
+  if (!message) return
+  if (message.type === 'join' && isHost.value) {
+    if (!userOffer.value) return
+    send(JSON.stringify({ type: 'signal', data: userOffer.value }))
   }
-  catch (error) {
-    console.error('Error parsing message:', error)
+  else if (message.type === 'signal') {
+    if (!message.data) return
+    // Prevent duplicate signals
+    if (isConnected.value) return
+    if (!peer.value) return
+    peer.value.signal(message.data as RTCSessionDescriptionInit)
   }
-})
-
-webRTC.connectBus.on(() => {
-  connected.value = true
-})
-
-webRTC.closeBus.on(() => {
-  connected.value = false
-})
+}, { deep: true })
 
 export function useConnection() {
-  function sendEvent(event: GameEvent) {
-    webRTC.sendMessage(JSON.stringify(event))
-  }
-
-  async function closeConnection() {
-    webRTC.closePeer()
-    connected.value = false
-  }
-
   function reset() {
-    webRTC.closePeer()
-    connected.value = false
+    isConnected.value = false
+    peer.value?.destroy()
+    peer.value = null
+    close()
+    roomId.value = ''
+    isHost.value = null
+    userOffer.value = null
+    userAnswer.value = null
   }
 
-  function initConnection(host: boolean) {
-    webRTC.createPeer(host)
+  function sendMessage(message: string) {
+    if (!peer.value) {
+      console.error('Peer is not initialized')
+      return
+    }
+    peer.value.send(message)
+  }
+
+  function onPeerData(data: SimplePeer.SimplePeerData) {
+    dataBus.emit(data)
+  }
+
+  function onPeerSignal(data: SimplePeer.SignalData) {
+    if (!peer.value) {
+      console.error('Peer is not initialized')
+      return
+    }
+    if (data.type === 'offer') {
+      userOffer.value = data
+    }
+    else if (data.type === 'answer') {
+      userAnswer.value = data
+    }
+    send(JSON.stringify({ type: 'signal', data }))
+  }
+
+  function onPeerConnect() {
+    isConnected.value = true
+  }
+
+  function onPeerClose() {
+    reset()
+  }
+
+  function onPeerError(err: Error) {
+    console.error('Peer error:', err)
+    reset()
+  }
+
+  function initPeer() {
+    peer.value = new SimplePeer({
+      initiator: !!isHost.value,
+      trickle: false,
+    })
+
+    peer.value.on('signal', onPeerSignal)
+    peer.value.on('connect', onPeerConnect)
+    peer.value.on('close', onPeerClose)
+    peer.value.on('data', onPeerData)
+    peer.value.on('error', onPeerError)
+  }
+
+  async function createRoom() {
+    reset()
+    isHost.value = true
+    initPeer()
+
+    const newRoomData = await fetch(`https://${SERVER_URL}/create-room`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+    }).then(res => res.json())
+
+    if (!newRoomData.roomId) {
+      throw new Error('Failed to create room')
+    }
+    roomId.value = newRoomData.roomId as string
+  }
+
+  async function joinRoom(id: string) {
+    if (!id) {
+      throw new Error('Room ID is required to join a room')
+    }
+    isHost.value = false
+    roomId.value = id
+    initPeer()
+    send(JSON.stringify({ type: 'join', data: null }))
   }
 
   return {
-    closeConnection,
-    connected,
-    eventBus,
-    initConnection,
     reset,
-    sendEvent,
+    isConnected,
+    createRoom,
+    joinRoom,
+    isHost,
+    roomId,
+    sendMessage,
+    dataBus,
   }
 }

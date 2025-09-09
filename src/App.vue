@@ -17,11 +17,11 @@
 import { Notification, Notivue } from 'notivue'
 import { RouterView } from 'vue-router'
 
-const { connected } = useConnection()
+const { isConnected } = useConnection()
 
 window.addEventListener('beforeunload', (event) => {
   if (import.meta.env.MODE === 'development') return
-  if (!connected.value) return
+  if (!isConnected.value) return
   // Custom message may not display in modern browsers, but this will trigger a confirmation dialog
   event.preventDefault()
 })
@@ -40,7 +40,7 @@ const showWarningDebounced = useDebounceFn(showWarning, 200, {
 
 document.addEventListener('keydown', (event) => {
   if (import.meta.env.MODE === 'development') return
-  if (!connected.value) return
+  if (!isConnected.value) return
   if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
     event.preventDefault()
     showWarningDebounced()

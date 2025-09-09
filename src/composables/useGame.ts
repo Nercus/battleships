@@ -43,7 +43,7 @@ const opponentBoardHitStates = ref<Board>(Array.from({ length: 10 }, () => Array
 const destroyedShips = ref<Layout>([])
 const lostShips = ref<Layout>([])
 
-const { sendEvent } = useConnection()
+const { sendEvent } = useEvent()
 export function useGame() {
   const router = useRouter()
 
