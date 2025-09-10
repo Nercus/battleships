@@ -1,10 +1,10 @@
 <template>
   <div class="relative flex flex-col justify-center items-center w-full h-full">
     <div v-if="!waitingForCoinFlip" class="relative size-40 coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
-      <div class="z-[100] absolute flex justify-center items-center bg-error drop-shadow-2xl p-3 rounded-full outline-8 outline-error outline-offset-4 size-full backface-hidden">
+      <div class="z-[100] absolute flex justify-center items-center bg-error drop-shadow-2xl p-3 rounded-full outline-8 outline-error outline-offset-4 size-full backface-hidden" :class="{ 'opacity-30': !isHost }">
         <Icon class="w-full h-full text-white fluent--vehicle-ship-16-filled" />
       </div>
-      <div class="absolute flex justify-center items-center bg-success drop-shadow-2xl p-3 rounded-full outline-8 outline-success outline-offset-4 size-full -rotate-y-180 backface-hidden">
+      <div class="absolute flex justify-center items-center bg-success drop-shadow-2xl p-3 rounded-full outline-8 outline-success outline-offset-4 size-full -rotate-y-180 backface-hidden" :class="{ 'opacity-30': isHost }">
         <Icon class="w-full h-full text-white fluent--number-circle-7-16-regular" />
       </div>
     </div>
