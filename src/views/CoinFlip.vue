@@ -2,19 +2,19 @@
   <div class="relative flex flex-col justify-center items-center w-full h-full">
     <div v-if="!waitingForCoinFlip" class="relative size-40 coin" :class="isHeads ? 'heads' : isTails ? 'tails' : ''">
       <div class="z-[100] absolute flex justify-center items-center bg-error drop-shadow-2xl p-3 rounded-full outline-8 outline-error outline-offset-4 size-full backface-hidden" :class="{ 'opacity-30': !isHost }">
-        <Icon class="w-full h-full text-white fluent--vehicle-ship-16-filled" />
+        <SkullIcon class="size-full" />
       </div>
-      <div class="absolute flex justify-center items-center bg-success drop-shadow-2xl p-3 rounded-full outline-8 outline-success outline-offset-4 size-full -rotate-y-180 backface-hidden" :class="{ 'opacity-30': isHost }">
-        <Icon class="w-full h-full text-white fluent--number-circle-7-16-regular" />
+      <div class="absolute flex justify-center items-center bg-orange-400 drop-shadow-2xl rounded-full outline-8 outline-orange-400 outline-offset-4 size-full -rotate-y-180 backface-hidden" :class="{ 'opacity-30': isHost }">
+        <CompassIcon class="size-full" />
       </div>
     </div>
     <div v-if="!waitingForCoinFlip" class="flex flex-row justify-center items-center gap-2 opacity-70 mt-4">
       <span class="font-semibold">You are </span>
-      <div v-if="isHost" class="flex justify-center items-center bg-error drop-shadow-2xl p-1 rounded-full size-10">
-        <Icon class="w-full h-full text-white fluent--vehicle-ship-16-filled" />
+      <div v-if="isHost" class="flex justify-center items-center bg-error drop-shadow-2xl rounded-full size-10">
+        <SkullIcon class="size-full" />
       </div>
-      <div v-else class="flex justify-center items-center bg-success drop-shadow-2xl p-1 rounded-full size-10">
-        <Icon class="w-full h-full text-white fluent--number-circle-7-16-regular" />
+      <div v-else class="flex justify-center items-center bg-orange-400 drop-shadow-2xl rounded-full size-10">
+        <CompassIcon class="size-full" />
       </div>
     </div>
     <Icon v-else class="size-40 animate-spin fluent--spinner-ios-20-filled" />
