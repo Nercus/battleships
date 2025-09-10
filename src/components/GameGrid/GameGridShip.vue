@@ -1,11 +1,11 @@
 <template>
-  <div class="group relative p-1 w-full h-full">
-    <div :class="shipVariants({ flipped: rotation >= 180, orientation: props.item.w === 1 ? 'vertical' : 'horizontal', color })">
-      <Button v-if="!disabled" type="ghost" size="small" square @click="emit('turnElement', props.item.i); setRotation()">
-        <Icon class="fluent--arrow-rotate-clockwise-16-filled" />
-      </Button>
-      <div />
+  <div class="group relative w-full h-full">
+    <div :class="shipVariants({ flipped: rotation >= 180 })">
+      <component :is="shipComponent" :orientation="orientation" class="size-full" :class="shipVariants({ color })" />
     </div>
+    <Button v-if="!disabled" type="muted" size="small" square class="invisible group-hover:visible absolute inset-0 m-auto size-4 hover:scale-150" @click="emit('turnElement', props.item.i); setRotation()">
+      <Icon class="fluent--arrow-rotate-clockwise-16-filled" />
+    </Button>
   </div>
 </template>
 
@@ -13,6 +13,11 @@
 import type { LayoutItem } from 'grid-layout-plus'
 import type { Color } from '../../composables/useGame'
 import { cva } from 'class-variance-authority'
+
+import AircraftCarrier from './ships/AircraftCarrier.vue'
+import Battleship from './ships/Battleship.vue'
+import Destroyer from './ships/Destroyer.vue'
+import Gunship from './ships/Gunship.vue'
 
 const props = defineProps<{
   item: LayoutItem
@@ -22,33 +27,42 @@ const props = defineProps<{
 
 const emit = defineEmits(['turnElement'])
 
+const shipsMap = {
+  5: AircraftCarrier,
+  4: Battleship,
+  3: Destroyer,
+  2: Gunship,
+} as const
+
+const orientation = computed(() => props.item.w === 1 ? 'vertical' : 'horizontal')
+const length = computed(() => props.item.w === 1 ? props.item.h : props.item.w)
+
+const shipComponent = computed(() => {
+  return shipsMap[length.value as keyof typeof shipsMap]
+})
+
 const shipVariants = cva(
-  'flex justify-center items-center shadow backdrop-blur-sm border-2 w-full h-full',
+  '',
   {
     defaultVariants: {
       color: 'blue',
       flipped: false,
-      orientation: props.item.w === 1 ? 'vertical' : 'horizontal',
     },
     variants: {
       color: {
-        blue: 'bg-distinct-6 hover:bg-distinct-6',
-        emerald: 'bg-distinct-4 hover:bg-distinct-4',
-        green: 'bg-distinct-3 hover:bg-distinct-3',
-        indigo: 'bg-distinct-7 hover:bg-distinct-7',
-        orange: 'bg-distinct-1 hover:bg-distinct-1',
-        rose: 'bg-distinct-9 hover:bg-distinct-9',
-        teal: 'bg-distinct-5 hover:bg-distinct-5',
-        violet: 'bg-distinct-8 hover:bg-distinct-8',
-        yellow: 'bg-distinct-2 hover:bg-distinct-2',
+        blue: 'fill-distinct-6',
+        emerald: 'fill-distinct-4',
+        green: 'fill-distinct-3',
+        indigo: 'fill-distinct-7',
+        orange: 'fill-distinct-1',
+        rose: 'fill-distinct-9',
+        teal: 'fill-distinct-5',
+        violet: 'fill-distinct-8',
+        yellow: 'fill-distinct-2',
       },
       flipped: {
         false: 'rotate-0',
         true: 'rotate-180',
-      },
-      orientation: {
-        horizontal: 'ship-border-horizontal',
-        vertical: 'ship-border-vertical',
       },
     },
   },
@@ -61,12 +75,3 @@ function setRotation() {
   rotation.value = (rotation.value + 90) % 360
 }
 </script>
-
-<style lang="css">
-.ship-border-vertical {
-  border-radius: 53% 47% 38% 39% / 85% 88% 10% 10%;
-}
-.ship-border-horizontal {
-  border-radius: 95% 11% 12% 83% / 49% 43% 55% 51%;
-}
-</style>
