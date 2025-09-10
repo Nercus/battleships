@@ -42,11 +42,6 @@ const isGameStarted = computed(() => {
 })
 
 function exitGame() {
-  push.error({
-    duration: 5000,
-    message: 'You have been disconnected.',
-    title: 'Disconnected',
-  })
   router.push({ name: 'Start Game' })
 }
 </script>
