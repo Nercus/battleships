@@ -32,8 +32,7 @@ watch(copied, (newValue) => {
   if (newValue) {
     push.success({
       duration: 3000,
-      message: 'You can now share this link with your battleship buddy.',
-      title: 'Invite link copied to clipboard!',
+      message: 'Invite link copied to clipboard!',
     })
   }
 })

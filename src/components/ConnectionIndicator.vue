@@ -29,7 +29,6 @@ watch(isConnected, () => {
     push.success({
       duration: 5000,
       message: 'You are now connected.',
-      title: 'Connected',
     })
     router.push({ name: 'Setup' })
   }
@@ -37,7 +36,6 @@ watch(isConnected, () => {
     push.error({
       duration: 5000,
       message: 'You have been disconnected.',
-      title: 'Disconnected',
     })
     router.push({ name: 'Start Game' })
   }

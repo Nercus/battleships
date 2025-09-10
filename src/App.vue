@@ -1,6 +1,8 @@
 <template>
   <Notivue v-slot="item">
-    <Notification :item="item" />
+    <Notification :item="item" :theme="theme" :icons="outlinedIcons">
+      <NotificationProgress :item="item" />
+    </Notification>
   </Notivue>
   <div class="flex flex-col justify-center items-center p-2 size-full">
     <RouterView v-slot="{ Component }">
@@ -14,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { Notification, Notivue } from 'notivue'
+import { lightTheme, Notification, NotificationProgress, Notivue, outlinedIcons } from 'notivue'
 import { RouterView } from 'vue-router'
 
 const { isConnected } = useConnection()
@@ -30,7 +32,6 @@ function showWarning() {
   push.warning({
     duration: 5000,
     message: 'Refreshing the page will end the connection. Please use the browser\'s reload button instead, if you insist on refreshing.',
-    title: 'Warning',
   })
 }
 
@@ -50,6 +51,15 @@ document.addEventListener('keydown', (event) => {
     showWarningDebounced()
   }
 })
+
+const theme = {
+  ...lightTheme,
+  '--nv-success-accent': '#7ac270',
+  '--nv-error-accent': '#d04e4e',
+  '--nv-warning-accent': '#d0ba49',
+  '--nv-info-accent': '#8baee9',
+  '--nv-promise-accent': '#8baee9',
+}
 </script>
 
 <style>
@@ -61,5 +71,13 @@ document.addEventListener('keydown', (event) => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+</style>
+
+<style>
+@media (max-width: 768px) {
+  :root {
+    --nv-root-x-align: center;
+  }
 }
 </style>

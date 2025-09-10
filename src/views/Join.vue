@@ -33,7 +33,6 @@ const { start, stop } = useTimeout(10000, {
     if (!isConnected.value) {
       push.error({
         message: 'Failed to connect.',
-        title: 'Connection Timeout',
       })
       router.push({ name: 'Start Game' })
     }
@@ -55,8 +54,7 @@ onMounted(() => {
   }
   else {
     push.error({
-      message: 'No join code provided in URL.',
-      title: 'Error joining room',
+      message: 'No join code provided in your link.',
     })
     router.push({ name: 'Start Game' })
   }
