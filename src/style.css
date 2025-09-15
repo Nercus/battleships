@@ -34,8 +34,8 @@
   font-optical-sizing: auto;
   font-style: normal;
   src:
-    url('/assets/fonts/Ranade-Light.woff2') format('woff2'),
-    url('/assets/fonts/Ranade-Light.woff') format('woff');
+    url('./assets/fonts/Ranade-Light.woff2') format('woff2'),
+    url('./assets/fonts/Ranade-Light.woff') format('woff');
 }
 
 @font-face {
@@ -43,8 +43,8 @@
   font-optical-sizing: auto;
   font-style: normal;
   src:
-    url('/assets/fonts/Excon-Medium.woff2') format('woff2'),
-    url('/assets/fonts/Excon-Medium.woff') format('woff');
+    url('./assets/fonts/Excon-Medium.woff2') format('woff2'),
+    url('./assets/fonts/Excon-Medium.woff') format('woff');
 }
 
 h1,
