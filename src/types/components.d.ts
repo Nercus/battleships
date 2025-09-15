@@ -18,7 +18,6 @@ declare module 'vue' {
     AlertDialogRoot: typeof import('reka-ui')['AlertDialogRoot']
     AlertDialogTitle: typeof import('reka-ui')['AlertDialogTitle']
     AlertDialogTrigger: typeof import('reka-ui')['AlertDialogTrigger']
-    AnimatedLogo: typeof import('./../components/AnimatedLogo.vue')['default']
     Battleship: typeof import('./../components/GameGrid/ships/Battleship.vue')['default']
     Button: typeof import('./../components/shared/Button.vue')['default']
     CoinFlip: typeof import('./../views/CoinFlip.vue')['default']
