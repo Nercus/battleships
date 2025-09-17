@@ -1,5 +1,5 @@
 <template>
-  <div class="group relative w-full h-full">
+  <div class="group relative" :style="{ width: `${width}px`, height: `${height}px` }">
     <div :class="shipVariants({ flipped: rotation >= 180 })">
       <component :is="shipComponent" :orientation="orientation" class="size-full" :class="shipVariants({ color })" />
     </div>
@@ -23,6 +23,7 @@ const props = defineProps<{
   item: LayoutItem
   color: Color | null
   disabled: boolean
+  size: number
 }>()
 
 const emit = defineEmits(['turnElement'])
@@ -40,6 +41,9 @@ const length = computed(() => props.item.w === 1 ? props.item.h : props.item.w)
 const shipComponent = computed(() => {
   return shipsMap[length.value as keyof typeof shipsMap]
 })
+
+const width = computed(() => (orientation.value === 'horizontal' ? length.value * props.size + 1 : props.size + 1))
+const height = computed(() => (orientation.value === 'vertical' ? length.value * props.size + 1 : props.size + 1))
 
 const shipVariants = cva(
   '',

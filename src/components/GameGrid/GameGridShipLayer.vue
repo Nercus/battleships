@@ -4,7 +4,7 @@
     v-model:layout="layout"
     :col-num="10"
     :max-rows="10"
-    :row-height="getRowHeight()"
+    :row-height="rowHeight"
     is-draggable
     :margin="[1, 1]"
     :prevent-collision="false"
@@ -14,7 +14,7 @@
     :auto-size="false"
     @layout-updated="layoutUpdated">
     <template #item="{ item }">
-      <GameGridShip :item="item" :color="color" :disabled="!isDraggable" @turn-element="turnElement(item.i)" />
+      <GameGridShip :item="item" :color="color" :disabled="!isDraggable" :size="rowHeight" @turn-element="turnElement(item.i)" />
     </template>
   </GridLayout>
 </template>
@@ -97,12 +97,12 @@ function turnElement(id: number | string) {
   layoutUpdated()
 }
 
-function getRowHeight() {
-  // get height of shipGrid and return it divided by 10
-  const height = shipGrid.value?.$el.clientHeight || 0
-  const rowHeight = height / 10
-  return rowHeight - 1
-}
+const rowHeight = ref(0)
+
+useResizeObserver(() => shipGrid.value?.$el, () => {
+  const clientHeight = shipGrid.value?.$el.clientHeight || 0
+  rowHeight.value = clientHeight / 10 - 1
+})
 
 watch(() => props.isDraggable, (newValue) => {
   layout.value.forEach((el) => {
