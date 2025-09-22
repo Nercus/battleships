@@ -19,7 +19,7 @@ defineProps<{
 }>()
 
 const colorVariants = cva(
-  'size-8 lg:size-14',
+  'size-8 md:size-14',
   {
     defaultVariants: {
       colorNumber: 1,

@@ -3,7 +3,7 @@
     <h1 class="z-10 font-black text-xl tracking-wide">
       Setup your ships
     </h1>
-    <div class="relative background-grid w-full max-w-xl max-h-full aspect-square" :class="{ 'pointer-events-none': shipsConfirmed }">
+    <div class="relative background-grid w-full max-w-xl max-h-full aspect-square" :class="{ 'pointer-events-none': shipsConfirmed }" style="width: min(70vw, 70vh, 40rem); height: min(70vw, 70vh, 40rem);">
       <GameGridLabels vertical />
       <GameGridLabels horizontal />
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" is-draggable />

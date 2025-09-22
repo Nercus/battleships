@@ -4,7 +4,7 @@
       <NotificationProgress :item="item" />
     </Notification>
   </Notivue>
-  <div class="flex flex-col justify-center items-center p-2 size-full">
+  <div class="flex flex-col justify-center items-center size-full">
     <RouterView v-slot="{ Component }">
       <Transition name="fade" mode="out-in">
         <component :is="Component" class="overflow-hidden" />
