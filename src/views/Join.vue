@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center gap-4 lg:gap-10 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
+  <div class="flex flex-col justify-center items-center gap-2 md:gap-4 lg:gap-10 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
     <h1 class="font-black text-xl tracking-wide">
       Joining Game: {{ joinCode }}
     </h1>

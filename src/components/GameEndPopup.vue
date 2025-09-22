@@ -10,7 +10,7 @@
         <AlertDialogDescription class="mt-4 mb-5 text-sm leading-normal">
           {{ playerWon ? 'Congratulations! You are the captain of the seven seas!' : 'You have lost the game. Better luck next time! Keelhaul the captain!' }}
         </AlertDialogDescription>
-        <div class="flex justify-end gap-4">
+        <div class="flex justify-end gap-2 md:gap-4">
           <AlertDialogAction
             :as="Button" :type="newGameRequested ? 'ghost' : 'success'" @click="newGame">
             <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2">

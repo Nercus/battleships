@@ -14,7 +14,7 @@
         <AlertDialogDescription class="mt-4 mb-5 text-sm leading-normal">
           This action will exit the game and close the connection to the other player. This action cannot be undone. Are you sure you want to exit the game?
         </AlertDialogDescription>
-        <div class="flex justify-end gap-4">
+        <div class="flex justify-end gap-2 md:gap-4">
           <AlertDialogCancel
             :as="Button" type="muted">
             Cancel
