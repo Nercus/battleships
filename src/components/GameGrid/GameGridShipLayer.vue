@@ -54,7 +54,6 @@ function layoutUpdated() {
     }
 
     // Check for overlapping ships
-
     let hasOverlap = false
     do {
       hasOverlap = false
