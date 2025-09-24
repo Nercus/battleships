@@ -62,11 +62,15 @@ function confirmSelection() {
 </script>
 
 <style lang="css">
-.background-grid {
-  background-image:
-    linear-gradient(#000000 1px, transparent 1px, transparent calc(100% - 1px), #000000 calc(100% - 1px)),
-    linear-gradient(90deg, #000000 1px, transparent 1px, transparent calc(100% - 1px), #000000 calc(100% - 1px));
-  background-size: 10% 10%;
-  border: 1px solid #000000;
+.background-grid::before {
+  content: '';
+  background-size: calc(calc(100% - 2px) / 10) calc(calc(100% - 2px) / 10);
+  background-image: linear-gradient(to right, black 1px, transparent 1px),
+    linear-gradient(to bottom, black 1px, transparent 1px);
+  height: calc(100% - 2px);
+  width: calc(100% - 2px);
+  position: absolute;
+  background-repeat: repeat;
+  margin: 2px;
 }
 </style>
