@@ -1,6 +1,6 @@
 <template>
   <div class="group relative" :style="{ width: `${width}px`, height: `${height}px` }">
-    <div :class="shipVariants({ flipped: rotation >= 180 })">
+    <div :class="shipVariants({ flipped: rotation >= 180 })" class="relative p-1 size-full">
       <component :is="shipComponent" :orientation="orientation" class="size-full" :class="shipVariants({ color })" />
     </div>
     <Button v-if="!disabled" type="muted" size="small" square class="md:invisible group-hover:visible absolute inset-0 m-auto size-4 hover:scale-150" @click="emit('turnElement', props.item.i); setRotation()">
