@@ -1,6 +1,7 @@
 import SimplePeer from 'simple-peer'
 
-const SERVER_URL = `webrtc.wintersperger.dev`
+const currentDomain = window.location.hostname
+const SERVER_URL = `webrtc.${currentDomain === 'localhost' ? 'nerc.dev' : currentDomain}`
 
 const isConnected = ref(false)
 const isHost = ref<boolean | null>()
