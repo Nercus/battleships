@@ -69,7 +69,7 @@ onMounted(() => {
 
 function connectToRoom(code: string) {
   if (isTryingToJoin.value) return
-  if (!code || code?.length !== 6) {
+  if (!code || (code && code?.length !== 6)) {
     return
   }
   start() // Start the timeout countdown
