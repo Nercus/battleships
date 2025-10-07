@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center gap-2 md:gap-4 w-full h-full">
+  <div class="flex flex-col justify-center items-center gap-4 w-full h-full">
     <h1 class="z-10 font-black text-xl tracking-wide">
       Setup your ships
     </h1>
@@ -65,8 +65,8 @@ function confirmSelection() {
 .background-grid::before {
   content: '';
   background-size: calc(calc(100% - 2px) / 10) calc(calc(100% - 2px) / 10);
-  background-image: linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to bottom, black 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px);
   height: calc(100% - 2px);
   width: calc(100% - 2px);
   position: absolute;
