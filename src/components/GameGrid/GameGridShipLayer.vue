@@ -6,6 +6,7 @@
     :max-rows="10"
     :row-height="rowHeight"
     is-draggable
+    class="touch-none"
     :margin="[1, 1]"
     :prevent-collision="false"
     :vertical-compact="false"
