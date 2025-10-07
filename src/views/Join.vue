@@ -7,7 +7,7 @@
       Room code
       <Input v-model="joinCode" />
     </span>
-    <Button :disabled="isTryingToJoin || joinCode.length !== 6" class="w-full md:w-auto" color="primary" @click="connectToRoom(joinCode)">
+    <Button :disabled="isTryingToJoin || joinCode?.length !== 6" class="w-full md:w-auto" color="primary" @click="connectToRoom(joinCode)">
       Join Game
     </Button>
     <div v-if="isTryingToJoin" class="relative size-32">
@@ -69,7 +69,7 @@ onMounted(() => {
 
 function connectToRoom(code: string) {
   if (isTryingToJoin.value) return
-  if (!code || (code && code?.length !== 6)) {
+  if (!code || code?.length !== 6) {
     return
   }
   start() // Start the timeout countdown
