@@ -8,7 +8,7 @@
       <PinInputRoot id="otp" v-model="joinCodeInput" placeholder=" " class="flex items-center gap-2 mt-1" :disabled="isTryingToJoin">
         <PinInputInput
           v-for="(id, index) in 6" :key="id" :index="index"
-          class="border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 size-10 text-center" @input="joinCodeInput[index] = $event.target.value.toUpperCase()" />
+          class="border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 size-10 text-md text-center" @input="joinCodeInput[index] = $event.target.value.toUpperCase()" />
       </PinInputRoot>
     </span>
     <Button
