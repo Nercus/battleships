@@ -1,9 +1,16 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2 md:gap-4 lg:gap-10 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
     <h1 class="font-black text-xl tracking-wide">
-      Joining Game: {{ joinCode }}
+      {{ isTryingToJoin ? 'Joining...' : 'Select a game to join or enter a code!' }}
     </h1>
-    <div class="relative size-32">
+    <span v-if="!isTryingToJoin" class="flex flex-col justify-start items-start gap-1 font-bold text-sm tracking-wide">
+      Room code
+      <Input v-model="joinCode" />
+    </span>
+    <Button :disabled="isTryingToJoin || joinCode.length !== 6" class="w-full md:w-auto" color="primary" @click="connectToRoom(joinCode)">
+      Join Game
+    </Button>
+    <div v-if="isTryingToJoin" class="relative size-32">
       <Icon class="absolute inset-0 m-auto size-32 text-primary animate-spin fluent--spinner-ios-20-regular" />
       <svg
         class="absolute inset-0 m-auto size-14 text-base-700"
@@ -25,16 +32,19 @@
 const route = useRoute<'Join'>()
 const router = useRouter()
 
+const isTryingToJoin = ref(false)
 const { joinRoom, isConnected } = useConnection()
-const joinCode = computed(() => route.query.code as string | undefined)
+const joinCode = ref('')
 
 const { start, stop } = useTimeout(10000, {
   callback: () => {
+    if (!isTryingToJoin.value) return
     if (!isConnected.value) {
       push.error({
         message: 'Failed to connect.',
       })
       router.push({ name: 'Start Game' })
+      isTryingToJoin.value = false
     }
   },
   controls: true,
@@ -43,20 +53,27 @@ const { start, stop } = useTimeout(10000, {
 watch(isConnected, (newVal) => {
   if (newVal) {
     stop() // Stop the timeout if connected
+    isTryingToJoin.value = false
   }
 }, { immediate: true })
 
 onMounted(() => {
-  const joinCode = route.query.code as string | undefined
-  if (joinCode) {
+  connectToRoom(route.query.code as string)
+  joinCode.value = route.query.code as string
+  if (joinCode.value) {
     start() // Start the timeout countdown
-    joinRoom(joinCode)
-  }
-  else {
-    push.error({
-      message: 'No join code provided in your link.',
-    })
-    router.push({ name: 'Start Game' })
+    joinRoom(joinCode.value)
+    isTryingToJoin.value = true
   }
 })
+
+function connectToRoom(code: string) {
+  if (isTryingToJoin.value) return
+  if (!code || code?.length !== 6) {
+    return
+  }
+  start() // Start the timeout countdown
+  joinRoom(code)
+  isTryingToJoin.value = true
+}
 </script>

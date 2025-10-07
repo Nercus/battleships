@@ -42,7 +42,6 @@ declare module 'vue' {
     ResetGamePopup: typeof import('./../components/ResetGamePopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Separator: typeof import('reka-ui')['Separator']
     Setup: typeof import('./../views/Setup.vue')['default']
     SimpleSeparator: typeof import('./../components/shared/SimpleSeparator.vue')['default']
     SkullIcon: typeof import('./../components/SkullIcon.vue')['default']
