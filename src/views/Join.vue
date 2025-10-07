@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2 md:gap-4 lg:gap-10 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
-    <h1 class="font-black text-xl tracking-wide">
+    <h1 class="font-black text-lg tracking-wide">
       {{ isTryingToJoin ? 'Joining...' : 'Select a game to join or enter a code!' }}
     </h1>
     <span v-if="!isTryingToJoin" class="flex flex-col justify-start items-start gap-1 font-bold text-sm tracking-wide">

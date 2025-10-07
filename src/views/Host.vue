@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2 md:gap-4 p-4 lg:p-20 w-full max-w-lg lg:max-w-2xl">
-    <span class="flex md:flex-row flex-col justify-center items-center gap-2 font-black text-xl tracking-wide">
+    <span class="flex md:flex-row flex-col justify-center items-center gap-2 font-black text-lg tracking-wide">
       New Room
       <Input v-model="roomId" has-copy-button disabled />
     </span>

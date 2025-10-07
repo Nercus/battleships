@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-4 w-full h-full">
-    <h1 class="z-10 font-black text-xl tracking-wide">
+    <h1 class="z-10 font-black text-lg tracking-wide">
       Setup your ships
     </h1>
     <div class="relative background-grid aspect-square" :class="{ 'pointer-events-none': shipsConfirmed }" style="width: min(70vw, 70vh, 40rem); height: min(70vw, 70vh, 40rem);">
