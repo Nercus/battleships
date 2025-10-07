@@ -4,10 +4,17 @@
       {{ isTryingToJoin ? 'Joining...' : 'Select a game to join or enter a code!' }}
     </h1>
     <span v-if="!isTryingToJoin" class="flex flex-col justify-start items-start gap-1 font-bold text-sm tracking-wide">
-      Room code
-      <Input v-model="joinCode" />
+      Enter room code
+      <PinInputRoot id="otp" v-model="joinCodeInput" placeholder=" " class="flex items-center gap-2 mt-1" :disabled="isTryingToJoin">
+        <PinInputInput
+          v-for="(id, index) in 6" :key="id" :index="index"
+          class="border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 size-10 text-center" @input="joinCodeInput[index] = $event.target.value.toUpperCase()" />
+      </PinInputRoot>
     </span>
-    <Button :disabled="isTryingToJoin || joinCode?.length !== 6" class="w-full md:w-auto" color="primary" @click="connectToRoom(joinCode)">
+    <Button
+      v-if="!isTryingToJoin"
+      :disabled="isTryingToJoin || joinCode?.length !== 6" class="w-full md:w-auto" color="primary"
+      @click="connectToRoom(joinCode)">
       Join Game
     </Button>
     <div v-if="isTryingToJoin" class="relative size-32">
@@ -30,11 +37,11 @@
 
 <script setup lang="ts">
 const route = useRoute<'Join'>()
-const router = useRouter()
 
 const isTryingToJoin = ref(false)
 const { joinRoom, isConnected } = useConnection()
-const joinCode = ref('')
+const joinCodeInput = ref<string[]>([])
+const joinCode = computed(() => joinCodeInput.value.join(''))
 
 const { start, stop } = useTimeout(10000, {
   callback: () => {
@@ -43,7 +50,6 @@ const { start, stop } = useTimeout(10000, {
       push.error({
         message: 'Failed to connect.',
       })
-      router.push({ name: 'Start Game' })
       isTryingToJoin.value = false
     }
   },
@@ -59,10 +65,10 @@ watch(isConnected, (newVal) => {
 
 onMounted(() => {
   connectToRoom(route.query.code as string)
-  joinCode.value = route.query.code as string
-  if (joinCode.value) {
+  const linkCode = route.query.code as string
+  if (linkCode) {
     start() // Start the timeout countdown
-    joinRoom(joinCode.value)
+    joinRoom(linkCode)
     isTryingToJoin.value = true
   }
 })

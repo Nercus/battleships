@@ -38,6 +38,8 @@ declare module 'vue' {
     Input: typeof import('./../components/shared/Input.vue')['default']
     Join: typeof import('./../views/Join.vue')['default']
     OpponentTurn: typeof import('./../views/OpponentTurn.vue')['default']
+    PinInputInput: typeof import('reka-ui')['PinInputInput']
+    PinInputRoot: typeof import('reka-ui')['PinInputRoot']
     PlayerTurn: typeof import('./../views/PlayerTurn.vue')['default']
     ResetGamePopup: typeof import('./../components/ResetGamePopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
