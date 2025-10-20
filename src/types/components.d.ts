@@ -53,7 +53,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Separator: typeof import('reka-ui')['Separator']
     Setup: typeof import('./../views/Setup.vue')['default']
-    ShipsSunk: typeof import('./../components/GameGrid/ShipsSunk.vue')['default']
+    ShipsSunkInfo: typeof import('./../components/GameGrid/ShipsSunkInfo.vue')['default']
     SimpleSeparator: typeof import('./../components/shared/SimpleSeparator.vue')['default']
     SkullIcon: typeof import('./../components/SkullIcon.vue')['default']
     Start: typeof import('./../views/Start.vue')['default']
