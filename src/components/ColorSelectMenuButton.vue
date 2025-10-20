@@ -1,7 +1,7 @@
 <template>
   <Button type="primary" square size="huge" :class="[coloredButtonClass(colorNumber, isSelected), isSelected ? '' : '']" :disabled="isOpponentSelected">
     <div v-if="isOpponentSelected" class="relative flex justify-center items-center bg-base-100 rounded-full w-full h-full">
-      <Icon class="fluent--presence-blocked-20-regular bg-error" />
+      <Icon class="bg-error fluent--presence-blocked-20-regular" />
     </div>
     <Icon v-else-if="isSelected" class="bg-base-100 size-full fluent--checkmark-12-filled" />
   </Button>
@@ -19,7 +19,7 @@ defineProps<{
 }>()
 
 const colorVariants = cva(
-  'size-8 md:size-14',
+  'size-6 md:size-10',
   {
     defaultVariants: {
       colorNumber: 1,

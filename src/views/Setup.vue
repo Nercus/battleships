@@ -3,11 +3,16 @@
     <h1 class="z-10 font-black text-lg tracking-wide">
       Setup your ships
     </h1>
+
     <div class="relative background-grid aspect-square" :class="{ 'pointer-events-none': shipsConfirmed }" style="width: min(70vw, 70vh, 40rem); height: min(70vw, 70vh, 40rem);">
       <GameGridLabels vertical />
       <GameGridLabels horizontal />
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" is-draggable />
+      <Button type="muted" size="small" square class="top-2 -right-2 absolute translate-x-full" @click="randomizeLayout">
+        <Icon class="size-5 fluent--arrow-shuffle-24-filled" />
+      </Button>
     </div>
+
     <ColorSelectMenu />
     <Button :type="shipsConfirmed ? 'ghost' : 'success'" :disabled="!playerColor" @click="confirmSelection">
       <span v-if="shipsConfirmed && !otherPlayerReady" class="flex items-center gap-2">
@@ -30,6 +35,10 @@ const { getRandomLayout, playerColor, shipLayout } = useGame()
 const otherPlayerReady = ref(false)
 const shipsConfirmed = ref(false)
 
+function randomizeLayout() {
+  shipLayout.value = getRandomLayout()
+}
+
 watch(shipsConfirmed, (newValue) => {
   if (newValue !== undefined) {
     sendEvent({ data: newValue, type: 'ready' })
@@ -39,7 +48,7 @@ watch(shipsConfirmed, (newValue) => {
 let removeListener: () => void
 onMounted(() => {
   // set a random layout here
-  shipLayout.value = getRandomLayout()
+  randomizeLayout()
   removeListener = onEvent((event) => {
     if (event.type === 'ready') {
       otherPlayerReady.value = event.data
