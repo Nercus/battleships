@@ -37,7 +37,7 @@ declare module 'vue' {
     Icon: typeof import('./../components/shared/Icon.vue')['default']
     Input: typeof import('./../components/shared/Input.vue')['default']
     Join: typeof import('./../views/Join.vue')['default']
-    NoLanscapeOverlay: typeof import('./../components/NoLanscapeOverlay.vue')['default']
+    NoLandscapeOverlay: typeof import('./../components/NoLandscapeOverlay.vue')['default']
     OpponentTurn: typeof import('./../views/OpponentTurn.vue')['default']
     PinInputInput: typeof import('reka-ui')['PinInputInput']
     PinInputRoot: typeof import('reka-ui')['PinInputRoot']

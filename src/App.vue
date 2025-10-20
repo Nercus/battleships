@@ -13,6 +13,7 @@
   </div>
   <Toolbar />
   <GameEndPopup />
+  <NoLandscapeOverlay />
 </template>
 
 <script setup lang="ts">
