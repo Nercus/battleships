@@ -27,7 +27,6 @@
             and a miss with <span class="inline-block"> <GameGridHitIndicator type="miss" :index="-1" board-title="" class="size-4" /></span>.
           </li>
         </ul>
-        <p class="inline-flex gap-2 mb-2 text-sm" />
       </HoverCardContent>
     </HoverCardPortal>
   </HoverCardRoot>
