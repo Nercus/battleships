@@ -1,6 +1,6 @@
 <template>
   <div class="flex md:flex-row flex-col justify-center items-center gap-2 md:gap-4 lg:gap-8 p-4 w-full h-full">
-    <div class="relative background-grid aspect-square" style="width: min(73vw, 73vh, 40rem); height: min(73vw, 73vh, 40rem);">
+    <div class="relative background-grid aspect-square" style="width: min(70vw, 70vh, 40rem); height: min(70vw, 70vh, 40rem);">
       <HowToPlay />
       <ShipsSunkInfo />
       <GameGridShipLayer v-model:layout="destroyedShips" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
