@@ -23,7 +23,6 @@ import type { HitType } from '../../composables/useGame'
 
 const props = defineProps<{
   type: HitType
-  boardTitle: string
   boardType?: 'opponent' | 'player'
   index: number
 }>()

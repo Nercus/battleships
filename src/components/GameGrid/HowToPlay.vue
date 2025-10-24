@@ -23,8 +23,8 @@
             Confirm your attack by double clicking the selected cell.
           </li>
           <li>
-            A hit is marked with <span class="inline-block"> <GameGridHitIndicator type="hit" :index="-1" board-title="" class="size-4" /></span>
-            and a miss with <span class="inline-block"> <GameGridHitIndicator type="miss" :index="-1" board-title="" class="size-4" /></span>.
+            A hit is marked with <span class="inline-block"> <GameGridHitIndicator type="hit" :index="-1" class="size-4" /></span>
+            and a miss with <span class="inline-block"> <GameGridHitIndicator type="miss" :index="-1" class="size-4" /></span>.
           </li>
         </ul>
       </HoverCardContent>

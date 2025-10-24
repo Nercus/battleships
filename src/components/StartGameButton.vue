@@ -7,7 +7,6 @@
       <GameGridHitIndicator
         v-if="boatAttacked"
         class="z-10 absolute size-full animate-pulse"
-        board-title=""
         board-type="player"
         :index="0"
         type="hit" />

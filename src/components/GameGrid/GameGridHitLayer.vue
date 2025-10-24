@@ -1,6 +1,7 @@
 <template>
   <div class="place-items-center grid grid-cols-10 grid-rows-10 aspect-square">
     <h1
+      v-if="props.title"
       class="-top-10 left-2 absolute w-full font-semibold text-lg text-center select-none height-6">
       {{ props.title }}
     </h1>
@@ -11,7 +12,6 @@
       :key="index"
       class="w-[80%] h-[80%]"
       :type="hitType"
-      :board-title="props.title"
       :index="index"
       :board-type="boardType"
       @click="setTarget(hitType, index)"
@@ -24,7 +24,7 @@ import type { Board, HitType } from '../../composables/useGame'
 
 const props = defineProps<{
   board: Board
-  title: string
+  title?: string
   boardType?: 'opponent' | 'player'
 }>()
 const emit = defineEmits<{

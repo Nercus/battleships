@@ -58,6 +58,11 @@ declare module 'vue' {
     SkullIcon: typeof import('./../components/SkullIcon.vue')['default']
     Start: typeof import('./../views/Start.vue')['default']
     StartGameButton: typeof import('./../components/StartGameButton.vue')['default']
+    TabsContent: typeof import('reka-ui')['TabsContent']
+    TabsIndicator: typeof import('reka-ui')['TabsIndicator']
+    TabsList: typeof import('reka-ui')['TabsList']
+    TabsRoot: typeof import('reka-ui')['TabsRoot']
+    TabsTrigger: typeof import('reka-ui')['TabsTrigger']
     Toolbar: typeof import('./../components/Toolbar.vue')['default']
   }
 }

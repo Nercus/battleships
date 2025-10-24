@@ -109,6 +109,7 @@ export function useGame() {
       if (lostShips.value.length === shipLayout.value.length) {
         sendEvent({ type: 'game-over' })
         gameState.value = 'ended'
+        sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })
       }
     }
   }

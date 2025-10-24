@@ -1,4 +1,4 @@
-import type { LayoutItem } from 'grid-layout-plus'
+import type { Layout, LayoutItem } from 'grid-layout-plus'
 import type { Color } from './useGame'
 
 const { dataBus, sendMessage } = useConnection()
@@ -14,6 +14,7 @@ type GameEvent = | { type: 'ready', data: boolean }
   | { type: 'ship-destroyed', data: LayoutItem } // used to notify the opponent that a ship has been destroyed and sends the coordinates of the ship
   | { type: 'game-over' } // notify the opponent that the game is over, because all the player's ships have been destroyed
   | { type: 'new-game' } // used to notify to play a new game
+  | { type: 'game-info', data: { board: Board, layout: Layout } } // when the game is over send the own board to the opponent for review
 
 const eventBus = useEventBus<GameEvent>('game-event')
 
