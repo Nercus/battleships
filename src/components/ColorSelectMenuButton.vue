@@ -19,26 +19,26 @@ defineProps<{
 }>()
 
 const colorVariants = cva(
-  'p-3 size-6 md:size-10',
+  'p-1 md:p-3 size-8 md:size-10',
   {
     defaultVariants: {
       colorNumber: 1,
     },
     variants: {
       colorNumber: {
-        0: 'bg-distinct-1 hover:bg-distinct-1',
-        1: 'bg-distinct-2 hover:bg-distinct-2',
-        2: 'bg-distinct-3 hover:bg-distinct-3',
-        3: 'bg-distinct-4 hover:bg-distinct-4',
-        4: 'bg-distinct-5 hover:bg-distinct-5',
-        5: 'bg-distinct-6 hover:bg-distinct-6',
-        6: 'bg-distinct-7 hover:bg-distinct-7',
-        7: 'bg-distinct-8 hover:bg-distinct-8',
-        8: 'bg-distinct-9 hover:bg-distinct-9',
+        0: 'bg-distinct-1 hover:bg-distinct-1 outline-distinct-1',
+        1: 'bg-distinct-2 hover:bg-distinct-2 outline-distinct-2',
+        2: 'bg-distinct-3 hover:bg-distinct-3 outline-distinct-3',
+        3: 'bg-distinct-4 hover:bg-distinct-4 outline-distinct-4',
+        4: 'bg-distinct-5 hover:bg-distinct-5 outline-distinct-5',
+        5: 'bg-distinct-6 hover:bg-distinct-6 outline-distinct-6',
+        6: 'bg-distinct-7 hover:bg-distinct-7 outline-distinct-7',
+        7: 'bg-distinct-8 hover:bg-distinct-8 outline-distinct-8',
+        8: 'bg-distinct-9 hover:bg-distinct-9 outline-distinct-9',
       },
       isSelected: {
         false: 'opacity-50',
-        true: 'outline-2 outline-offset-2 outline-primary opacity-100',
+        true: 'outline-2 outline-offset-2  opacity-100',
       },
       opponentSelection: {
         false: 'opacity-100',

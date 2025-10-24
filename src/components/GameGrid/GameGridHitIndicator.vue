@@ -1,19 +1,19 @@
 <template>
   <div
     v-if="props.type !== 'none'"
-    class="flex justify-center items-center shadow-[0px_2px_3px_2px_rgba(0,_0,_0,_0.6)] p-1 rounded-full aspect-square"
+    class="flex justify-center items-center indicator-outer-shadow mt-1 p-1 rounded-full aspect-square"
     :class="{
       'bg-base-300': props.type === 'miss',
       'bg-error': props.type === 'hit',
       'bg-blue': opponentTarget !== null,
       'animate-pulse': flashTarget && isAttackTarget,
     }">
-    <div class="bg-black/10 shadow-[inset_0px_0px_5px_3px_rgba(0,_0,_0,_0.4)] rounded-full w-2/3 h-2/3" />
+    <div class="bg-black/10 indicator-inner-shadow rounded-full size-4/5 md:size-2/3" />
   </div>
-  <Button v-else-if="playersTurn && isOpponentsBoard" class="p-0 ring-error cursor-pointer" :class="{ 'ring-2 bg-error/10 rounded-full shadow-[0px_2px_3px_2px_rgba(0,_0,_0,_0.6)]': isPlayersTarget }" square type="ghost">
+  <Button v-else-if="playersTurn && isOpponentsBoard" class="p-0 ring-error cursor-pointer" :class="{ 'ring-2 bg-error/10 rounded-full indicator-outer-shadow': isPlayersTarget }" square type="ghost">
     <Icon v-if="isPlayersTarget" class="bg-error size-full fluent--location-target-square-20-regular" />
   </Button>
-  <div v-else class="animate-pulse" :class="{ 'rounded-full shadow-[0px_2px_3px_2px_rgba(0,_0,_0,_0.6)]': opponentTarget?.x === x && opponentTarget?.y === y && isPlayerBoardHitStates }">
+  <div v-else class="animate-pulse" :class="{ 'rounded-full indicator-outer-shadow': opponentTarget?.x === x && opponentTarget?.y === y && isPlayerBoardHitStates }">
     <Icon v-if="opponentTarget?.x === x && opponentTarget?.y === y && isPlayerBoardHitStates" class="bg-error rounded-full ring-2 ring-error size-full fluent--target-20-filled" />
   </div>
 </template>
@@ -65,3 +65,23 @@ onEvent((event) => {
   }
 })
 </script>
+
+<style lang="css">
+ .indicator-inner-shadow {
+  box-shadow: inset 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+}
+
+.indicator-outer-shadow {
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.4);
+}
+
+@media (width <= 48rem) {
+  .indicator-inner-shadow {
+    box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.35);
+  }
+
+  .indicator-outer-shadow {
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.35);
+  }
+}
+</style>

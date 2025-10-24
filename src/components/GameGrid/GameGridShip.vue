@@ -3,8 +3,8 @@
     <div :class="shipVariants({ flipped: rotation >= 180 })" class="relative md:py-1 size-full">
       <component :is="shipComponent" :orientation="orientation" class="size-full" :class="shipVariants({ color })" />
     </div>
-    <Button v-if="!disabled" type="muted" size="small" square class="md:invisible group-hover:visible absolute inset-0 m-auto size-4 hover:scale-150" @click="emit('turnElement', props.item.i); setRotation()">
-      <Icon class="fluent--arrow-rotate-clockwise-16-filled" />
+    <Button v-if="!disabled" type="muted" size="small" square class="md:invisible group-hover:visible absolute inset-0 m-auto size-3 md:size-4 hover:scale-150" @click="emit('turnElement', props.item.i); setRotation()">
+      <Icon class="size-3 md:size-4 fluent--arrow-rotate-clockwise-16-filled" />
     </Button>
   </div>
 </template>
