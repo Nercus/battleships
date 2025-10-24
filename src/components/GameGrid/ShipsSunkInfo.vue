@@ -1,7 +1,7 @@
 <template>
-  <HoverCardRoot :open-delay="100">
+  <HoverCardRoot :open-delay="100" :open="open">
     <HoverCardTrigger
-      class="top-12 -right-2 absolute flex justify-center items-center bg-base-800 drop-shadow p-1 rounded-full size-8 translate-x-full">
+      class="top-12 -right-2 absolute flex justify-center items-center bg-base-800 drop-shadow p-1 rounded-full size-8 translate-x-full" @click="open = true">
       <span class="text-white text-xs">
         {{ destroyedShips.length }} / 5
       </span>
@@ -43,6 +43,8 @@
 
 <script setup lang="ts">
 import { cva } from 'class-variance-authority'
+
+const open = ref(false)
 
 const { destroyedShips, opponentColor } = useGame()
 

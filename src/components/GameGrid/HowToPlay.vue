@@ -1,6 +1,6 @@
 <template>
-  <HoverCardRoot :open-delay="100">
-    <HoverCardTrigger class="top-2 -right-2 absolute flex justify-center items-center bg-base-800 drop-shadow p-2 rounded-full size-8 translate-x-full">
+  <HoverCardRoot :open-delay="100" :open="open">
+    <HoverCardTrigger class="top-2 -right-2 absolute flex justify-center items-center bg-base-800 drop-shadow p-2 rounded-full size-8 translate-x-full" @click="open = true">
       <Icon class="bg-white size-full fluent--question-16-filled" />
     </HoverCardTrigger>
     <HoverCardPortal>
@@ -31,3 +31,7 @@
     </HoverCardPortal>
   </HoverCardRoot>
 </template>
+
+<script setup lang="ts">
+const open = ref(false)
+</script>

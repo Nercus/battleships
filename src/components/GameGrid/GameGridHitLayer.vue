@@ -37,14 +37,6 @@ const flatBoard = computed(() => {
   return props.board.flat()
 })
 
-function setTarget(hitType: HitType, index: number) {
-  if (hitType !== 'none') return
-  const x = Math.floor(index / 10)
-  const y = index % 10
-  playerTarget.value = { x, y }
-  sendEvent({ data: { x, y }, type: 'target' })
-}
-
 function onDoubleClick(hitType: HitType, index: number) {
   if (hitType !== 'none') return
   if (!playerTarget.value) return
@@ -52,5 +44,19 @@ function onDoubleClick(hitType: HitType, index: number) {
   const y = index % 10
   if (playerTarget.value.x !== x || playerTarget.value.y !== y) return
   emit('shoot', x, y)
+}
+
+function setTarget(hitType: HitType, index: number) {
+  if (hitType !== 'none') return
+
+  const x = Math.floor(index / 10)
+  const y = index % 10
+
+  if (playerTarget.value?.x === x && playerTarget.value?.y === y) {
+    onDoubleClick(hitType, index)
+    return
+  }
+  playerTarget.value = { x, y }
+  sendEvent({ data: { x, y }, type: 'target' })
 }
 </script>
