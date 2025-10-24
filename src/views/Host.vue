@@ -5,7 +5,7 @@
       <Input v-model="roomId" has-copy-button disabled />
     </span>
     <SimpleSeparator />
-    <span>
+    <span class="text-center">
       Share this room ID with your battleship buddy to connect.
     </span>
   </div>
