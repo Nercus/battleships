@@ -23,19 +23,19 @@
     "simple-peer": "^9.11.1",
     "tailwind-merge": "^3.3.1",
     "vue": "^3.5.22",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^5.4.1",
+    "@antfu/eslint-config": "^6.0.0",
     "@iconify-json/fluent": "^1.2.33",
     "@iconify/tailwind4": "^1.0.6",
     "@stylistic/eslint-plugin": "^5.4.0",
     "@tailwindcss/vite": "^4.1.14",
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.8.1",
     "@types/simple-peer": "^9.11.8",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.8.1",
-    "eslint": "^9.37.0",
+    "eslint": "^9.38.0",
     "eslint-plugin-format": "^1.0.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.4",
@@ -43,7 +43,7 @@
     "typescript": "~5.9.3",
     "unplugin-auto-import": "^20.2.0",
     "unplugin-vue-components": "^29.1.0",
-    "vite": "^7.1.9",
+    "vite": "^7.1.10",
     "vue-tsc": "^3.1.1"
   },
   "pnpm": {
