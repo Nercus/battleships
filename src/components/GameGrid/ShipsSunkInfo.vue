@@ -1,5 +1,5 @@
 <template>
-  <HoverCardRoot>
+  <HoverCardRoot :open-delay="100">
     <HoverCardTrigger
       class="top-12 -right-2 absolute flex justify-center items-center bg-base-800 drop-shadow p-1 rounded-full size-8 translate-x-full">
       <span class="text-white text-xs">
@@ -11,7 +11,7 @@
         <HoverCardArrow />
         <div class="flex flex-col w-full">
           <span class="relative w-full">
-            <Icon v-if="carrierDestroyed" class="absolute inset-0 bg-red-500 size-full fluent--dismiss-24-filled" />
+            <Icon v-if="carrierDestroyed" class="absolute inset-0 bg-red-500 size-full fluent--dismiss-24-filled" />y
             <span class="font-bold text-sm">Aircraft Carrier</span>
             <AircraftCarrier orientation="horizontal" class="-mt-4 w-full" :class="shipColors({ color: opponentColor })" />
           </span>

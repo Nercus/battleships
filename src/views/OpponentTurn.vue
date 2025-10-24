@@ -1,5 +1,5 @@
 <template>
-  <div class="flex md:flex-row flex-col justify-center items-center gap-2 md:gap-4 lg:gap-8 p-4 w-full h-full">
+  <div class="flex md:flex-row flex-col justify-center items-center gap-2 md:gap-4 lg:gap-8 p-4 w-full h-full touch-none">
     <div class="relative background-grid aspect-square" style="width: min(70vw, 70vh, 40rem); height: min(70vw, 70vh, 40rem);">
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)] pointer-events-none" :color="playerColor" :is-draggable="false" />
       <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoardHitStates" title="Opponent's turn" board-type="player" />
@@ -47,8 +47,8 @@ onUnmounted(() => {
 .background-grid::before {
   content: '';
   background-size: calc(calc(100% - 2px) / 10) calc(calc(100% - 2px) / 10);
-  background-image: linear-gradient(to right, black 1px, transparent 1px),
-    linear-gradient(to bottom, black 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px);
   height: calc(100% - 2px);
   width: calc(100% - 2px);
   position: absolute;

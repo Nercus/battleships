@@ -1,5 +1,5 @@
 <template>
-  <HoverCardRoot>
+  <HoverCardRoot :open-delay="100">
     <HoverCardTrigger class="top-2 -right-2 absolute flex justify-center items-center bg-base-800 drop-shadow p-2 rounded-full size-8 translate-x-full">
       <Icon class="bg-white size-full fluent--question-16-filled" />
     </HoverCardTrigger>
