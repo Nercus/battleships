@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="props.type !== 'none'"
-    class="flex justify-center items-center indicator-outer-shadow mt-1 p-1 rounded-full aspect-square"
+    class="flex justify-center items-center indicator-outer-shadow mt-px sm:mt-0.5 md:mt-1 p-1 rounded-full aspect-square"
     :class="{
       'bg-base-300': props.type === 'miss',
       'bg-error': props.type === 'hit',
