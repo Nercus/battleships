@@ -6,7 +6,7 @@
     </div>
     <div class="hidden lg:block relative background-grid opacity-70 h-1/5 lg:h-1/3 aspect-square pointer-events-none">
       <GameGridShipLayer v-model:layout="destroyedShips" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHitStates" title="Your board" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHitStates" title="Your hits" />
     </div>
   </div>
 </template>

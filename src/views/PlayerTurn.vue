@@ -8,7 +8,7 @@
     </div>
     <div class="hidden lg:block relative background-grid opacity-70 h-1/5 lg:h-1/3 aspect-square pointer-events-none">
       <GameGridShipLayer v-model:layout="shipLayout" class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="playerColor" :is-draggable="false" />
-      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoardHitStates" title="Opponent's board" />
+      <GameGridHitLayer class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="playerBoardHitStates" title="Opponent's hits" />
     </div>
   </div>
 </template>
