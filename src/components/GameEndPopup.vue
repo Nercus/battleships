@@ -31,7 +31,7 @@
                 </tbody>
               </table>
             </TabsContent>
-            <TabsContent v-if="opponentBoardLayout && opponentBoardHits" value="board" class="relative background-grid m-4 min-h-0 aspect-square">
+            <TabsContent v-if="opponentBoardLayout && opponentBoardHits" value="board" class="relative m-4 min-h-0 aspect-square">
               <GameGridShipLayer
                 v-model:layout="opponentBoardLayout"
                 class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
@@ -43,11 +43,11 @@
         <div class="flex justify-end gap-2 md:gap-4">
           <AlertDialogAction
             :as="Button" :type="newGameRequested ? 'ghost' : 'success'" @click="newGame">
-            <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2 max-w-full break-words whitespace-normal">
+            <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
               Waiting for other player...
               <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
             </span>
-            <span v-else-if="!newGameRequested && opponentRequestsNewGame" class="flex items-center gap-2 max-w-full break-words whitespace-normal">
+            <span v-else-if="!newGameRequested && opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
               Opponent wants a rematch! Join?
               <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
             </span>
@@ -149,17 +149,3 @@ function exitGame() {
   router.push({ name: 'Start Game' })
 }
 </script>
-
-<style lang="css">
-.background-grid::before {
-  content: '';
-  background-size: calc(calc(100% - 2px) / 10) calc(calc(100% - 2px) / 10);
-  background-image:
-    linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px);
-  height: calc(100% - 2px);
-  width: calc(100% - 2px);
-  position: absolute;
-  background-repeat: repeat;
-  margin: 2px;
-}
-</style>
