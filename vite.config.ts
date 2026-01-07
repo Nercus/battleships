@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite'
+import { templateCompilerOptions } from '@tresjs/core'
 import vue from '@vitejs/plugin-vue'
 import RekaUIResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -14,7 +15,9 @@ export default defineConfig({
   },
   clearScreen: false,
   plugins: [
-    vue(),
+    vue({
+      ...templateCompilerOptions,
+    }),
     tailwindcss(),
     // vueDevTools(),
     Components({

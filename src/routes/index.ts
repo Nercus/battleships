@@ -7,27 +7,9 @@ export const routes: RouteRecordRaw[] = [
       useGame().reset()
       useConnection().reset()
     },
-    component: () => import('../views/Start.vue'),
-    name: 'Start Game',
+    component: () => import('../pages/Home.vue'),
+    name: 'Home',
     path: '/',
-  },
-  {
-    beforeEnter: () => {
-      useGame().reset()
-      useConnection().reset()
-    },
-    component: () => import('../views/Host.vue'),
-    name: 'Host',
-    path: '/host',
-  },
-  {
-    beforeEnter: () => {
-      useGame().reset()
-      useConnection().reset()
-    },
-    component: () => import('../views/Join.vue'),
-    name: 'Join',
-    path: '/join',
   },
   {
     beforeEnter: () => {
@@ -35,7 +17,7 @@ export const routes: RouteRecordRaw[] = [
       gameState.value = 'setup'
       return gameState.value === 'setup'
     },
-    component: () => import('../views/Setup.vue'),
+    component: () => import('../pages/Setup.vue'),
     meta: {
       requiresConnection: true,
     },
@@ -48,45 +30,22 @@ export const routes: RouteRecordRaw[] = [
       gameState.value = 'coin-flip'
       return gameState.value === 'coin-flip'
     },
-    component: () => import('../views/CoinFlip.vue'),
+    component: () => import('../pages/Coinflip.vue'),
     name: 'Who Starts?',
     path: '/start',
   },
   {
     beforeEnter: () => {
-      const { gameState, playersTurn } = useGame()
+      const { gameState } = useGame()
       gameState.value = 'active'
-      if (!playersTurn.value) {
-        console.warn('Redirecting to opponent\'s turn')
-        // Redirect to the opponent's turn if it's not the player's turn
-        return { name: 'Opponent\'s Turn' }
-      }
-      return playersTurn.value
+      return gameState.value === 'active'
     },
-    component: () => import('../views/PlayerTurn.vue'),
+    component: () => import('../pages/Play.vue'),
     meta: {
       requiresConnection: true,
     },
-    name: 'Player\'s Turn',
-    path: '/players-turn',
-  },
-  {
-    beforeEnter: () => {
-      const { gameState, playersTurn } = useGame()
-      gameState.value = 'active'
-      if (playersTurn.value) {
-        // Redirect to the player's turn if it's the player's turn
-        console.warn('Redirecting to player\'s turn')
-        return { name: 'Player\'s Turn' }
-      }
-      return !playersTurn.value
-    },
-    component: () => import('../views/OpponentTurn.vue'),
-    meta: {
-      requiresConnection: true,
-    },
-    name: 'Opponent\'s Turn',
-    path: '/opponents-turn',
+    name: 'Playing',
+    path: '/play',
   },
 ]
 

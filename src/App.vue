@@ -11,9 +11,6 @@
       </Transition>
     </RouterView>
   </div>
-  <Toolbar />
-  <GameEndPopup />
-  <NoLandscapeOverlay />
 </template>
 
 <script setup lang="ts">
@@ -32,7 +29,7 @@ window.addEventListener('beforeunload', (event) => {
 function showWarning() {
   push.warning({
     duration: 5000,
-    message: 'Refreshing the page will end the connection. Please use the browser\'s reload button instead, if you insist on refreshing.',
+    message: 'Refreshing the page will end the connection.',
   })
 }
 
