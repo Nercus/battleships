@@ -1,5 +1,5 @@
 <template>
-  Setup
+  <span>Setup</span>
 </template>
 
 <script setup lang="ts">

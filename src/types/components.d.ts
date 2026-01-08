@@ -12,9 +12,16 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Coin: typeof import('./../components/coin/Coin.vue')['default']
+    CoinLogo: typeof import('./../components/coin/CoinLogo.vue')['default']
     CoinScene: typeof import('./../components/coin/CoinScene.vue')['default']
     CommonButton: typeof import('./../components/common/CommonButton.vue')['default']
-    CommonCoin: typeof import('./../components/common/CommonCoin.vue')['default']
+    CommonInput: typeof import('./../components/common/CommonInput.vue')['default']
+    Icon: typeof import('./../components/common/Icon.vue')['default']
+    Input: typeof import('./../components/common/Input.vue')['default']
+    PinInput: typeof import('./../components/common/PinInput.vue')['default']
+    PinInputInput: typeof import('reka-ui')['PinInputInput']
+    PinInputRoot: typeof import('reka-ui')['PinInputRoot']
+    Primitive: typeof import('reka-ui')['Primitive']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

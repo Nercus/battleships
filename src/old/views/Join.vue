@@ -56,12 +56,27 @@ const { start, stop } = useTimeout(10000, {
   controls: true,
 }) // 10 seconds
 
-watch(isConnected, (newVal) => {
-  if (newVal) {
+
+
+watch(isConnected, () => {
+  if (isConnected.value) {
+    push.success({
+      duration: 5000,
+      message: 'You are now connected.',
+    })
     stop() // Stop the timeout if connected
     isTryingToJoin.value = false
+    router.push({ name: 'Setup' })
+  }
+  if (!isConnected.value && route.meta.requiresConnection) {
+    push.error({
+      duration: 5000,
+      message: 'You have been disconnected.',
+    })
+    router.push({ name: 'Start Game' })
   }
 }, { immediate: true })
+
 
 onMounted(() => {
   connectToRoom(route.query.code as string)
