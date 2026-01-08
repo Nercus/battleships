@@ -7,7 +7,7 @@
       <Icon class="animate-spin fluent--spinner-ios-20-filled" />
       <span class="text-base-content italic">Loading new room!</span>
     </span>
-    <CommonInput v-else-if="isStarting && !isLoading" v-model="roomId" has-copy-button disabled />
+    <CommonInput v-else-if="isStarting && !isLoading" v-model="roomId" has-copy-button disabled class="w-2/3 text-lg text-center" />
   </div>
 </template>
 
