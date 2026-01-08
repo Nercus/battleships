@@ -32,7 +32,7 @@ watch(copied, (newValue) => {
   if (newValue) {
     push.success({
       duration: 3000,
-      message: 'Invite link copied to clipboard!',
+      message: 'Text copied to clipboard!',
     })
   }
 })
