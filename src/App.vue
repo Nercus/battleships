@@ -7,7 +7,7 @@
   <div class="flex flex-col justify-center items-center size-full">
     <RouterView v-slot="{ Component }">
       <Transition name="fade" mode="out-in">
-        <component :is="Component" class="overflow-hidden" />
+        <component :is="Component" class="flex justify-center items-center size-full overflow-hidden" />
       </Transition>
     </RouterView>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex justify-center items-center size-full overflow-hidden">
+  <div class="relative">
     <div class="relative flex flex-col justify-center items-center gap-2 lg:gap-4 p-4 lg:p-20 w-full max-w-xl overflow-visible">
       <CoinLogo />
       <h1 class="z-10 font-semibold text-3xl tracking-wide">

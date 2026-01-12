@@ -1,8 +1,12 @@
 <template>
-  <div class="relative size-100">
-    <IndicatorGrid class="absolute inset-0" />
-    <ShipGrid v-model:layout="shipLayout" :color="playerColor" is-draggable class="absolute inset-0 size-full" />
-  </div>
+  <GridLayers>
+    <template #layer1>
+      <IndicatorGrid class="absolute inset-0" />
+    </template>
+    <template #layer2>
+      <ShipGrid v-model:layout="shipLayout" :color="playerColor" is-draggable class="absolute inset-0 size-full" />
+    </template>
+  </GridLayers>
 </template>
 
 <script setup lang="ts">
