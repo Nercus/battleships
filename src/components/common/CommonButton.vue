@@ -77,8 +77,8 @@ const buttonVariants = cva('inline-flex justify-center items-center gap-2 shadow
       true: ['rounded-full'],
     },
     size: {
-      huge: ['text-xl focus-visible:ring-2'],
-      large: ['text-lg focus-visible:ring-2'],
+      huge: ['text-xl focus-visible:ring-2 font-semibold'],
+      large: ['text-lg focus-visible:ring-2 font-semibold'],
       medium: ['text-md focus-visible:ring'],
       small: ['text-sm focus-visible:ring'],
     },

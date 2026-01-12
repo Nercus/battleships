@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2 lg:gap-4 w-full">
-    <CommonButton class="z-10 relative w-full max-w-xs" type="muted" size="large" @click="initiateJoinGame">
+    <CommonButton class="z-10 relative w-full max-w-xs" type="muted" size="huge" @click="initiateJoinGame">
       Join Game
     </CommonButton>
     <div v-if="isJoining" class="flex flex-row items-end gap-2">

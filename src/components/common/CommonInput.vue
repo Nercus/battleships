@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative w-fit">
     <input v-model="model" v-bind="$attrs" class="px-2 py-1 border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-fit">
     <CommonButton v-if="props.hasCopyButton" class="right-1 absolute inset-y-1" size="small" square :disabled="!isSupported || model?.length === 0" @click="copyToClipboard">
       <Icon class="fluent--copy-20-regular" />
