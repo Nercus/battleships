@@ -133,7 +133,7 @@ watch(() => props.targetSide, (newTarget) => {
   if (newTarget && !isSpinning.value) {
     startSpinAnimation()
   }
-}, { immediate: true })
+}, { immediate: !props.showLogo })
 
 function startSpinAnimation() {
   isSpinning.value = true

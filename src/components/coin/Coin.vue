@@ -1,7 +1,7 @@
 <template>
   <TresCanvas window-size clear-color="#f5f5f5">
     <Suspense>
-      <CoinScene :colors="['#4f82ce', '#4f82ce']" :names="['Nerc', 'Eminos']" show-logo />
+      <CoinScene :colors="props.colors" :names="props.names" :target-side="props.targetSide" />
       <template #fallback>
         Loading coin...
       </template>
@@ -11,4 +11,10 @@
 
 <script setup lang="ts">
 import { TresCanvas } from '@tresjs/core'
+
+const props = defineProps<{
+  colors: [string, string]
+  names: [string, string]
+  targetSide: 'front' | 'back'
+}>()
 </script>
