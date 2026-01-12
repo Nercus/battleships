@@ -1,20 +1,20 @@
 <template>
   <GridLayout
     ref="shipGrid" v-model:layout="layout" :col-num="10" :max-rows="10" :row-height="rowHeight" is-draggable
-    class="touch-none" :margin="[1, 1]" :prevent-collision="false" :vertical-compact="false" is-bounded
-    :use-css-transforms="false" :auto-size="false" @layout-updated="layoutUpdated">
-    <template #item="{ item }">
+    class="touch-none" :prevent-collision="true" :vertical-compact="false" is-bounded
+    :use-css-transforms="false" :auto-size="false" :margin="[0, 0]" :is-resizable="false">
+    <GridItem v-for="item in layout" :key="item.i" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :is-resizable="false" @moved="layoutUpdated()">
       <ShipGridElement
         :item="item" :color="color" :disabled="!isDraggable" :size="rowHeight"
         @turn-element="turnElement(item.i)" />
-    </template>
+    </GridItem>
   </GridLayout>
 </template>
 
 <script setup lang="ts">
 import type { Layout } from 'grid-layout-plus'
 import type { Color } from '../../composables/useGame'
-import { GridLayout } from 'grid-layout-plus'
+import { GridItem, GridLayout } from 'grid-layout-plus'
 
 const props = defineProps<{
   color: Color | null
@@ -91,8 +91,25 @@ function turnElement(id: number | string) {
 const rowHeight = ref(0)
 
 useResizeObserver(() => shipGrid.value?.$el, () => {
-  const clientHeight = shipGrid.value?.$el.clientHeight || 0
-  rowHeight.value = clientHeight / 10 - 1
+  const gridElement = shipGrid.value?.$el
+  if (!gridElement) return
+
+  const clientHeight = gridElement.clientHeight || gridElement.parentElement?.clientHeight || 0
+  if (clientHeight > 0) {
+    rowHeight.value = (clientHeight) / 10 // Account for grid gaps
+  }
+})
+
+onMounted(() => {
+  nextTick(() => {
+    const gridElement = shipGrid.value?.$el
+    if (gridElement) {
+      const clientHeight = gridElement.clientHeight || gridElement.parentElement?.clientHeight || 0
+      if (clientHeight > 0) {
+        rowHeight.value = (clientHeight - 10) / 10
+      }
+    }
+  })
 })
 
 watch(() => props.isDraggable, (newValue) => {
@@ -100,10 +117,37 @@ watch(() => props.isDraggable, (newValue) => {
     el.static = !newValue
   })
 }, { immediate: true })
+
+const ShipColors = {
+  blue: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-6').trim(),
+  emerald: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-4').trim(),
+  green: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-3').trim(),
+  indigo: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-7').trim(),
+  orange: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-1').trim(),
+  rose: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-9').trim(),
+  teal: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-5').trim(),
+  violet: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-8').trim(),
+  yellow: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-2').trim(),
+} as const
+
+const shipColor = computed(() => {
+  return props.color ? ShipColors[props.color] : 'stroke-black'
+})
 </script>
 
 <style lang="css">
 .vgl-item {
   transition: none !important;
+}
+
+.vgl-item--placeholder {
+  border-radius: 0.5rem !important;
+}
+</style>
+
+<style lang="css" scoped>
+.vgl-layout {
+  --vgl-placeholder-bg: v-bind(shipColor);
+  --vgl-placeholder-opacity: 30%;
 }
 </style>

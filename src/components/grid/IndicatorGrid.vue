@@ -1,6 +1,6 @@
 <template>
-  <div class="grid grid-cols-9 grid-rows-9">
-    <IndicatorGridCell v-for="n in 81" :key="n" />
+  <div class="grid grid-cols-10 grid-rows-10">
+    <IndicatorGridCell v-for="n in 100" :key="n" />
   </div>
 </template>
 
