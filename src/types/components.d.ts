@@ -35,6 +35,7 @@ declare module 'vue' {
     Primitive: typeof import('reka-ui')['Primitive']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Separator: typeof import('reka-ui')['Separator']
     ShipGrid: typeof import('./../components/grid/ShipGrid.vue')['default']
     ShipGridElement: typeof import('./../components/grid/ShipGridElement.vue')['default']
   }

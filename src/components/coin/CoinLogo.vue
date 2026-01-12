@@ -1,6 +1,6 @@
 <template>
-  <button class="-mb-20 w-80 md:w-full max-w-full aspect-square" @click="switchSide">
-    <TresCanvas clear-color="#f5f5f5" class="size-full">
+  <button class="-mb-20 w-80 md:w-full max-w-full aspect-square cursor-pointer" @click="switchSide">
+    <TresCanvas clear-color="#f5f5f5" class="-z-10 size-full">
       <Suspense>
         <CoinScene :colors="['#4f82ce', '#4f82ce']" show-logo :target-side="currentSide" />
         <template #fallback>

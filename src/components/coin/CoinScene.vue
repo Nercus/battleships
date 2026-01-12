@@ -1,5 +1,5 @@
 <template>
-  <TresPerspectiveCamera :position="[0, 1, 4]" :look-at="[0, 0, 0]" />
+  <TresPerspectiveCamera :position="[0, 1, 3.5]" :look-at="[0, 0, 0]" />
   <TresDirectionalLight :position="[5, 5, 5]" :intensity="0.7" />
 
   <TresMesh :position="[0, -coinRadius - 0.05, 0]" :rotation="[-Math.PI / 2, 0, 0]">
