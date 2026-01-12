@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import type { LayoutItem } from 'grid-layout-plus'
-import type { Color } from '../../composables/useGame'
+import type { Color } from '../../../composables/useGame'
 import { cva } from 'class-variance-authority'
 
 import AircraftCarrier from './ships/AircraftCarrier.vue'

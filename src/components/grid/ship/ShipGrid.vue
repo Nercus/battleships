@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import type { Layout } from 'grid-layout-plus'
-import type { Color } from '../../composables/useGame'
+import type { Color } from '../../../composables/useGame'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 
 const props = defineProps<{
