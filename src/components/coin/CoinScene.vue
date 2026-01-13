@@ -36,7 +36,13 @@ const props = defineProps<{
   showLogo?: boolean
 }>()
 
-const coinRadius = 1.0
+const coinRadius = computed(() => {
+  const baseRadius = 1.0
+  const aspectRatio = window.innerWidth / window.innerHeight
+
+  return aspectRatio < 0.8 ? baseRadius * 0.6 : baseRadius
+})
+
 const coinThickness = 0.12
 const faceZOffset = coinThickness / 2
 
