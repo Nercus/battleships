@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center items-center gap-2 lg:gap-4 w-full">
-    <CommonButton class="z-10 relative w-full max-w-xs" size="huge" @click="initiateStartGame">
+    <CommonButton class="z-10 relative w-full max-w-xs" size="large" @click="initiateStartGame">
       Start Game
     </CommonButton>
     <span v-if="isStarting && isLoading" class="flex flex-row justify-center items-center gap-2">
