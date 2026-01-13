@@ -13,7 +13,3 @@
     <slot name="toolbar" />
   </div>
 </template>
-
-<script setup lang="ts">
-
-</script>
