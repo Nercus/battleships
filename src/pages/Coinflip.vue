@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const currentSide = ref<'front' | 'back'>('front')
+const currentSide = ref<0 | 1>(0)
 const countDown = ref(3)
 
 function startCountDown() {

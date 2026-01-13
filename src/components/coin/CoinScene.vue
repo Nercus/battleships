@@ -32,7 +32,7 @@ import { CanvasTexture } from 'three'
 const props = defineProps<{
   colors: [string, string]
   names?: [string, string]
-  targetSide?: 'front' | 'back'
+  targetSide?: 0 | 1
   showLogo?: boolean
 }>()
 
@@ -156,7 +156,7 @@ onBeforeRender(({ delta }) => {
 
     if (progress >= 1) {
       // Animation complete - set final position
-      const targetRotation = props.targetSide === 'back' ? Math.PI : 0
+      const targetRotation = props.targetSide === 1 ? Math.PI : 0
       coinGroupRef.value.rotation.y = targetRotation
       isSpinning.value = false
     }
@@ -166,7 +166,7 @@ onBeforeRender(({ delta }) => {
 
       // Total rotations: multiple spins + final position
       const baseSpins = 4 // Number of full rotations
-      const targetRotation = props.targetSide === 'back' ? Math.PI : 0
+      const targetRotation = props.targetSide === 1 ? Math.PI : 0
       const totalRotation = baseSpins * Math.PI * 2 + targetRotation
 
       coinGroupRef.value.rotation.y = easedProgress * totalRotation

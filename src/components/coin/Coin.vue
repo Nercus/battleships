@@ -15,6 +15,6 @@ import { TresCanvas } from '@tresjs/core'
 const props = defineProps<{
   colors: [string, string]
   names: [string, string]
-  targetSide: 'front' | 'back'
+  targetSide: 0 | 1
 }>()
 </script>

@@ -14,9 +14,9 @@
 <script setup lang="ts">
 import { TresCanvas } from '@tresjs/core'
 
-const currentSide = ref<'front' | 'back'>('front')
+const currentSide = ref<0 | 1>(0)
 
 function switchSide() {
-  currentSide.value = currentSide.value === 'front' ? 'back' : 'front'
+  currentSide.value = currentSide.value === 0 ? 1 : 0
 }
 </script>
