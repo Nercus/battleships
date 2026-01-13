@@ -12,6 +12,15 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AircraftCarrier: typeof import('./../components/grid/ship/ships/AircraftCarrier.vue')['default']
+    AlertDialogAction: typeof import('reka-ui')['AlertDialogAction']
+    AlertDialogCancel: typeof import('reka-ui')['AlertDialogCancel']
+    AlertDialogContent: typeof import('reka-ui')['AlertDialogContent']
+    AlertDialogDescription: typeof import('reka-ui')['AlertDialogDescription']
+    AlertDialogOverlay: typeof import('reka-ui')['AlertDialogOverlay']
+    AlertDialogPortal: typeof import('reka-ui')['AlertDialogPortal']
+    AlertDialogRoot: typeof import('reka-ui')['AlertDialogRoot']
+    AlertDialogTitle: typeof import('reka-ui')['AlertDialogTitle']
+    AlertDialogTrigger: typeof import('reka-ui')['AlertDialogTrigger']
     Battleship: typeof import('./../components/grid/ship/ships/Battleship.vue')['default']
     Coin: typeof import('./../components/coin/Coin.vue')['default']
     CoinLogo: typeof import('./../components/coin/CoinLogo.vue')['default']
@@ -25,6 +34,7 @@ declare module 'vue' {
     GridLayers: typeof import('./../components/grid/GridLayers.vue')['default']
     GridLayout: typeof import('./../components/grid/GridLayout.vue')['default']
     Gunship: typeof import('./../components/grid/ship/ships/Gunship.vue')['default']
+    HomeButton: typeof import('./../components/HomeButton.vue')['default']
     HomeJoinGame: typeof import('./../components/home/HomeJoinGame.vue')['default']
     HomeStartGame: typeof import('./../components/home/HomeStartGame.vue')['default']
     'HomeStartGame.1': typeof import('../components/home/HomeJoinGame.vue')['default']
