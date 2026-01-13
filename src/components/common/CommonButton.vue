@@ -47,7 +47,7 @@ const buttonVariants = cva('inline-flex justify-center items-center gap-2 shadow
       square: true,
     },
     {
-      class: ['py-1 px-3 '],
+      class: ['py-1 px-3'],
       size: 'small',
       square: false,
     },
