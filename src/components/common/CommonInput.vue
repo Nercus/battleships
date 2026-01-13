@@ -1,6 +1,9 @@
 <template>
-  <div class="relative w-fit">
-    <input v-model="model" v-bind="$attrs" class="px-2 py-1 border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-fit">
+  <div class="relative flex flex-col w-fit">
+    <label v-if="props.label" :for="id" class="text-xs text-base-700 italic">
+      {{ props.label }}
+    </label>
+    <input :id="id" v-model="model" v-bind="$attrs" class="px-2 py-1 border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
     <CommonButton v-if="props.hasCopyButton" class="right-1 absolute inset-y-1" size="small" square :disabled="!isSupported || model?.length === 0" @click="copyToClipboard">
       <Icon class="fluent--copy-20-regular" />
     </CommonButton>
@@ -11,12 +14,14 @@
 const props = withDefaults(defineProps<{
   hasCopyButton?: boolean
   copyFormat?: (value: string) => string
+  label?: string
 }>(), {
   hasCopyButton: false,
   copyFormat: (value: string) => value,
 })
 
-const model = defineModel<string>()
+const id = useId()
+const model = defineModel<string | null>()
 
 const { copied, copy, isSupported } = useClipboard({
   legacy: true,

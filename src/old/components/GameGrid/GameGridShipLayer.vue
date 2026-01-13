@@ -119,7 +119,6 @@ const ShipColors = {
   rose: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-9').trim(),
   teal: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-5').trim(),
   violet: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-8').trim(),
-  yellow: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-2').trim(),
 } as const
 
 const shipColor = computed(() => {

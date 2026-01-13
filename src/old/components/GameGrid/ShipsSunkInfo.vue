@@ -84,7 +84,6 @@ const shipColors = cva(
         rose: 'fill-distinct-9',
         teal: 'fill-distinct-5',
         violet: 'fill-distinct-8',
-        yellow: 'fill-distinct-2',
       },
 
     },

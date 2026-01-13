@@ -6,14 +6,35 @@
           <span :key="countDown" class="font-bold text-base-900 text-4xl">{{ countDown }}</span>
         </Transition>
       </div>
-      <Coin v-else key="coin" :names="['Player A', 'PlayerB']" :colors="['#ff0021', '#fa7b62']" :target-side="currentSide" />
+      <Coin v-else key="coin" :names="playerNames" :colors="playerColors" :target-side="currentSide" />
     </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
+const router = useRouter()
+
+const { playersTurn, switchTurn, playerName, opponentName, playerColor, opponentColor } = useGame()
+const { onEvent, sendEvent } = useEvent()
+const { isHost } = useConnection()
+
+const waitingForCoinFlip = ref(true)
 const currentSide = ref<0 | 1>(0)
 const countDown = ref(3)
+
+const playerNames = computed<[string, string]>(() => {
+  if (!playerName.value || !opponentName.value) {
+    return ['Player 1', 'Player 2']
+  }
+  return isHost.value ? [playerName.value, opponentName.value] : [opponentName.value, playerName.value]
+})
+
+const playerColors = computed<[string, string]>(() => {
+  if (!playerColor.value || !opponentColor.value) {
+    return ['#FF0000', '#0000FF']
+  }
+  return isHost.value ? [playerColor.value, opponentColor.value] : [opponentColor.value, playerColor.value]
+})
 
 function startCountDown() {
   countDown.value = 3
@@ -22,12 +43,53 @@ function startCountDown() {
     if (countDown.value <= 0) {
       clearInterval(interval)
       countDown.value = 0
+      triggerCoinFlip()
     }
   }, 1000)
 }
 
+function flipCoin(forcedResult?: 0 | 1): 0 | 1 {
+  let result: 0 | 1
+  if (forcedResult) {
+    result = forcedResult
+  }
+  else {
+    result = Math.random() >= 0.5 ? 0 : 1 as 0 | 1
+  }
+  currentSide.value = result
+  setTimeout(() => {
+    // set init active player
+    const wonCoinFlip = result === 0 ? isHost.value : !isHost.value
+    playersTurn.value = !wonCoinFlip // set the losing player to the active player, so the winning player can start the game
+    switchTurn()
+    router.push('/play')
+  }, 5000)
+  return result
+}
+
+function triggerCoinFlip() {
+  // the host is the only one who can trigger the coin flip
+  if (!isHost.value) return
+  const flipResult = flipCoin()
+  setTimeout(() => {
+    sendEvent({ data: { hostSide: flipResult }, type: 'coin-flip' })
+    waitingForCoinFlip.value = false
+  }, 1000)
+}
+
+let removeListener: () => void
 onMounted(() => {
   startCountDown()
+  removeListener = onEvent((event) => {
+    if (event.type === 'coin-flip') {
+      const { hostSide } = event.data
+      flipCoin(hostSide)
+      waitingForCoinFlip.value = false
+    }
+  })
+})
+onUnmounted(() => {
+  if (removeListener) removeListener()
 })
 </script>
 

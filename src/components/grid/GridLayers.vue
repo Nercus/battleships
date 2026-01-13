@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col">
+  <div class="flex flex-col items-center">
     <GridLabels orientation="horizontal" />
     <div class="flex flex-row">
       <GridLabels orientation="vertical" />
@@ -10,6 +10,7 @@
       <GridLabels orientation="vertical" />
     </div>
     <GridLabels orientation="horizontal" />
+    <slot name="toolbar" />
   </div>
 </template>
 

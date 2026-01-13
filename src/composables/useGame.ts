@@ -10,7 +10,6 @@ export const AVAILABLE_SHIPS = [
 
 export const AVAILABLE_COLORS = [
   'orange',
-  'yellow',
   'green',
   'emerald',
   'teal',
@@ -28,7 +27,9 @@ export type Board = Length10Array<Length10Array<HitType>>
 const gameState = ref<'idle' | 'setup' | 'coin-flip' | 'active' | 'ended'>('idle')
 const shipLayout = ref<Layout>([])
 
+const playerName = ref<string | null>(null)
 const playerColor = ref<Color | null>(null)
+const opponentName = ref<string | null>(null)
 const opponentColor = ref<Color | null>(null)
 
 const playersTurn = ref<boolean>(false) // the player whose turn it is
@@ -45,8 +46,6 @@ const lostShips = ref<Layout>([])
 
 const { sendEvent } = useEvent()
 export function useGame() {
-  const router = useRouter()
-
   const boardShipMap = computed(() => {
     const hitMap = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill(false)) as Length10Array<Length10Array<typeof AVAILABLE_SHIPS[number]['name'] | false>>
     shipLayout.value.forEach((el) => {
@@ -61,12 +60,6 @@ export function useGame() {
 
   function switchTurn() {
     playersTurn.value = !playersTurn.value
-    if (playersTurn.value) {
-      router.push('/players-turn')
-    }
-    else {
-      router.push('/opponents-turn')
-    }
   }
 
   function setHitStateForOpponent(isHit: boolean): boolean | undefined {
@@ -189,6 +182,8 @@ export function useGame() {
     playerColor,
     playersTurn,
     playerTarget,
+    opponentName,
+    playerName,
     reset,
     setHitStateForOpponent,
     shipLayout,

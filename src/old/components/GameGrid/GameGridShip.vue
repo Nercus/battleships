@@ -62,7 +62,6 @@ const shipVariants = cva(
         rose: 'stroke-distinct-9',
         teal: 'stroke-distinct-5',
         violet: 'stroke-distinct-8',
-        yellow: 'stroke-distinct-2',
       },
       flipped: {
         false: 'rotate-0',
