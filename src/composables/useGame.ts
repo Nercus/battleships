@@ -132,7 +132,9 @@ export function useGame() {
 
     destroyedShips.value = []
     playerColor.value = null
+    playerName.value = null
     opponentColor.value = null
+    opponentName.value = null
     lostShips.value = []
   }
 
