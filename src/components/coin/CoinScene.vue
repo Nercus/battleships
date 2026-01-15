@@ -1,40 +1,73 @@
 <template>
-  <TresPerspectiveCamera :position="[0, 1, 3.5]" :look-at="[0, 0, 0]" />
-  <TresDirectionalLight :position="[5, 5, 5]" :intensity="0.7" />
-
-  <TresMesh :position="[0, -coinRadius - 0.05, 0]" :rotation="[-Math.PI / 2, 0, 0]">
-    <TresPlaneGeometry :args="[coinRadius * 2, coinRadius * 2]" />
-    <TresMeshBasicMaterial :map="shadowTexture" :transparent="true" :depth-write="false" />
-  </TresMesh>
+  <TresPerspectiveCamera :args="[45, 1, 1, 500]" :position="[0, 0, 3]" :look-at="[0, 0, 0]" />
 
   <TresGroup ref="coinGroupRef">
-    <TresMesh :position="[0, 0, faceZOffset + 0.01]">
-      <TresCircleGeometry :args="[coinRadius * 0.95, 64]" />
-      <TresMeshBasicMaterial :map="frontTexture" />
-    </TresMesh>
-
     <TresMesh :rotation="[Math.PI / 2, 0, 0]">
       <TresCylinderGeometry :args="[coinRadius, coinRadius, coinThickness, 64]" />
-      <TresMeshPhongMaterial color="#f5f5f5" :shininess="70" :specular="0x111111" />
+      <TresMeshBasicMaterial color="#f5f5f5" />
     </TresMesh>
 
-    <TresMesh :position="[0, 0, -faceZOffset - 0.01]" :rotation="[Math.PI, 0, Math.PI]">
-      <TresCircleGeometry :args="[coinRadius * 0.95, 64]" />
-      <TresMeshBasicMaterial :map="backTexture" />
+    <TresLineSegments :rotation="[Math.PI / 2, 0, 0]">
+      <TresEdgesGeometry :args="[cylinderGeometry]" />
+      <TresLineBasicMaterial color="#000000" :line-width="3" />
+    </TresLineSegments>
+
+    <TresMesh v-if="font && props.names && frontTextGeometry" :position="[0, 0, faceZOffset + 0.02]" :geometry="frontTextGeometry">
+      <TresMeshBasicMaterial :color="props.colors[0]" />
     </TresMesh>
+
+    <!-- Front text outline -->
+    <TresLineSegments v-if="font && props.names && frontTextGeometry" :position="[0, 0, faceZOffset + 0.02]">
+      <TresEdgesGeometry :args="[frontTextGeometry]" />
+      <TresLineBasicMaterial color="#000000" :line-width="2" />
+    </TresLineSegments>
+
+    <TresMesh :position="[0, 0, faceZOffset]">
+      <TresExtrudeGeometry :args="[ringShape, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }]" />
+      <TresMeshBasicMaterial :color="props.colors[0]" />
+    </TresMesh>
+    <TresLineSegments :position="[0, 0, faceZOffset]">
+      <TresEdgesGeometry :args="[frontRingGeometry]" />
+      <TresLineBasicMaterial color="#000000" :line-width="2" />
+    </TresLineSegments>
+
+    <TresMesh
+      v-if="font && props.names && backTextGeometry" :position="[0, 0, -faceZOffset - 0.02]"
+      :rotation="[0, Math.PI, 0]" :geometry="backTextGeometry">
+      <TresMeshBasicMaterial :color="props.colors[1]" />
+    </TresMesh>
+
+    <TresLineSegments
+      v-if="font && props.names && backTextGeometry" :position="[0, 0, -faceZOffset - 0.02]"
+      :rotation="[0, Math.PI, 0]">
+      <TresEdgesGeometry :args="[backTextGeometry]" />
+      <TresLineBasicMaterial color="#000000" :line-width="2" />
+    </TresLineSegments>
+
+    <TresMesh :position="[0, 0, -faceZOffset - 0.025]">
+      <TresExtrudeGeometry :args="[ringShape, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }]" />
+      <TresMeshBasicMaterial :color="props.colors[1]" />
+    </TresMesh>
+
+    <TresLineSegments :position="[0, 0, -faceZOffset - 0.025]">
+      <TresEdgesGeometry :args="[backRingGeometry]" />
+      <TresLineBasicMaterial color="#000000" :line-width="2" />
+    </TresLineSegments>
   </TresGroup>
 </template>
 
 <script setup lang="ts">
-import { useLoop } from '@tresjs/core'
-import { CanvasTexture } from 'three'
+import { useLoop, useTres } from '@tresjs/core'
+import { CylinderGeometry, ExtrudeGeometry, Shape } from 'three'
+import { Font, TextGeometry, TTFLoader } from 'three/examples/jsm/Addons.js'
 
 const props = defineProps<{
   colors: [string, string]
   names?: [string, string]
   targetSide?: 0 | 1
-  showLogo?: boolean
 }>()
+const { extend } = useTres()
+extend({ TextGeometry })
 
 const coinRadius = computed(() => {
   const baseRadius = 1.0
@@ -43,103 +76,84 @@ const coinRadius = computed(() => {
   return aspectRatio < 0.8 ? baseRadius * 0.6 : baseRadius
 })
 
+const ringShape = computed(() => {
+  const shape = new Shape()
+  const outerRadius = coinRadius.value * 0.98
+  const innerRadius = coinRadius.value * 0.95
+
+  shape.absarc(0, 0, outerRadius, 0, Math.PI * 2, false)
+
+  const hole = new Shape()
+  hole.absarc(0, 0, innerRadius, 0, Math.PI * 2, true)
+  shape.holes.push(hole)
+
+  return shape
+})
+
 const coinThickness = 0.12
 const faceZOffset = coinThickness / 2
 
 const coinGroupRef = ref()
+const font = ref<Font | null>(null)
 
-function createFaceTexture(text: string, color: string, size = 512) {
-  const canvas = document.createElement('canvas')
-  canvas.width = size
-  canvas.height = size
-  const ctx = canvas.getContext('2d')!
+const cylinderGeometry = computed(() => new CylinderGeometry(coinRadius.value, coinRadius.value, coinThickness, 64))
+const frontRingGeometry = computed(() => new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }))
+const backRingGeometry = computed(() => new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }))
 
-  ctx.fillStyle = '#1a1a1a'
-  ctx.fillRect(0, 0, size, size)
+const frontTextGeometry = ref<TextGeometry | null>(null)
+const backTextGeometry = ref<TextGeometry | null>(null)
 
-  // Add subtle border
-  ctx.strokeStyle = color
-  ctx.lineWidth = 8
-  ctx.beginPath()
-  ctx.arc(size / 2, size / 2, size / 2 - 4, 0, Math.PI * 2)
-  ctx.stroke()
+function createTextGeometry(text: string) {
+  if (!font.value) return null
+  const geometry = new TextGeometry(text, { font: font.value, size: 0.1, depth: 0.025 })
 
-  if (props.showLogo) {
-    const logo = new Image()
-    logo.src = 'src/assets/logo.png'
-
-    // Set fill color for SVG
-    ctx.fillStyle = color
-
-    const texture = new CanvasTexture(canvas)
-
-    logo.onload = () => {
-      const logoSize = size * 0.6
-      ctx.drawImage(logo, (size - logoSize) / 2, (size - logoSize) / 2, logoSize, logoSize)
-      texture.needsUpdate = true // Update the texture after logo loads
-    }
-
-    return texture
+  geometry.computeBoundingBox()
+  if (geometry.boundingBox) {
+    const centerX = (geometry.boundingBox.max.x + geometry.boundingBox.min.x) / 2
+    const centerY = (geometry.boundingBox.max.y + geometry.boundingBox.min.y) / 2
+    geometry.translate(-centerX, -centerY, 0)
   }
 
-  // Draw text with shadow
-  ctx.shadowColor = 'rgba(0,0,0,0.5)'
-  ctx.shadowBlur = 4
-  ctx.shadowOffsetY = 2
-
-  ctx.fillStyle = color
-  ctx.font = `bold ${size / 7}px Arial`
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  ctx.fillText(text, size / 2, size / 2)
-
-  return new CanvasTexture(canvas)
+  return geometry
 }
 
-function createShadowTexture(size = 256) {
-  const canvas = document.createElement('canvas')
-  canvas.width = size
-  canvas.height = size
-  const ctx = canvas.getContext('2d')!
-
-  const gradient = ctx.createRadialGradient(
-    size / 2,
-    size / 2,
-    0,
-    size / 2,
-    size / 2,
-    size / 2,
-  )
-  gradient.addColorStop(0, 'rgba(0,0,0,0.4)')
-  gradient.addColorStop(0.7, 'rgba(0,0,0,0.1)')
-  gradient.addColorStop(1, 'rgba(0,0,0,0)')
-
-  ctx.fillStyle = gradient
-  ctx.fillRect(0, 0, size, size)
-
-  return new CanvasTexture(canvas)
+function updateTextGeometries() {
+  if (font.value && props.names) {
+    frontTextGeometry.value = createTextGeometry(props.names[0])
+    backTextGeometry.value = createTextGeometry(props.names[1])
+  }
 }
 
-const shadowTexture = createShadowTexture()
+onMounted(async () => {
+  try {
+    const loader = new TTFLoader()
+    const json = await loader.loadAsync('../../src/assets/LexendMega.ttf')
+    font.value = new Font(json)
 
-const faceNames = computed(() => {
-  if (props.names) return props.names
-  return props.showLogo ? ['logo', 'logo'] : ['Front', 'Back']
+    updateTextGeometries()
+  }
+  catch (error) {
+    console.warn('Could not load font, using fallback text rendering:', error)
+  }
 })
 
-const frontTexture = computed(() => createFaceTexture(faceNames.value[0] || 'logo', props.colors[0]))
-const backTexture = computed(() => createFaceTexture(faceNames.value[1] || 'logo', props.colors[1]))
+watch(() => props.names, async () => {
+  updateTextGeometries()
+}, { deep: true })
 
 const isSpinning = ref(false)
 const spinProgress = ref(0)
-const spinDuration = 3000 // 3 seconds
 let animationStartTime = 0
+const spinDuration = 3000
+const baseSpins = 7
+const currentTarget = ref<0 | 1 | undefined>(undefined)
 
 watch(() => props.targetSide, (newTarget) => {
-  if (newTarget && !isSpinning.value) {
+  if (newTarget !== undefined && newTarget !== currentTarget.value) {
+    currentTarget.value = newTarget
     startSpinAnimation()
   }
-}, { immediate: !props.showLogo })
+}, { immediate: true })
 
 function startSpinAnimation() {
   isSpinning.value = true
@@ -156,31 +170,26 @@ const { onBeforeRender } = useLoop()
 onBeforeRender(({ delta }) => {
   if (!coinGroupRef.value) return
 
-  if (isSpinning.value && props.targetSide) {
+  if (isSpinning.value && currentTarget.value !== undefined) {
     const elapsed = Date.now() - animationStartTime
     const progress = Math.min(elapsed / spinDuration, 1)
 
     if (progress >= 1) {
-      // Animation complete - set final position
-      const targetRotation = props.targetSide === 1 ? Math.PI : 0
+      const targetRotation = currentTarget.value === 1 ? Math.PI : 0
       coinGroupRef.value.rotation.y = targetRotation
       isSpinning.value = false
     }
     else {
-      // Calculate eased progress for deceleration
       const easedProgress = easeOutCubic(progress)
 
-      // Total rotations: multiple spins + final position
-      const baseSpins = 4 // Number of full rotations
-      const targetRotation = props.targetSide === 1 ? Math.PI : 0
+      const targetRotation = currentTarget.value === 1 ? Math.PI : 0
       const totalRotation = baseSpins * Math.PI * 2 + targetRotation
 
-      coinGroupRef.value.rotation.y = easedProgress * totalRotation
+      coinGroupRef.value.rotation.y = -easedProgress * totalRotation
     }
   }
-  else if (!props.targetSide) {
-    // Default gentle rotation when no target
-    coinGroupRef.value.rotation.y += delta
+  else if (currentTarget.value === undefined) {
+    coinGroupRef.value.rotation.y += delta * 0.5
   }
 })
 </script>
