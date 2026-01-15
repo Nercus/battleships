@@ -33,10 +33,10 @@
 }
 
 @font-face {
-  font-family: 'Quicksand', sans-serif;
-  font-optical-sizing: auto;
+  font-family: 'Lexend Mega';
+  font-weight: normal;
   font-style: normal;
-  src: url('./assets/Quicksand.ttf') format('ttf');
+  src: url('./assets/LexendMega.ttf') format('truetype');
 }
 
 h1,
@@ -79,5 +79,5 @@ object,
 embed,
 details,
 summary {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Lexend Mega', sans-serif;
 }
