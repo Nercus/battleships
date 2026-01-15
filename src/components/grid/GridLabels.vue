@@ -13,7 +13,7 @@ const props = defineProps<{
   orientation: 'horizontal' | 'vertical'
 }>()
 
-const labelBarStyle = cva('flex justify-between shadow-sm border border-base-200 rounded-full font-bold text-sm text-base-700/50 select-none', {
+const labelBarStyle = cva('flex justify-between font-bold text-sm text-base-700/30 select-none', {
   variants: {
     orientation: {
       horizontal: 'w-70 md:w-100 text-center my-px',

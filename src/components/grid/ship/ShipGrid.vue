@@ -118,7 +118,7 @@ watch(() => props.isDraggable, (newValue) => {
   })
 }, { immediate: true })
 
-const ShipColors = {
+const ShipColors = computed(() => ({
   blue: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-6').trim(),
   emerald: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-4').trim(),
   green: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-3').trim(),
@@ -127,10 +127,10 @@ const ShipColors = {
   rose: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-9').trim(),
   teal: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-5').trim(),
   violet: getComputedStyle(document.documentElement).getPropertyValue('--color-distinct-8').trim(),
-} as const
+}))
 
 const shipColor = computed(() => {
-  return props.color ? ShipColors[props.color] : 'stroke-black'
+  return props.color ? ShipColors.value[props.color] : 'black'
 })
 </script>
 
@@ -147,6 +147,6 @@ const shipColor = computed(() => {
 <style lang="css" scoped>
 .vgl-layout {
   --vgl-placeholder-bg: v-bind(shipColor);
-  --vgl-placeholder-opacity: 30%;
+  --vgl-placeholder-opacity: 100%;
 }
 </style>

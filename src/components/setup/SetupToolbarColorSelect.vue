@@ -1,14 +1,12 @@
 <template>
-  <RadioGroupRoot v-model="color" class="gap-1 md:gap-2 grid grid-cols-8 md:grid-cols-4 mb-2">
-    <RadioGroupItem v-for="c in AVAILABLE_COLORS" :key="c" :value="c" class="rounded outline-2 size-8 md:size-6 aspect-square cursor-pointer" :class="radioItemVariant({ color: c })" :disabled="c === opponentColor">
-      <div
-        v-if="opponentColor === c"
-        class="relative flex justify-center items-center bg-base-100 rounded-full size-full">
-        <Icon class="bg-error fluent--presence-blocked-20-regular" />
-      </div>
-      <RadioGroupIndicator>
-        <Icon class="bg-base-100 size-full fluent--checkmark-12-filled" />
-      </RadioGroupIndicator>
+  <RadioGroupRoot v-model="color" class="flex flex-row gap-1 md:gap-2 mb-2">
+    <RadioGroupItem v-for="c in AVAILABLE_COLORS" :key="c" :value="c" as-child>
+      <CommonButton size="icon" class="relative w-8" :class="radioItemVariant({ color: c })" :disabled="c === opponentColor">
+        <Icon v-if="opponentColor === c" class="text-error fluent--presence-blocked-20-regular" />
+        <RadioGroupIndicator>
+          <Icon class="absolute inset-0 bg-base-100 size-full fluent--checkmark-12-filled" />
+        </RadioGroupIndicator>
+      </CommonButton>
     </RadioGroupItem>
   </RadioGroupRoot>
 </template>

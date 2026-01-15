@@ -3,9 +3,9 @@
     <label v-if="props.label" :for="id" class="text-xs text-base-700 italic">
       {{ props.label }}
     </label>
-    <input :id="id" v-model="model" v-bind="$attrs" class="px-2 py-1 border border-gray-300 focus:border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
-    <CommonButton v-if="props.hasCopyButton" class="right-1 absolute inset-y-1" size="small" square :disabled="!isSupported || model?.length === 0" @click="copyToClipboard">
-      <Icon class="fluent--copy-20-regular" />
+    <input :id="id" v-model="model" v-bind="$attrs" class="flex bg-base-100 selection:bg-primary file:bg-transparent disabled:opacity-50 px-3 py-2 border-2 border-black file:border-0 rounded-base focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 h-11 font-base file:font-heading text-sm file:text-sm text-base-900 selection:text-base-900 placeholder:text-base-900/50 disabled:cursor-not-allowed">
+    <CommonButton v-if="props.hasCopyButton" class="top-1 right-2 bottom-2 absolute" size="icon" :disabled="!isSupported || model?.length === 0" @click="copyToClipboard">
+      <Icon class="fluent--copy-20-filled" />
     </CommonButton>
   </div>
 </template>

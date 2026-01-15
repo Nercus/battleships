@@ -1,13 +1,13 @@
 <template>
-  <svg v-if="props.orientation === 'horizontal'" width="327" height="102" viewBox="0 0 327 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg v-if="props.orientation === 'horizontal'" width="327" height="102" viewBox="0 0 327 102" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M324.335 47.2144C322.14 35.1414 315.256 4.68831 301.685 4.80511L160.877 2.00012C104.202 2.48795 123.185 3.26671 65.2986 2.97222C51.8168 2.90364 20.5693 28.5903 4.72081 42.4266C-0.52773 47.0088 -0.526608 55.0167 4.72321 59.5974C20.5724 73.4266 51.8175 99.0966 65.2986 99.028C123.185 98.7335 104.202 99.5123 160.877 100L301.685 97.1951C315.175 97.3112 322.057 68.5665 324.295 56.8951C324.911 53.6836 324.92 50.4316 324.335 47.2144Z"
-      stroke="inherit" stroke-width="8" stroke-dasharray="8 8" />
+      stroke="inherit" fill="inherit" stroke-width="8" />
   </svg>
-  <svg v-else width="102" height="327" viewBox="0 0 102 327" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg v-else width="102" height="327" viewBox="0 0 102 327" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M54.7859 324.335C66.8588 322.14 97.3119 315.256 97.1951 301.685L100 160.877C99.5123 104.202 98.7335 123.185 99.028 65.2986C99.0966 51.8168 73.4099 20.5693 59.5736 4.72081C54.9914 -0.52773 46.9836 -0.526608 42.4029 4.72321C28.5736 20.5724 2.90364 51.8175 2.97222 65.2986C3.26671 123.185 2.48795 104.202 2.00011 160.877L4.80511 301.685C4.689 315.175 33.4337 322.057 45.1051 324.295C48.3166 324.911 51.5687 324.92 54.7859 324.335Z"
-      stroke="inherit" stroke-width="8" stroke-dasharray="8 8" />
+      stroke="inherit" fill="inherit" stroke-width="8" />
   </svg>
 </template>
 

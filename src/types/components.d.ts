@@ -24,6 +24,7 @@ declare module 'vue' {
     Battleship: typeof import('./../components/grid/ship/ships/Battleship.vue')['default']
     Coin: typeof import('./../components/coin/Coin.vue')['default']
     CoinLogo: typeof import('./../components/coin/CoinLogo.vue')['default']
+    CoinLogoScene: typeof import('./../components/coin/CoinLogoScene.vue')['default']
     CoinScene: typeof import('./../components/coin/CoinScene.vue')['default']
     CommonButton: typeof import('./../components/common/CommonButton.vue')['default']
     CommonInput: typeof import('./../components/common/CommonInput.vue')['default']

@@ -2,7 +2,6 @@
   <div
     class="group relative"
     :style="{ width: `${width}px`, height: `${height}px` }"
-
     @mousedown.prevent="onDown"
     @mouseup.prevent="onUp"
     @touchstart.prevent="onDown"
@@ -50,22 +49,23 @@ const width = computed(() => (orientation.value === 'horizontal' ? length.value 
 const height = computed(() => (orientation.value === 'vertical' ? length.value * props.size : props.size))
 
 const shipVariants = cva(
-  'stroke-4',
+  'drop-shadow-(--drop-shadow-shadow) stroke-1 stroke-black active:translate-x-boxShadowX active:translate-y-boxShadowY active:drop-shadow-none',
   {
     defaultVariants: {
-      color: 'blue',
+      color: 'white',
       flipped: false,
     },
     variants: {
       color: {
-        blue: 'stroke-distinct-6 fill-distinct-6/40',
-        emerald: 'stroke-distinct-4 fill-distinct-4/40',
-        green: 'stroke-distinct-3 fill-distinct-3/40',
-        indigo: 'stroke-distinct-7 fill-distinct-7/40',
-        orange: 'stroke-distinct-1 fill-distinct-1/40',
-        rose: 'stroke-distinct-9 fill-distinct-9/40',
-        teal: 'stroke-distinct-5 fill-distinct-5/40',
-        violet: 'stroke-distinct-8 fill-distinct-8/40',
+        blue: 'fill-distinct-6',
+        emerald: 'fill-distinct-4',
+        green: 'fill-distinct-3',
+        indigo: 'fill-distinct-7',
+        orange: 'fill-distinct-1',
+        rose: 'fill-distinct-9',
+        teal: 'fill-distinct-5',
+        violet: 'fill-distinct-8',
+        white: 'fill-white',
       },
       flipped: {
         false: 'rotate-0',
@@ -77,7 +77,7 @@ const shipVariants = cva(
 
 const rawRotation = ref(0)
 const rotation = refDefault(rawRotation, props.item.w === 1 ? 0 : 90)
-const clickTimeThreshold = 200 // milliseconds
+const clickTimeThreshold = 200
 const lastMouseDownTime = ref(0)
 
 function onDown() {

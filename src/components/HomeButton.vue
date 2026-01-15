@@ -2,7 +2,7 @@
   <AlertDialogRoot>
     <AlertDialogTrigger v-if="!isHomePage" as-child>
       <CommonButton
-        class="top-2 z-10 fixed inset-x-0 opacity-70 hover:opacity-100 mx-auto w-fit" size="small" type="ghost">
+        class="top-2 z-10 fixed inset-x-0 opacity-70 hover:opacity-100 mx-auto w-fit" size="small" variant="muted">
         Go Home
       </CommonButton>
     </AlertDialogTrigger>
@@ -17,12 +17,12 @@
         </AlertDialogDescription>
         <div class="flex justify-end gap-4">
           <AlertDialogAction as-child>
-            <CommonButton size="small" type="ghost" @click="goHome">
+            <CommonButton size="small" variant="error" @click="goHome">
               Yes, go back
             </CommonButton>
           </AlertDialogAction>
           <AlertDialogCancel as-child>
-            <CommonButton size="small" type="error">
+            <CommonButton size="small" variant="success">
               No, stay here
             </CommonButton>
           </AlertDialogCancel>
