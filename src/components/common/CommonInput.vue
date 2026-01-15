@@ -35,7 +35,7 @@ function copyToClipboard() {
 
 watch(copied, (newValue) => {
   if (newValue) {
-    push.success({
+    push.info({
       duration: 3000,
       message: 'Text copied to clipboard!',
     })
