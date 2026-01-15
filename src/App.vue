@@ -54,11 +54,14 @@ document.addEventListener('keydown', (event) => {
 
 const theme = {
   ...lightTheme,
-  '--nv-success-accent': '#7ac270',
-  '--nv-error-accent': '#d04e4e',
-  '--nv-warning-accent': '#d0ba49',
-  '--nv-info-accent': '#8baee9',
-  '--nv-promise-accent': '#8baee9',
+  '--nv-success-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-success').trim(),
+  '--nv-error-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-error').trim(),
+  '--nv-warning-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-warning').trim(),
+  '--nv-info-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim(),
+  '--nv-promise-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-base-700').trim(),
+  '--nv-global-border': 'black',
+  '--nv-radius': '0rem',
+  '--nv-shadow': getComputedStyle(document.documentElement).getPropertyValue('--shadow-shadow').trim(),
 }
 </script>
 
