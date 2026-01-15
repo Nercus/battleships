@@ -8,7 +8,7 @@
     </AlertDialogTrigger>
     <AlertDialogPortal>
       <AlertDialogOverlay class="z-30 fixed inset-0 bg-base-300/70" />
-      <AlertDialogContent class="top-1/2 md:left-1/2 z-50 fixed inset-x-0 bg-base-100 shadow-2xl px-8 py-6 md:rounded-lg -translate-y-1/2 md:-translate-x-1/2">
+      <AlertDialogContent class="top-1/2 md:left-1/2 z-50 fixed inset-x-0 bg-base-100 shadow-2xl px-8 py-6 md:rounded-lg max-w-xl -translate-y-1/2 md:-translate-x-1/2">
         <AlertDialogTitle class="font-semibold text-xl">
           Do you want to go back to the home page?
         </AlertDialogTitle>
@@ -39,6 +39,6 @@ const route = useRoute()
 const isHomePage = computed(() => route.name === 'Home' || route.path === '/')
 
 function goHome() {
-  router.push({ name: 'Home' })
+  router.push({ path: '/' })
 }
 </script>
