@@ -8,9 +8,6 @@
       <Separator
         class="z-10 bg-linear-to-r from-transparent via-base-300 to-transparent w-full h-px"
         decorative />
-      <span class="text-sm text-base-700 italic">
-        Choose to start a new game or join an existing one.
-      </span>
       <HomeStartGame v-model="role" />
       <HomeJoinGame v-model="role" />
     </div>
