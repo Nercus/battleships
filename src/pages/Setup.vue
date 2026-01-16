@@ -14,7 +14,10 @@
         <ShipGrid v-model:layout="shipLayout" :color="playerColor" is-draggable class="absolute inset-0 size-full" />
       </template>
       <template #footer>
-        <SetupToolbar class="mt-2" />
+        <CommonInfoText class="mb-2 w-full">
+          Drag to move your ships. Click to rotate.
+        </CommonInfoText>
+        <SetupToolbar class="" />
       </template>
     </GridLayers>
     <SetupReadyButton />

@@ -37,6 +37,7 @@
   --rounded-rounded: 12px;
 
   --radius-blob: 86% 14% 62% 38% / 62% 57% 43% 38%;
+  --text-tiny: 0.625rem;
 }
 
 @font-face {
