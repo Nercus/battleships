@@ -8,7 +8,7 @@
     </AlertDialogTrigger>
     <AlertDialogPortal>
       <AlertDialogOverlay class="z-30 fixed inset-0 bg-base-300/70" />
-      <AlertDialogContent class="top-1/2 md:left-1/2 z-50 fixed inset-x-0 bg-base-100 shadow-2xl px-8 py-6 md:rounded-lg max-w-xl -translate-y-1/2 md:-translate-x-1/2">
+      <AlertDialogContent class="top-1/2 left-1/2 z-50 fixed flex flex-col justify-center items-center bg-base-100 shadow-2xl px-8 py-6 md:rounded-lg w-full sm:max-w-xl h-fit sm:max-h-4/5 -translate-1/2">
         <AlertDialogTitle class="font-semibold text-xl">
           Do you want to go back to the home page?
         </AlertDialogTitle>
