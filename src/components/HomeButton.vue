@@ -2,8 +2,8 @@
   <AlertDialogRoot>
     <AlertDialogTrigger v-if="!isHomePage" as-child>
       <CommonButton
-        class="top-2 z-10 fixed inset-x-0 opacity-70 hover:opacity-100 mx-auto w-fit" size="small" variant="muted">
-        Go Home
+        class="top-2 left-2 z-10 fixed opacity-70 size-10" size="icon" variant="muted">
+        <Icon class="size-8 fluent--home-20-filled" />
       </CommonButton>
     </AlertDialogTrigger>
     <AlertDialogPortal>
