@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Opponent Grid
+  <div class="shadow-shadow border-2 w-full max-w-xl">
+    123
   </div>
 </template>
 

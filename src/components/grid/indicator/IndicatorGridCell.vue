@@ -1,6 +1,6 @@
 <template>
   <button class="flex justify-center items-center hover:bg-base-300 rounded-full size-7 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled">
-    <motion.div class="bg-base-700 rounded-full outline outline-transparent size-2" :animate="indicatorAnimation" />
+    <motion.div class="bg-base-700 rounded-full outline-4 outline-transparent size-2" :animate="indicatorAnimation" />
   </button>
 </template>
 
@@ -53,16 +53,16 @@ const blackColor = 'black'
 
 const indicatorAnimation = computed(() => {
   if (indicatorType.value === 'hit') {
-    return { width: '2rem', height: '2rem', backgroundColor: redColor, outlineOffset: '0rem', outlineColor: redColor }
+    return { width: '1.25rem', height: '1.25rem', backgroundColor: redColor, outlineOffset: '0rem', outlineColor: redColor }
   }
   else if (indicatorType.value === 'miss') {
-    return { width: '2rem', height: '2rem', backgroundColor: greyColor, outlineOffset: '0rem', outlineColor: greyColor }
+    return { width: '1.25rem', height: '1.25rem', backgroundColor: greyColor, outlineOffset: '0rem', outlineColor: greyColor }
   }
   else if (indicatorType.value === 'opponent-target') {
-    return { width: '0.5rem', height: '0.5rem', backgroundColor: redColor, outlineOffset: '1rem', outlineColor: redColor }
+    return { width: '0.5rem', height: '0.5rem', backgroundColor: redColor, outlineOffset: '0.5rem', outlineColor: redColor }
   }
   else if (indicatorType.value === 'player-target') {
-    return { width: '0.5rem', height: '0.5rem', backgroundColor: blackColor, outlineOffset: '1rem', outlineColor: blackColor }
+    return { width: '0.5rem', height: '0.5rem', backgroundColor: blackColor, outlineOffset: '0.5rem', outlineColor: blackColor }
   }
   else {
     return { width: '0.5rem', height: '0.5rem', backgroundColor: blackColor, outlineOffset: '0rem', outlineColor: 'transparent' }

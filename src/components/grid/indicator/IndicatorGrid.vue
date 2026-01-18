@@ -2,7 +2,7 @@
   <div class="grid grid-cols-10 grid-rows-10">
     <IndicatorGridCell
       v-for="(hitType, index) in flatBoard" :key="index" :index="index"
-      :type="hitType" :board-type="props.boardType" :disabled="!props.board" @click="setTarget(hitType, index)" @dblclick="onDoubleClick(hitType, index)" />
+      :type="hitType" :board-type="props.boardType" :disabled="isDisabled" @click="setTarget(hitType, index)" @dblclick="onDoubleClick(hitType, index)" />
   </div>
 </template>
 
@@ -14,8 +14,12 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'shoot', x: number, y: number): void
 }>()
-const { playerTarget } = useGame()
+const { playerTarget, playersTurn } = useGame()
 const { sendEvent } = useEvent()
+
+const isDisabled = computed(() => {
+  return !props.board || !(props.boardType === 'opponent' && playersTurn.value)
+})
 
 const flatBoard = computed(() => {
   return props.board?.flat() || Array.from({ length: 100 }).fill('none') as HitType[]
