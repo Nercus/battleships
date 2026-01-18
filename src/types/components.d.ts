@@ -46,6 +46,7 @@ declare module 'vue' {
     Input: typeof import('./../components/common/Input.vue')['default']
     Logo: typeof import('./../components/logo/Logo.vue')['default']
     LogoScene: typeof import('./../components/logo/LogoScene.vue')['default']
+    NoLandscapeOverlay: typeof import('./../components/NoLandscapeOverlay.vue')['default']
     OpponentGrid: typeof import('./../components/play/OpponentGrid.vue')['default']
     OpponentTurnGrid: typeof import('./../components/play/OpponentTurnGrid.vue')['default']
     PinInput: typeof import('./../components/common/PinInput.vue')['default']
