@@ -6,5 +6,6 @@
       <OpponentTurnGrid />
     </div>
     <PlayToolbar class="mb-4" />
+    <GameEndPopup />
   </div>
 </template>

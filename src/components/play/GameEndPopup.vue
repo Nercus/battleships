@@ -10,11 +10,15 @@
         <AlertDialogDescription class="mt-4 mb-5 text-sm leading-normal">
           <TabsRoot class="flex flex-col flex-1 gap-2" default-value="stats">
             <TabsList class="flex gap-2">
-              <TabsTrigger :as="Button" size="small" type="primary" value="stats" class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2">
-                Stats
+              <TabsTrigger as-child size="small" type="primary" value="stats" class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2">
+                <CommonButton>
+                  Stats
+                </CommonButton>
               </TabsTrigger>
-              <TabsTrigger :as="Button" size="small" type="primary" value="board" class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2" :disabled="!opponentBoardLayout || !opponentBoardHits">
-                Enemy Board
+              <TabsTrigger as-child size="small" type="primary" value="board" class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2" :disabled="!opponentBoardLayout || !opponentBoardHits">
+                <CommonButton>
+                  Enemy Board
+                </CommonButton>
               </TabsTrigger>
             </TabsList>
             <TabsContent value="stats">
@@ -32,31 +36,35 @@
               </table>
             </TabsContent>
             <TabsContent v-if="opponentBoardLayout && opponentBoardHits" value="board" class="relative m-4 min-h-0 aspect-square">
-              <GameGridShipLayer
+              <ShipGrid
                 v-model:layout="opponentBoardLayout"
                 class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
-              <GameGridHitLayer
+              <IndicatorGrid
                 class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHits" />
             </TabsContent>
           </TabsRoot>
         </AlertDialogDescription>
         <div class="flex justify-end gap-2 md:gap-4">
           <AlertDialogAction
-            :as="Button" :type="newGameRequested ? 'ghost' : 'success'" @click="newGame">
-            <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
-              Waiting for other player...
-              <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
-            </span>
-            <span v-else-if="!newGameRequested && opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
-              Opponent wants a rematch! Join?
-              <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
-            </span>
-            <span v-else class="whitespace-normal">Play Again</span>
+            :type="newGameRequested ? 'ghost' : 'success'" as-child @click="newGame">
+            <CommonButton>
+              <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
+                Waiting for other player...
+                <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
+              </span>
+              <span v-else-if="!newGameRequested && opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
+                Opponent wants a rematch! Join?
+                <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
+              </span>
+              <span v-else class="whitespace-normal">Play Again</span>
+            </CommonButton>
           </AlertDialogAction>
 
           <AlertDialogAction
-            :as="Button" type="error" @click="exitGame()">
-            Exit Game
+            type="error" as-child @click="exitGame()">
+            <CommonButton>
+              Exit Game
+            </CommonButton>
           </AlertDialogAction>
         </div>
       </AlertDialogContent>
@@ -66,7 +74,6 @@
 
 <script setup lang="ts">
 import type { Layout } from 'grid-layout-plus'
-import Button from './shared/Button.vue'
 
 const { gameState, reset, destroyedShips, opponentBoardHitStates, opponentColor, playerBoardHitStates, shipLayout } = useGame()
 const { onEvent, sendEvent } = useEvent()
