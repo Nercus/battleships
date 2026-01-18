@@ -1,5 +1,5 @@
 <template>
-  <button class="flex justify-center items-center hover:bg-base-300 rounded-full size-7 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled">
+  <button class="flex justify-center items-center hover:bg-base-300 rounded-full size-8 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled">
     <motion.div class="bg-base-700 rounded-full outline-4 outline-transparent size-2" :animate="indicatorAnimation" />
   </button>
 </template>

@@ -53,7 +53,9 @@ declare module 'vue' {
     PinInputRoot: typeof import('reka-ui')['PinInputRoot']
     PlayerGrid: typeof import('./../components/play/PlayerGrid.vue')['default']
     PlayerTurnGrid: typeof import('./../components/play/PlayerTurnGrid.vue')['default']
-    PlayToolbar: typeof import('./../components/play/PlayToolbar.vue')['default']
+    PlayToolbar: typeof import('./../components/play/Toolbar/PlayToolbar.vue')['default']
+    PlayToolbarHelp: typeof import('./../components/play/Toolbar/PlayToolbarHelp.vue')['default']
+    PlayToolbarSunkenShips: typeof import('./../components/play/Toolbar/PlayToolbarSunkenShips.vue')['default']
     Primitive: typeof import('reka-ui')['Primitive']
     RadioGroupIndicator: typeof import('reka-ui')['RadioGroupIndicator']
     RadioGroupItem: typeof import('reka-ui')['RadioGroupItem']
@@ -68,5 +70,11 @@ declare module 'vue' {
     SetupToolbarReadyButton: typeof import('./../components/setup/SetupToolbarReadyButton.vue')['default']
     ShipGrid: typeof import('./../components/grid/ship/ShipGrid.vue')['default']
     ShipGridElement: typeof import('./../components/grid/ship/ShipGridElement.vue')['default']
+    TooltipArrow: typeof import('reka-ui')['TooltipArrow']
+    TooltipContent: typeof import('reka-ui')['TooltipContent']
+    TooltipPortal: typeof import('reka-ui')['TooltipPortal']
+    TooltipProvider: typeof import('reka-ui')['TooltipProvider']
+    TooltipRoot: typeof import('reka-ui')['TooltipRoot']
+    TooltipTrigger: typeof import('reka-ui')['TooltipTrigger']
   }
 }

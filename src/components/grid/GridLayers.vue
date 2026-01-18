@@ -4,7 +4,7 @@
     <GridLabels orientation="horizontal" />
     <div class="flex flex-row">
       <GridLabels orientation="vertical" />
-      <div class="relative shadow-shadow border-2 border-black size-75 md:size-100">
+      <div class="relative shadow-shadow border-2 border-black size-80 md:size-100">
         <slot name="layer1" />
         <slot name="layer2" />
       </div>
