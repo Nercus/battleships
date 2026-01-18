@@ -1,5 +1,5 @@
 <template>
-  <button class="flex justify-center items-center hover:bg-base-300 rounded-full size-8 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled">
+  <button class="flex justify-center items-center enabled:hover:bg-base-300 rounded-full size-8 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled || !hittable">
     <motion.div class="bg-base-700 rounded-full outline-4 outline-transparent size-2" :animate="indicatorAnimation" />
   </button>
 </template>
@@ -14,7 +14,7 @@ const props = defineProps<{
   disabled?: boolean
 }>()
 
-const { playerTarget, opponentTarget } = useGame()
+const { playerTarget, opponentTarget, playersTurn } = useGame()
 
 const x = computed(() => {
   return Math.floor(props.index / 10)
@@ -47,6 +47,10 @@ const indicatorType = computed(() => {
   return 'default'
 })
 
+const hittable = computed(() => {
+  return props.type === 'none' || indicatorType.value === 'player-target' || indicatorType.value === 'opponent-target'
+})
+
 const redColor = getComputedStyle(document.documentElement).getPropertyValue('--color-error').trim()
 const greyColor = getComputedStyle(document.documentElement).getPropertyValue('--color-base-300').trim()
 const blackColor = 'black'
@@ -58,10 +62,10 @@ const indicatorAnimation = computed(() => {
   else if (indicatorType.value === 'miss') {
     return { width: '1.25rem', height: '1.25rem', backgroundColor: greyColor, outlineOffset: '0rem', outlineColor: greyColor }
   }
-  else if (indicatorType.value === 'opponent-target') {
+  else if (indicatorType.value === 'opponent-target' && !playersTurn.value) {
     return { width: '0.5rem', height: '0.5rem', backgroundColor: redColor, outlineOffset: '0.5rem', outlineColor: redColor }
   }
-  else if (indicatorType.value === 'player-target') {
+  else if (indicatorType.value === 'player-target' && playersTurn.value) {
     return { width: '0.5rem', height: '0.5rem', backgroundColor: blackColor, outlineOffset: '0.5rem', outlineColor: blackColor }
   }
   else {
