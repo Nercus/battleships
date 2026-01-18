@@ -17,7 +17,7 @@
         <CommonInfoText class="mb-2 w-full">
           Drag to move your ships. Click to rotate.
         </CommonInfoText>
-        <SetupToolbar class="" />
+        <SetupToolbar />
       </template>
     </GridLayers>
     <SetupReadyButton />
