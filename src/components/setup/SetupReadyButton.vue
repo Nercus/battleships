@@ -1,6 +1,6 @@
 <template>
   <CommonButton
-    :type="shipsConfirmed ? 'ghost' : 'success'" :disabled="!playerColor || !playerName"
+    :variant="shipsConfirmed ? 'muted' : 'success'" :disabled="!playerColor || !playerName"
     @click="confirmSelection">
     <span v-if="shipsConfirmed && !otherPlayerReady" class="flex items-center gap-2">
       Waiting for other player...
@@ -23,7 +23,7 @@ const otherPlayerReady = ref(false)
 const shipsConfirmed = ref(false)
 
 watch(shipsConfirmed, (newValue) => {
-  if (newValue && playerName.value) {
+  if (playerName.value) {
     sendEvent({ data: playerName.value, type: 'name' })
     sendEvent({ data: newValue, type: 'ready' })
   }
