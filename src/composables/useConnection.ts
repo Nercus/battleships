@@ -8,10 +8,16 @@ const isHost = ref<boolean | null>()
 const roomId = ref<string>('')
 const peer = ref<SimplePeer.Instance | null>(null)
 const wsUrl = computed(() => roomId.value ? `wss://${SERVER_URL}/ws?roomId=${roomId.value}` : undefined)
-const { data, send, close } = useWebSocket<{ type: 'join' | 'signal', data: object | null }>(wsUrl)
+const { data, send, close, status } = useWebSocket<{ type: 'join' | 'signal', data: object | null }>(wsUrl)
 const userOffer = ref<RTCSessionDescriptionInit | null>(null)
 const userAnswer = ref<RTCSessionDescriptionInit | null>(null)
 const dataBus = useEventBus<SimplePeer.SimplePeerData>('data')
+
+function handleDisconnection() {
+  if (!isConnected.value) return // Already disconnected
+  console.warn('Connection lost - notifying callbacks and updating state')
+  isConnected.value = false
+}
 
 watch(data, (message) => {
   message = JSON.parse(message as unknown as string)
@@ -28,6 +34,14 @@ watch(data, (message) => {
     peer.value.signal(message.data as RTCSessionDescriptionInit)
   }
 }, { deep: true })
+
+// Watch for WebSocket disconnections
+watch(status, (newStatus) => {
+  if (newStatus === 'CLOSED' && isConnected.value) {
+    console.warn('WebSocket connection lost')
+    handleDisconnection()
+  }
+})
 
 export function useConnection() {
   function reset() {
@@ -72,11 +86,13 @@ export function useConnection() {
   }
 
   function onPeerClose() {
+    handleDisconnection()
     reset()
   }
 
   function onPeerError(err: Error) {
     console.error('Peer error:', err)
+    handleDisconnection()
     reset()
   }
 

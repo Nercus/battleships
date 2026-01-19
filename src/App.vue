@@ -20,6 +20,23 @@ import { lightTheme, Notification, NotificationProgress, Notivue, outlinedIcons 
 import { RouterView } from 'vue-router'
 
 const { isConnected } = useConnection()
+const router = useRouter()
+const route = useRoute()
+
+function checkConnectionState() {
+  if (!isConnected.value && route.meta.requiresConnection) {
+    push.error({
+      message: 'You have been disconnected.',
+    })
+    router.push({ name: 'Home' })
+  }
+}
+
+useInterval(2500, {
+  controls: true,
+  immediate: true,
+  callback: checkConnectionState,
+})
 
 window.addEventListener('beforeunload', (event) => {
   if (import.meta.env.MODE === 'development') return

@@ -31,6 +31,9 @@ export const routes: RouteRecordRaw[] = [
       return gameState.value === 'coin-flip'
     },
     component: () => import('../pages/Coinflip.vue'),
+    meta: {
+      requiresConnection: true,
+    },
     name: 'Who Starts?',
     path: '/start',
   },
