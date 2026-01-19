@@ -30,7 +30,6 @@ window.addEventListener('beforeunload', (event) => {
 
 function showWarning() {
   push.warning({
-    duration: 5000,
     message: 'Refreshing the page will end the connection.',
   })
 }

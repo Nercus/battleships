@@ -15,7 +15,6 @@
 
 <script setup lang="ts">
 const router = useRouter()
-const route = useRoute()
 
 const { joinRoom, isConnected } = useConnection()
 
@@ -41,19 +40,11 @@ const { start, stop } = useTimeout(10000, {
 watch(isConnected, () => {
   if (isConnected.value) {
     push.success({
-      duration: 5000,
       message: 'You are now connected.',
     })
     router.push({ name: 'Setup' })
     stop()
     isTryingToJoin.value = false
-  }
-  if (!isConnected.value && route.meta.requiresConnection) {
-    push.error({
-      duration: 5000,
-      message: 'You have been disconnected.',
-    })
-    router.push({ name: 'Start Game' })
   }
 }, { immediate: true })
 
