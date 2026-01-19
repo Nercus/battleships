@@ -96,12 +96,21 @@ const faceZOffset = coinThickness / 2
 const coinGroupRef = ref()
 const font = ref<Font | null>(null)
 
-const cylinderGeometry = computed(() => new CylinderGeometry(coinRadius.value, coinRadius.value, coinThickness, 64))
-const frontRingGeometry = computed(() => new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }))
-const backRingGeometry = computed(() => new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }))
+const cylinderGeometry = shallowRef()
+const frontRingGeometry = shallowRef()
+const backRingGeometry = shallowRef()
 
-const frontTextGeometry = ref<TextGeometry | null>(null)
-const backTextGeometry = ref<TextGeometry | null>(null)
+watch([coinRadius, coinThickness], () => {
+  cylinderGeometry.value = new CylinderGeometry(coinRadius.value, coinRadius.value, coinThickness, 64)
+}, { immediate: true })
+
+watch(ringShape, () => {
+  frontRingGeometry.value = new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 })
+  backRingGeometry.value = new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 })
+}, { immediate: true })
+
+const frontTextGeometry = shallowRef<TextGeometry | null>(null)
+const backTextGeometry = shallowRef<TextGeometry | null>(null)
 
 function createTextGeometry(text: string) {
   if (!font.value) return null
