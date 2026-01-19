@@ -8,9 +8,7 @@
   </Notivue>
   <div class="flex flex-col justify-center items-center size-full">
     <RouterView v-slot="{ Component }">
-      <Transition name="fade" mode="out-in">
-        <component :is="Component" class="flex justify-center items-center size-full overflow-hidden" />
-      </Transition>
+      <component :is="Component" class="flex justify-center items-center size-full overflow-hidden" />
     </RouterView>
   </div>
 </template>
@@ -80,18 +78,6 @@ const theme = {
   '--nv-shadow': getComputedStyle(document.documentElement).getPropertyValue('--shadow-shadow').trim(),
 }
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
 
 <style>
 @media (max-width: 768px) {
