@@ -16,7 +16,7 @@ const router = useRouter()
 
 const { playersTurn, switchTurn, playerName, opponentName, playerColor, opponentColor } = useGame()
 const { onEvent, sendEvent } = useEvent()
-const { isHost } = useConnection()
+const { isHost, isConnected } = useConnection()
 
 const waitingForCoinFlip = ref(true)
 const currentSide = ref<0 | 1>(0)
@@ -62,6 +62,7 @@ function flipCoin(forcedResult?: 0 | 1): 0 | 1 {
     const wonCoinFlip = result === 0 ? isHost.value : !isHost.value
     playersTurn.value = !wonCoinFlip // set the losing player to the active player, so the winning player can start the game
     switchTurn()
+    if (!isConnected.value) return
     router.push('/play')
   }, 5000)
   return result
