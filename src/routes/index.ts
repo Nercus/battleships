@@ -50,6 +50,19 @@ export const routes: RouteRecordRaw[] = [
     name: 'Play',
     path: '/play',
   },
+  {
+    beforeEnter: () => {
+      const { gameState } = useGame()
+      gameState.value = 'ended'
+      return gameState.value === 'ended'
+    },
+    component: () => import('../pages/End.vue'),
+    meta: {
+      requiresConnection: true,
+    },
+    name: 'End',
+    path: '/end',
+  },
 ]
 
 const router = createRouter({

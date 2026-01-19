@@ -10,12 +10,17 @@
         <AlertDialogDescription class="mt-4 mb-5 text-sm leading-normal">
           <TabsRoot class="flex flex-col flex-1 gap-2" default-value="stats">
             <TabsList class="flex gap-2">
-              <TabsTrigger as-child size="small" type="primary" value="stats" class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2">
+              <TabsTrigger
+                as-child size="small" type="primary" value="stats"
+                class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2">
                 <CommonButton>
                   Stats
                 </CommonButton>
               </TabsTrigger>
-              <TabsTrigger as-child size="small" type="primary" value="board" class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2" :disabled="!opponentBoardLayout || !opponentBoardHits">
+              <TabsTrigger
+                as-child size="small" type="primary" value="board"
+                class="opacity-80 data-[state=active]:opacity-100 data-[state=active]:outline-2 outline-offset-2"
+                :disabled="!opponentBoardLayout || !opponentBoardHits">
                 <CommonButton>
                   Enemy Board
                 </CommonButton>
@@ -35,24 +40,29 @@
                 </tbody>
               </table>
             </TabsContent>
-            <TabsContent v-if="opponentBoardLayout && opponentBoardHits" value="board" class="relative m-4 min-h-0 aspect-square">
+            <TabsContent
+              v-if="opponentBoardLayout && opponentBoardHits" value="board"
+              class="relative m-4 min-h-0 aspect-square">
               <ShipGrid
                 v-model:layout="opponentBoardLayout"
-                class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor" :is-draggable="false" />
-              <IndicatorGrid
-                class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHits" />
+                class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :color="opponentColor"
+                :is-draggable="false" />
+              <IndicatorGrid class="absolute inset-0 w-[calc(100%-1px)] h-[calc(100%-1px)]" :board="opponentBoardHits" />
             </TabsContent>
           </TabsRoot>
         </AlertDialogDescription>
         <div class="flex justify-end gap-2 md:gap-4">
-          <AlertDialogAction
-            :type="newGameRequested ? 'ghost' : 'success'" as-child @click="newGame">
+          <AlertDialogAction :type="newGameRequested ? 'ghost' : 'success'" as-child @click="newGame">
             <CommonButton>
-              <span v-if="newGameRequested && !opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
+              <span
+                v-if="newGameRequested && !opponentRequestsNewGame"
+                class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
                 Waiting for other player...
                 <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
               </span>
-              <span v-else-if="!newGameRequested && opponentRequestsNewGame" class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
+              <span
+                v-else-if="!newGameRequested && opponentRequestsNewGame"
+                class="flex items-center gap-2 max-w-full wrap-break-word whitespace-normal">
                 Opponent wants a rematch! Join?
                 <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
               </span>
@@ -60,8 +70,7 @@
             </CommonButton>
           </AlertDialogAction>
 
-          <AlertDialogAction
-            type="error" as-child @click="exitGame()">
+          <AlertDialogAction type="error" as-child @click="exitGame()">
             <CommonButton>
               Exit Game
             </CommonButton>
@@ -95,7 +104,7 @@ const accuracy = computed(() => {
 })
 
 const opponentBoardLayout = ref<Layout | null>()
-const opponentBoardHits = ref <Board | null>()
+const opponentBoardHits = ref<Board | null>()
 
 const stats = computed(() => ({
   shipsDestroyed: {

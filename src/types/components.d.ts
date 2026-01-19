@@ -54,6 +54,7 @@ declare module 'vue' {
     RadioGroupRoot: typeof import('reka-ui')['RadioGroupRoot']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SafeCanvas: typeof import('./../components/common/SafeCanvas.vue')['default']
     Separator: typeof import('reka-ui')['Separator']
     SetupReadyButton: typeof import('./../components/setup/SetupReadyButton.vue')['default']
     SetupToolbar: typeof import('./../components/setup/SetupToolbar.vue')['default']

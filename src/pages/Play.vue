@@ -6,6 +6,16 @@
       <OpponentTurnGrid />
     </div>
     <PlayToolbar class="mb-4" />
-    <GameEndPopup />
   </div>
 </template>
+
+<script setup lang="ts">
+const { gameState } = useGame()
+const router = useRouter()
+
+watch(gameState, (newState) => {
+  if (newState === 'ended') {
+    router.push({ name: 'End' })
+  }
+})
+</script>
