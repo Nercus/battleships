@@ -34,8 +34,8 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       requiresConnection: true,
     },
-    name: 'Who Starts?',
-    path: '/start',
+    name: 'Coinflip',
+    path: '/coin-flip',
   },
   {
     beforeEnter: () => {
@@ -47,7 +47,7 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       requiresConnection: true,
     },
-    name: 'Playing',
+    name: 'Play',
     path: '/play',
   },
 ]

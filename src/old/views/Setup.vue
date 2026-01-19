@@ -61,7 +61,7 @@ onUnmounted(() => {
 
 watchEffect(() => {
   if (otherPlayerReady.value && shipsConfirmed.value) {
-    router.push('/start')
+    router.push('/coin-flip')
   }
 })
 
