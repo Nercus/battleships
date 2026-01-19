@@ -1,6 +1,4 @@
 <template>
-  <TresPerspectiveCamera :args="[45, 1, 1, 500]" :position="[0, 0, 2]" :look-at="[0, 0, 0]" />
-
   <TresGroup ref="coinGroupRef">
     <TresGroup v-for="(shape, index) in logoShapes" :key="`shape-${index}`">
       <TresMesh :position="[-0.75, 0.75, -0.05]" :scale="[0.003, -0.003, 1]">
@@ -10,7 +8,7 @@
 
       <TresLineSegments :position="[-0.75, 0.75, -0.05]" :scale="[0.003, -0.003, 1]">
         <TresEdgesGeometry :args="[new ExtrudeGeometry(shape, { depth: 0.1, bevelEnabled: false })]" />
-        <TresLineBasicMaterial color="black" :line-width="2" />
+        <TresLineBasicMaterial color="black" />
       </TresLineSegments>
     </TresGroup>
   </TresGroup>
@@ -21,7 +19,7 @@ import { useLoader, useLoop } from '@tresjs/core'
 import { ExtrudeGeometry } from 'three'
 import { SVGLoader } from 'three/examples/jsm/Addons.js'
 
-const { state: svgData } = await useLoader(SVGLoader, '/src/assets/logo.svg')
+const { state: svgData } = useLoader(SVGLoader, '/src/assets/logo.svg')
 
 const logoShapes = computed(() => {
   if (!svgData.value) return []

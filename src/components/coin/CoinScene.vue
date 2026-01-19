@@ -1,6 +1,4 @@
 <template>
-  <TresPerspectiveCamera :args="[45, 1, 1, 500]" :position="[0, 0, 3]" :look-at="[0, 0, 0]" />
-
   <TresGroup ref="coinGroupRef">
     <TresMesh :rotation="[Math.PI / 2, 0, 0]">
       <TresCylinderGeometry :args="[coinRadius, coinRadius, coinThickness, 64]" />
@@ -100,7 +98,7 @@ const cylinderGeometry = shallowRef()
 const frontRingGeometry = shallowRef()
 const backRingGeometry = shallowRef()
 
-watch([coinRadius, coinThickness], () => {
+watch([coinRadius], () => {
   cylinderGeometry.value = new CylinderGeometry(coinRadius.value, coinRadius.value, coinThickness, 64)
 }, { immediate: true })
 
