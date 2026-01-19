@@ -52,15 +52,15 @@ const hittable = computed(() => {
 })
 
 const redColor = getComputedStyle(document.documentElement).getPropertyValue('--color-error').trim()
-const greyColor = getComputedStyle(document.documentElement).getPropertyValue('--color-base-300').trim()
+const greyColor = getComputedStyle(document.documentElement).getPropertyValue('--color-base-700').trim()
 const blackColor = 'black'
 
 const indicatorAnimation = computed(() => {
   if (indicatorType.value === 'hit') {
-    return { width: '1.25rem', height: '1.25rem', backgroundColor: redColor, outlineOffset: '0rem', outlineColor: redColor }
+    return { width: '1.5rem', height: '1.5rem', backgroundColor: redColor, outlineOffset: '0rem', outlineColor: 'transparent' }
   }
   else if (indicatorType.value === 'miss') {
-    return { width: '1.25rem', height: '1.25rem', backgroundColor: greyColor, outlineOffset: '0rem', outlineColor: greyColor }
+    return { width: '1.5rem', height: '1.5rem', backgroundColor: greyColor, outlineOffset: '0rem', outlineColor: 'transparent' }
   }
   else if (indicatorType.value === 'opponent-target' && !playersTurn.value) {
     return { width: '0.5rem', height: '0.5rem', backgroundColor: redColor, outlineOffset: '0.5rem', outlineColor: redColor }
