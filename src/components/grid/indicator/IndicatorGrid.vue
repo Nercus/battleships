@@ -2,7 +2,7 @@
   <div class="grid grid-cols-10 grid-rows-10">
     <IndicatorGridCell
       v-for="(hitType, index) in flatBoard" :key="index" :index="index"
-      :type="hitType" :board-type="props.boardType" :disabled="isDisabled" @click="setTarget(hitType, index)" @dblclick.stop="onDoubleClick(hitType, index)" />
+      :type="hitType" :board-type="props.boardType" :disabled="isDisabled" @click="setTarget(hitType, index)" @dblclick.stop="shootTarget(hitType, index)" />
   </div>
 </template>
 
@@ -25,7 +25,11 @@ const flatBoard = computed(() => {
   return props.board?.flat() || Array.from({ length: 100 }).fill('none') as HitType[]
 })
 
-function onDoubleClick(hitType: HitType, index: number) {
+const isMobile = computed(() => {
+  return 'ontouchstart' in window
+})
+
+function shootTarget(hitType: HitType, index: number) {
   if (hitType !== 'none') return
   if (!playerTarget.value) return
   const x = Math.floor(index / 10)
@@ -39,6 +43,11 @@ function setTarget(hitType: HitType, index: number) {
 
   const x = Math.floor(index / 10)
   const y = index % 10
+
+  if (isMobile.value && playerTarget.value?.x === x && playerTarget.value?.y === y) {
+    emit('shoot', x, y)
+    return
+  }
 
   playerTarget.value = { x, y }
   sendEvent({ data: { x, y }, type: 'target' })
