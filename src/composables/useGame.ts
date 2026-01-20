@@ -31,6 +31,7 @@ const playerName = ref<string | null>(null)
 const playerColor = ref<Color | null>(null)
 const opponentName = ref<string | null>(null)
 const opponentColor = ref<Color | null>(null)
+const winner = ref<'player' | 'opponent' | null>(null)
 
 const playersTurn = ref<boolean>(false) // the player whose turn it is
 const isTurnPending = ref<boolean>(false) // indicates if the player's turn is pending information exchange to switch the turn
@@ -102,6 +103,7 @@ export function useGame() {
       if (lostShips.value.length === shipLayout.value.length) {
         sendEvent({ type: 'game-over' })
         gameState.value = 'ended'
+        winner.value = 'opponent'
         sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })
       }
     }
@@ -126,6 +128,7 @@ export function useGame() {
     isTurnPending.value = false
     playerTarget.value = null
     opponentTarget.value = null
+    winner.value = null
     shipLayout.value = []
     playerBoardHitStates.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
     opponentBoardHitStates.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
@@ -186,6 +189,7 @@ export function useGame() {
     playerTarget,
     opponentName,
     playerName,
+    winner,
     reset,
     setHitStateForOpponent,
     shipLayout,
