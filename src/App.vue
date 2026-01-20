@@ -1,6 +1,5 @@
 <template>
   <HomeButton />
-  <NoLandscapeOverlay />
   <Notivue v-slot="item">
     <Notification :item="item" :theme="theme" :icons="outlinedIcons">
       <NotificationProgress :item="item" />

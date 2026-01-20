@@ -8,6 +8,7 @@
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent
+          side="left"
           class="bg-base-100 shadow-shadow p-2 border-2"
           style="width: min(calc(100vw - 2rem), var(--reka-tooltip-content-available-width, 20rem)); max-width: 20rem;">
           <TooltipArrow class="bg-base-100 stroke-black" />

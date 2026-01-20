@@ -14,6 +14,7 @@ const { orientation, angle } = useScreenOrientation()
 const isLandscape = computed(() => {
   return orientation.value === 'landscape-secondary' || angle.value === 90 || angle.value === -90
 })
+
 </script>
 
 <style lang="css" scoped>

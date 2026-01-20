@@ -1,6 +1,6 @@
 <template>
-  <span class="flex items-center gap-2 shadow-base-700 shadow-shadow border max-w-xs text-tiny text-base-700">
-    <Icon class="size-5 text-base-700 fluent--info-20-filled" />
+  <span class="flex items-center gap-0.5 shadow-base-700 shadow-shadow p-0.5 border max-w-xs text-tiny text-base-700">
+    <Icon class="size-5 text-warning fluent--info-20-filled" />
     <slot />
   </span>
 </template>

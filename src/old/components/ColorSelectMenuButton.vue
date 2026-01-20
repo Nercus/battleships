@@ -19,7 +19,7 @@ defineProps<{
 }>()
 
 const colorVariants = cva(
-  'p-1 md:p-3 size-8 md:size-10',
+  'p-1 md:p-3 size-8 landscape:max-lg:size-6 md:size-10',
   {
     defaultVariants: {
       colorNumber: 1,

@@ -16,8 +16,8 @@ const props = defineProps<{
 const labelBarStyle = cva('flex justify-between font-bold text-tiny text-base-700/30 select-none', {
   variants: {
     orientation: {
-      horizontal: 'w-80 md:w-100 text-center',
-      vertical: 'h-80 md:h-100 flex-col text-center',
+      horizontal: 'w-80 md:w-100 landscape:max-lg:w-60 text-center',
+      vertical: 'h-80 md:h-100 landscape:max-lg:h-60 flex-col text-center',
     },
   },
 })
@@ -25,8 +25,8 @@ const labelBarStyle = cva('flex justify-between font-bold text-tiny text-base-70
 const labelStyle = cva('flex justify-center items-center', {
   variants: {
     orientation: {
-      horizontal: 'w-8 md:w-10',
-      vertical: 'h-8 md:h-10',
+      horizontal: 'w-8 md:w-10 landscape:max-lg:w-6',
+      vertical: 'h-8 md:h-10 landscape:max-lg:h-6',
     },
   },
 })

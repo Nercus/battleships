@@ -3,11 +3,11 @@
     :variant="shipsConfirmed ? 'muted' : 'success'" :disabled="!playerColor || !playerName"
     @click="confirmSelection">
     <span v-if="shipsConfirmed && !otherPlayerReady" class="flex items-center gap-2">
-      Waiting for other player...
+      Waiting for opponent...
       <Icon class="w-4 h-4 animate-spin fluent--spinner-ios-20-filled" />
     </span>
     <span v-else-if="!shipsConfirmed && otherPlayerReady" class="flex items-center gap-2">
-      Other player is ready! Are you?
+      Are you ready?
       <Icon class="w-4 h-4 fluent--checkmark-24-filled" />
     </span>
     <span v-else>Confirm</span>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center gap-2 md:gap-4 w-full">
+  <div class="flex landscape:max-lg:flex-row flex-col justify-center items-center gap-2 md:gap-4 w-full">
     <GridLayers>
       <template #header>
         <CommonButton variant="success" class="mb-2 w-fit text-xs" size="tiny" @click="randomizeLayout">
@@ -14,13 +14,15 @@
         <ShipGrid v-model:layout="shipLayout" :color="playerColor" is-draggable class="absolute inset-0 size-full" />
       </template>
       <template #footer>
-        <CommonInfoText class="mb-2 w-full">
-          Drag to move your ships. Click to rotate.
-        </CommonInfoText>
-        <SetupToolbar />
+        <div class="flex flex-col items-center gap-2 w-full">
+          <CommonInfoText class="mb-2 w-full">
+            Drag to move your ships. Click to rotate.
+          </CommonInfoText>
+          <SetupToolbar />
+          <SetupReadyButton />
+        </div>
       </template>
     </GridLayers>
-    <SetupReadyButton />
   </div>
 </template>
 

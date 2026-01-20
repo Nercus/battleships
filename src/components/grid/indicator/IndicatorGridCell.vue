@@ -1,5 +1,5 @@
 <template>
-  <button class="flex justify-center items-center enabled:hover:bg-base-300 rounded-full size-8 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled || !hittable">
+  <button class="flex justify-center items-center enabled:hover:bg-base-300 rounded-full size-8 landscape:max-lg:size-6 md:size-10 cursor-pointer disabled:pointer-events-none" :disabled="props.disabled || !hittable">
     <motion.div class="bg-base-700 rounded-full outline-4 outline-transparent size-2" :animate="indicatorAnimation" />
   </button>
 </template>
