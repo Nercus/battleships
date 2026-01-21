@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @plugin "@iconify/tailwind4" {
-  prefixes: 'fluent';
+  prefixes: 'fluent', 'emojione-monotone';
 }
 
 @theme {
