@@ -17,33 +17,18 @@
 </template>
 
 <script setup lang="ts">
-import type { Layout } from 'grid-layout-plus'
-
-const { gameState, reset, playerBoardHitStates, shipLayout } = useGame()
+const { reset } = useGame()
 const { onEvent, sendEvent } = useEvent()
 const opponentRequestsNewGame = ref(false)
 const newGameRequested = ref(false)
 const playerWon = ref(false)
 const router = useRouter()
 
-const opponentBoardLayout = ref<Layout | null>()
-const opponentBoardHits = ref<Board | null>()
-
 let removeListener: () => void
 onMounted(() => {
   removeListener = onEvent((event) => {
-    if (event.type === 'game-over') {
-      gameState.value = 'ended'
-      playerWon.value = true
-      sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })
-    }
-    else if (event.type === 'new-game') {
+    if (event.type === 'new-game') {
       opponentRequestsNewGame.value = true
-    }
-    else if (event.type === 'game-info' && gameState.value === 'ended') {
-      const { board, layout } = event.data as { board: Board, layout: Layout }
-      opponentBoardHits.value = board
-      opponentBoardLayout.value = layout
     }
   })
 })

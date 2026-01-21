@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-const { gameState, winner, playerBoardHitStates, shipLayout } = useGame()
+const { gameState, winner } = useGame()
 const router = useRouter()
-const { onEvent, sendEvent } = useEvent()
+const { onEvent } = useEvent()
 
 watch(gameState, (newState) => {
   if (newState === 'ended') {
@@ -26,7 +26,6 @@ onMounted(() => {
     if (event.type === 'game-over') {
       gameState.value = 'ended'
       winner.value = 'player'
-      sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })
     }
   })
 })

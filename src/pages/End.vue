@@ -2,8 +2,9 @@
   <div class="flex flex-col justify-center items-center gap-2 size-full">
     <PlayerWon v-if="winner === 'player'" />
     <PlayerLost v-else-if="winner === 'opponent'" />
+    <EnemyShipLayout />
     <PlayerStats />
-    <ReplayButton class="" />
+    <ReplayButton />
   </div>
 </template>
 

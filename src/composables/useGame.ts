@@ -104,7 +104,6 @@ export function useGame() {
         sendEvent({ type: 'game-over' })
         gameState.value = 'ended'
         winner.value = 'opponent'
-        sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })
       }
     }
   }
