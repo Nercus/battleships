@@ -1,0 +1,65 @@
+<template>
+  <div class="flex flex-col justify-center items-center gap-2 lg:gap-4 w-full">
+    <CommonButton class="z-10 relative w-full max-w-xs" variant="success" size="large" @click="initiateJoinGame">
+      Join Game
+    </CommonButton>
+    <div v-if="isJoining" class="flex flex-row items-end gap-2">
+      <PinInput v-model="joinCodeInput" />
+      <CommonButton variant="success" size="icon" class="h-10" :disabled="isTryingToJoin || joinCodeInput.join('').length !== 6" @click="connectToRoom(joinCodeInput.join(''))">
+        <Icon v-if="isTryingToJoin" class="animate-spin fluent--spinner-ios-20-filled" />
+        <Icon v-else class="fluent--play-24-filled" />
+      </CommonButton>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const router = useRouter()
+
+const { joinRoom, isConnected } = useConnection()
+
+const role = defineModel<'host' | 'client' | null>()
+const isJoining = computed(() => role.value === 'client')
+
+const isTryingToJoin = ref(false)
+const joinCodeInput = ref<string[]>([])
+
+const { start, stop } = useTimeout(10000, {
+  callback: () => {
+    if (!isTryingToJoin.value) return
+    if (!isConnected.value) {
+      push.error({
+        message: 'Failed to connect.',
+      })
+      isTryingToJoin.value = false
+    }
+  },
+  controls: true,
+})
+
+watch(isConnected, () => {
+  if (isConnected.value) {
+    push.success({
+      message: 'You are now connected.',
+    })
+    router.push({ name: 'Setup' })
+    stop()
+    isTryingToJoin.value = false
+  }
+}, { immediate: true })
+
+function connectToRoom(code: string) {
+  if (isTryingToJoin.value) return
+  if (!code || code?.length !== 6) {
+    return
+  }
+  start() // Start the timeout countdown
+  joinRoom(code)
+  isTryingToJoin.value = true
+}
+
+function initiateJoinGame() {
+  if (isJoining.value) return
+  role.value = 'client'
+}
+</script>

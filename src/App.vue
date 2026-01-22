@@ -1,4 +1,5 @@
 <template>
+  <HomeButton />
   <Notivue v-slot="item">
     <Notification :item="item" :theme="theme" :icons="outlinedIcons">
       <NotificationProgress :item="item" />
@@ -6,14 +7,9 @@
   </Notivue>
   <div class="flex flex-col justify-center items-center size-full">
     <RouterView v-slot="{ Component }">
-      <Transition name="fade" mode="out-in">
-        <component :is="Component" class="overflow-hidden" />
-      </Transition>
+      <component :is="Component" class="flex justify-center items-center size-full overflow-hidden" />
     </RouterView>
   </div>
-  <Toolbar />
-  <GameEndPopup />
-  <NoLandscapeOverlay />
 </template>
 
 <script setup lang="ts">
@@ -21,6 +17,23 @@ import { lightTheme, Notification, NotificationProgress, Notivue, outlinedIcons 
 import { RouterView } from 'vue-router'
 
 const { isConnected } = useConnection()
+const router = useRouter()
+const route = useRoute()
+
+function checkConnectionState() {
+  if (!isConnected.value && route.meta.requiresConnection) {
+    push.error({
+      message: 'You have been disconnected.',
+    })
+    router.push({ name: 'Home' })
+  }
+}
+
+useInterval(2500, {
+  controls: true,
+  immediate: true,
+  callback: checkConnectionState,
+})
 
 window.addEventListener('beforeunload', (event) => {
   if (import.meta.env.MODE === 'development') return
@@ -31,8 +44,7 @@ window.addEventListener('beforeunload', (event) => {
 
 function showWarning() {
   push.warning({
-    duration: 5000,
-    message: 'Refreshing the page will end the connection. Please use the browser\'s reload button instead, if you insist on refreshing.',
+    message: 'Refreshing the page will end the connection.',
   })
 }
 
@@ -55,25 +67,16 @@ document.addEventListener('keydown', (event) => {
 
 const theme = {
   ...lightTheme,
-  '--nv-success-accent': '#7ac270',
-  '--nv-error-accent': '#d04e4e',
-  '--nv-warning-accent': '#d0ba49',
-  '--nv-info-accent': '#8baee9',
-  '--nv-promise-accent': '#8baee9',
+  '--nv-success-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-success').trim(),
+  '--nv-error-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-error').trim(),
+  '--nv-warning-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-warning').trim(),
+  '--nv-info-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim(),
+  '--nv-promise-accent': getComputedStyle(document.documentElement).getPropertyValue('--color-base-700').trim(),
+  '--nv-global-border': 'black',
+  '--nv-radius': '0rem',
+  '--nv-shadow': getComputedStyle(document.documentElement).getPropertyValue('--shadow-shadow').trim(),
 }
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
 
 <style>
 @media (max-width: 768px) {

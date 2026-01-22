@@ -14,9 +14,16 @@ app.use(createNotivue({
   limit: 2,
   position: 'bottom-right',
   avoidDuplicates: true,
-
+  pauseOnTabChange: false,
+  pauseOnHover: false,
   notifications: {
-    global: {
+    success: {
+      duration: 2000,
+    },
+    error: {
+      duration: 5000,
+    },
+    info: {
       duration: 3000,
     },
   },
