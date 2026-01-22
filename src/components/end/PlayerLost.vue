@@ -73,7 +73,7 @@ const shipVariants = cva('', {
   }
 
   100% {
-    transform: translateY(80px) rotate(70deg);
+    transform: translateY(100vh) rotate(70deg);
     opacity: 0;
   }
 }
