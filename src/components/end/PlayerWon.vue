@@ -11,7 +11,7 @@
           duration: 8,
         },
       }" class="-z-10 fixed size-full">
-      <Icon class="size-full text-warning/40 emojione-monotone--glowing-star" />
+      <Icon class="size-full text-warning/40 fluent--star-24-filled" />
     </motion.div>
     <div class="flex flex-col justify-center items-center gap-4">
       <motion.div
