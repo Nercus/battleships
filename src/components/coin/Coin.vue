@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-80 md:w-3/4 max-w-full h-80 md:h-3/4 max-h-full aspect-square">
-    <TresCanvas clear-color="#f5f5f5" class="size-full pointer-events-none!" :clear-alpha="0" alpha>
+    <TresCanvas class="size-full pointer-events-none!" :clear-alpha="0" alpha>
       <TresPerspectiveCamera :args="[45, 1, 1, 500]" :position="[0, 0, 3]" :look-at="[0, 0, 0]" />
       <Suspense>
         <CoinScene :colors="resolvedColors" :names="props.names" :target-side="props.targetSide" />
