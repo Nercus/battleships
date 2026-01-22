@@ -50,6 +50,10 @@ function startCountDown() {
 
 function flipCoin(forcedResult?: 0 | 1): 0 | 1 {
   let result: 0 | 1
+  if ((forcedResult === null || forcedResult === undefined) && isHost.value === false) {
+    console.warn('Only the host can flip the coin!')
+    return 0
+  }
   if (forcedResult) {
     result = forcedResult
   }
