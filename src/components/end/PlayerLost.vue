@@ -5,9 +5,9 @@
         You Lost!
       </h1>
       <motion.div
-        class="w-full md:w-1/2" :initial="{ x: '100%' }"
+        class="w-full md:w-1/2 pointer-events-none" :initial="{ x: '100%' }"
         :animate="{ x: '0%' }" :transition="{ duration: 5 }">
-        <ShipSVG class="size-full" :class="shipVariants({ sunken: boatSunk, color: playerColor })" />
+        <ShipSVG class="w-full h-fit" :class="shipVariants({ sunken: boatSunk, color: playerColor })" />
       </motion.div>
     </div>
   </div>
@@ -53,7 +53,7 @@ const shipVariants = cva('', {
 
 <style scoped>
 .animated-sunken-boat {
-  animation: sink 2s ease-in-out forwards;
+  animation: sink 3s ease-in-out forwards;
 }
 
 @keyframes sink {
