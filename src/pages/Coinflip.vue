@@ -54,7 +54,7 @@ function flipCoin(forcedResult?: 0 | 1): 0 | 1 {
     console.warn('Only the host can flip the coin!')
     return 0
   }
-  if (forcedResult) {
+  if (forcedResult != null) {
     result = forcedResult
   }
   else {
