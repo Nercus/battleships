@@ -12,11 +12,11 @@
         <DialogTitle class="font-semibold text-xl">
           Enemy Board
         </DialogTitle>
-        <div v-if="opponentBoardLayout && opponentBoardHits" class="relative shadow-shadow border-2 border-black size-80 landscape:max-lg:size-60 md:size-100">
+        <div v-if="opponentBoardLayout && opponentBoardHitStates" class="relative shadow-shadow border-2 border-black size-80 landscape:max-lg:size-60 md:size-100">
           <ShipGrid
             v-model:layout="opponentBoardLayout" :color="opponentColor" :is-draggable="false"
             class="absolute inset-0 size-full pointer-events-none" />
-          <IndicatorGrid class="absolute inset-0" :board="opponentBoardHits" board-type="player" />
+          <IndicatorGrid class="absolute inset-0" :board="opponentBoardHitStates" board-type="player" />
         </div>
         <div v-else class="py-8">
           Cannot load enemy board.
@@ -35,9 +35,7 @@
 import type { Layout } from 'grid-layout-plus'
 
 const { onEvent, sendEvent } = useEvent()
-const { opponentColor, gameState, playerBoardHitStates, shipLayout } = useGame()
-const opponentBoardLayout = ref<Layout | null>()
-const opponentBoardHits = ref<Board | null>()
+const { opponentColor, gameState, playerBoardHitStates, shipLayout, opponentBoardHitStates, opponentBoardLayout } = useGame()
 
 let removeListener: () => void
 onMounted(() => {
@@ -46,7 +44,7 @@ onMounted(() => {
   removeListener = onEvent((event) => {
     if (event.type === 'game-info' && gameState.value === 'ended') {
       const { board, layout } = event.data as { board: Board, layout: Layout }
-      opponentBoardHits.value = board
+      opponentBoardHitStates.value = board
       opponentBoardLayout.value = layout
     }
   })

@@ -45,6 +45,8 @@ const opponentBoardHitStates = ref<Board>(Array.from({ length: 10 }, () => Array
 const destroyedShips = ref<Layout>([])
 const lostShips = ref<Layout>([])
 
+const opponentBoardLayout = ref<Layout | null>()
+
 const { sendEvent } = useEvent()
 export function useGame() {
   const boardShipMap = computed(() => {
@@ -101,7 +103,10 @@ export function useGame() {
       lostShips.value.push(destroyedShipLayoutItem)
 
       if (lostShips.value.length === shipLayout.value.length) {
-        sendEvent({ type: 'game-over' })
+        sendEvent({
+          type: 'game-over',
+          data: { board: playerBoardHitStates.value, layout: shipLayout.value },
+        })
         gameState.value = 'ended'
         winner.value = 'opponent'
       }
@@ -192,6 +197,7 @@ export function useGame() {
     reset,
     setHitStateForOpponent,
     shipLayout,
+    opponentBoardLayout,
     switchTurn,
   }
 }

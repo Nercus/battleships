@@ -5,7 +5,6 @@ const { dataBus, sendMessage } = useConnection()
 
 type GameEvent = | { type: 'ready', data: boolean }
   | { type: 'coin-flip', data: { hostSide: 0 | 1 } }
-  | { type: 'game-over', data: { won: boolean } }
   | { type: 'attack', data: { x: number, y: number } }
   | { type: 'attack-response', data: boolean } // returns true if the attack hit, false if it missed
   | { type: 'acknowledge' } // used to acknowledge the receipt of a message
@@ -13,7 +12,7 @@ type GameEvent = | { type: 'ready', data: boolean }
   | { type: 'color', data: Color }
   | { type: 'name', data: string }
   | { type: 'ship-destroyed', data: LayoutItem } // used to notify the opponent that a ship has been destroyed and sends the coordinates of the ship
-  | { type: 'game-over' } // notify the opponent that the game is over, because all the player's ships have been destroyed
+  | { type: 'game-over', data: { board: Board, layout: Layout } } // notify the opponent that the game is over, because all the player's ships have been destroyed
   | { type: 'new-game' } // used to notify to play a new game
   | { type: 'game-info', data: { board: Board, layout: Layout } } // when the game is over send the own board to the opponent for review
 

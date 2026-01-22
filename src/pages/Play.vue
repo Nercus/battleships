@@ -10,9 +10,9 @@
 </template>
 
 <script setup lang="ts">
-const { gameState, winner } = useGame()
+const { gameState, winner, playerBoardHitStates, shipLayout, opponentBoardLayout, opponentBoardHitStates } = useGame()
 const router = useRouter()
-const { onEvent } = useEvent()
+const { onEvent, sendEvent } = useEvent()
 
 watch(gameState, (newState) => {
   if (newState === 'ended') {
@@ -24,8 +24,15 @@ let removeListener: () => void
 onMounted(() => {
   removeListener = onEvent((event) => {
     if (event.type === 'game-over') {
+      const { board, layout } = event.data
+      sendEvent({
+        type: 'game-info',
+        data: { board: playerBoardHitStates.value, layout: shipLayout.value },
+      })
       gameState.value = 'ended'
       winner.value = 'player'
+      opponentBoardHitStates.value = board
+      opponentBoardLayout.value = layout
     }
   })
 })
