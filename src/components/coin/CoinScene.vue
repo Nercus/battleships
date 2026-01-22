@@ -134,7 +134,7 @@ function updateTextGeometries() {
 onMounted(async () => {
   try {
     const loader = new TTFLoader()
-    const json = await loader.loadAsync('../../src/assets/LexendMega.ttf')
+    const json = await loader.loadAsync('../../assets/LexendMega.ttf')
     font.value = new Font(json)
 
     updateTextGeometries()

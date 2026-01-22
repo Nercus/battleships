@@ -19,7 +19,7 @@ import { useLoader, useLoop } from '@tresjs/core'
 import { ExtrudeGeometry } from 'three'
 import { SVGLoader } from 'three/examples/jsm/Addons.js'
 
-const { state: svgData } = useLoader(SVGLoader, '/src/assets/logo.svg')
+const { state: svgData } = useLoader(SVGLoader, '/assets/logo.svg')
 
 const logoShapes = computed(() => {
   if (!svgData.value) return []
