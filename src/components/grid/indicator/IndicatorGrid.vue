@@ -2,7 +2,7 @@
   <div class="grid grid-cols-10 grid-rows-10">
     <IndicatorGridCell
       v-for="(hitType, index) in flatBoard" :key="index" :index="index"
-      :type="hitType" :board-type="props.boardType" :disabled="isDisabled" @click="setTarget(hitType, index)" @dblclick.stop="shootTarget(hitType, index)" />
+      :type="hitType" :board-type="props.boardType" :disabled="isDisabled" @click="setTarget(hitType, index)" @dblclick.prevent.stop="shootTarget(hitType, index)" />
   </div>
 </template>
 

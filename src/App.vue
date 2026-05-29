@@ -5,7 +5,7 @@
       <NotificationProgress :item="item" />
     </Notification>
   </Notivue>
-  <div class="flex flex-col justify-center items-center size-full">
+  <div class="flex flex-col justify-center items-center size-full touch-manipulation">
     <RouterView v-slot="{ Component }">
       <component :is="Component" class="flex justify-center items-center size-full overflow-hidden" />
     </RouterView>

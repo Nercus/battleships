@@ -1,7 +1,7 @@
 <template>
   <GridLayout
     ref="shipGrid" v-model:layout="layout" :col-num="10" :max-rows="10" :row-height="rowHeight" is-draggable
-    class="touch-none" :prevent-collision="true" :vertical-compact="false" is-bounded
+    class="touch-manipulation" :prevent-collision="true" :vertical-compact="false" is-bounded
     :use-css-transforms="false" :auto-size="false" :margin="[0, 0]" :is-resizable="false">
     <GridItem v-for="item in layout" :key="item.i" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :is-resizable="false" @moved="layoutUpdated()">
       <ShipGridElement
