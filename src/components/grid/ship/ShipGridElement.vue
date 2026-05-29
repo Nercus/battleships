@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group relative"
+    class="group relative overflow-visible"
     :style="{ width: `${width}px`, height: `${height}px` }"
     @mousedown.prevent="onDown"
     @mouseup.prevent="onUp"
