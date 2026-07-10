@@ -1,72 +1,73 @@
 <template>
   <TresGroup ref="coinGroupRef">
-    <TresMesh :rotation="[Math.PI / 2, 0, 0]">
-      <TresCylinderGeometry :args="[coinRadius, coinRadius, coinThickness, 64]" />
-      <TresMeshBasicMaterial color="#f5f5f5" />
-    </TresMesh>
+    <TresGroup
+      v-for="(geometry, index) in coinBodyGeometries"
+      :key="`coin-body-${index}`"
+      :position="coinBodyPosition"
+      :scale="coinBodyScale">
+      <TresMesh :geometry="geometry">
+        <TresMeshBasicMaterial color="#f5f5f5" />
+      </TresMesh>
 
-    <TresLineSegments :rotation="[Math.PI / 2, 0, 0]">
-      <TresEdgesGeometry :args="[cylinderGeometry]" />
-      <TresLineBasicMaterial color="#000000" :line-width="3" />
-    </TresLineSegments>
+      <TresLineSegments>
+        <TresEdgesGeometry :args="[geometry]" />
+        <TresLineBasicMaterial color="#1a1a1a" :line-width="2" />
+      </TresLineSegments>
+    </TresGroup>
+
+    <TresMesh :position="frontInsetBorderPosition" :rotation="[Math.PI / 2, 0, 0]">
+      <TresCylinderGeometry :args="[insetBorderRadius, insetBorderRadius, insetDepth, coinSegments]" />
+      <TresMeshBasicMaterial color="#1a1a1a" />
+    </TresMesh>
+    <TresMesh :position="frontInsetPosition" :rotation="[Math.PI / 2, 0, 0]">
+      <TresCylinderGeometry :args="[insetRadius, insetRadius, insetDepth, coinSegments]" />
+      <TresMeshBasicMaterial :color="props.colors[0]" />
+    </TresMesh>
+    <TresMesh :position="frontInsetLinePosition">
+      <TresTorusGeometry :args="[innerInsetRadius, insetLineThickness, 6, coinSegments]" />
+      <TresMeshBasicMaterial color="#1a1a1a" />
+    </TresMesh>
 
     <TresMesh v-if="font && props.names && frontTextGeometry" :position="frontTextPosition" :geometry="frontTextGeometry">
-      <TresMeshBasicMaterial :color="props.colors[0]" />
+      <TresMeshBasicMaterial color="#1a1a1a" />
     </TresMesh>
 
-    <!-- Front text outline -->
-    <TresLineSegments v-if="font && props.names && frontTextGeometry" :position="frontTextPosition">
-      <TresEdgesGeometry :args="[frontTextGeometry]" />
-      <TresLineBasicMaterial color="#000000" :line-width="2" />
-    </TresLineSegments>
-
-    <TresMesh :position="frontFacePosition">
-      <TresExtrudeGeometry :args="[ringShape, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }]" />
-      <TresMeshBasicMaterial :color="props.colors[0]" />
+    <TresMesh :position="backInsetBorderPosition" :rotation="[Math.PI / 2, 0, 0]">
+      <TresCylinderGeometry :args="[insetBorderRadius, insetBorderRadius, insetDepth, coinSegments]" />
+      <TresMeshBasicMaterial color="#1a1a1a" />
     </TresMesh>
-    <TresLineSegments :position="frontFacePosition">
-      <TresEdgesGeometry :args="[frontRingGeometry]" />
-      <TresLineBasicMaterial color="#000000" :line-width="2" />
-    </TresLineSegments>
+    <TresMesh :position="backInsetPosition" :rotation="[Math.PI / 2, 0, 0]">
+      <TresCylinderGeometry :args="[insetRadius, insetRadius, insetDepth, coinSegments]" />
+      <TresMeshBasicMaterial :color="props.colors[1]" />
+    </TresMesh>
+    <TresMesh :position="backInsetLinePosition">
+      <TresTorusGeometry :args="[innerInsetRadius, insetLineThickness, 6, coinSegments]" />
+      <TresMeshBasicMaterial color="#1a1a1a" />
+    </TresMesh>
 
     <TresMesh
       v-if="font && props.names && backTextGeometry" :position="backTextPosition"
       :rotation="[0, Math.PI, 0]" :geometry="backTextGeometry">
-      <TresMeshBasicMaterial :color="props.colors[1]" />
+      <TresMeshBasicMaterial color="#1a1a1a" />
     </TresMesh>
-
-    <TresLineSegments
-      v-if="font && props.names && backTextGeometry" :position="backTextPosition"
-      :rotation="[0, Math.PI, 0]">
-      <TresEdgesGeometry :args="[backTextGeometry]" />
-      <TresLineBasicMaterial color="#000000" :line-width="2" />
-    </TresLineSegments>
-
-    <TresMesh :position="backFacePosition">
-      <TresExtrudeGeometry :args="[ringShape, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }]" />
-      <TresMeshBasicMaterial :color="props.colors[1]" />
-    </TresMesh>
-
-    <TresLineSegments :position="backFacePosition">
-      <TresEdgesGeometry :args="[backRingGeometry]" />
-      <TresLineBasicMaterial color="#000000" :line-width="2" />
-    </TresLineSegments>
   </TresGroup>
 </template>
 
 <script setup lang="ts">
-import { useLoop, useTres } from '@tresjs/core'
-import { CylinderGeometry, ExtrudeGeometry, Shape, Vector3 } from 'three'
-import { Font, TextGeometry, TTFLoader } from 'three/examples/jsm/Addons.js'
+import { useLoader, useLoop } from '@tresjs/core'
+import { ExtrudeGeometry, Vector3 } from 'three'
+import { Font, SVGLoader, TextGeometry, TTFLoader } from 'three/examples/jsm/Addons.js'
 
 const props = defineProps<{
   colors: [string, string]
   names?: [string, string]
   targetSide?: 0 | 1
 }>()
-const { extend } = useTres()
-extend({ TextGeometry })
 
+const coinSegments = 64
+const coinSvgSize = 837
+const coinSvgCenter = coinSvgSize / 2
+const { state: coinSvgData } = useLoader(SVGLoader, '/assets/Coin.svg')
 const coinRadius = computed(() => {
   const baseRadius = 1.0
   const aspectRatio = window.innerWidth / window.innerHeight
@@ -74,49 +75,62 @@ const coinRadius = computed(() => {
   return aspectRatio < 0.8 ? baseRadius * 0.6 : baseRadius
 })
 
-const ringShape = computed(() => {
-  const shape = new Shape()
-  const outerRadius = coinRadius.value * 0.98
-  const innerRadius = coinRadius.value * 0.95
-
-  shape.absarc(0, 0, outerRadius, 0, Math.PI * 2, false)
-
-  const hole = new Shape()
-  hole.absarc(0, 0, innerRadius, 0, Math.PI * 2, true)
-  shape.holes.push(hole)
-
-  return shape
-})
-
-const coinThickness = 0.12
+const coinThickness = 0.16
+const insetDepth = 0.028
+const insetLineThickness = 0.008
 const faceZOffset = coinThickness / 2
-const frontTextPosition = new Vector3(0, 0, faceZOffset + 0.02)
-const frontFacePosition = new Vector3(0, 0, faceZOffset)
-const backTextPosition = new Vector3(0, 0, -faceZOffset - 0.02)
-const backFacePosition = new Vector3(0, 0, -faceZOffset - 0.025)
+const faceInsetOffset = 0.026
+const recessedFaceZOffset = faceZOffset - faceInsetOffset
+const coinSvgScale = computed(() => (coinRadius.value * 2) / coinSvgSize)
+const coinBodyPosition = computed(() => {
+  const scale = coinSvgScale.value
+  return new Vector3(-coinSvgCenter * scale, coinSvgCenter * scale, -faceZOffset)
+})
+const coinBodyScale = computed(() => {
+  const scale = coinSvgScale.value
+  return new Vector3(scale, -scale, 1)
+})
+const coinBodyGeometries = computed(() => {
+  if (!coinSvgData.value) return []
+
+  return coinSvgData.value.paths.flatMap(path =>
+    SVGLoader
+      .createShapes(path)
+      .map(shape => new ExtrudeGeometry(shape, {
+        bevelEnabled: false,
+        curveSegments: 10,
+        depth: coinThickness,
+      })),
+  )
+})
+const insetBorderRadius = computed(() => coinRadius.value * 0.94)
+const insetRadius = computed(() => coinRadius.value * 0.88)
+const innerInsetRadius = computed(() => coinRadius.value * 0.58)
+const frontTextPosition = new Vector3(0, 0, recessedFaceZOffset + 0.002)
+const backTextPosition = new Vector3(0, 0, -recessedFaceZOffset - 0.002)
+const frontInsetBorderPosition = new Vector3(0, 0, recessedFaceZOffset - insetDepth / 2)
+const frontInsetPosition = new Vector3(0, 0, recessedFaceZOffset - insetDepth / 2 + 0.004)
+const frontInsetLinePosition = new Vector3(0, 0, recessedFaceZOffset + 0.008)
+const backInsetBorderPosition = new Vector3(0, 0, -recessedFaceZOffset + insetDepth / 2)
+const backInsetPosition = new Vector3(0, 0, -recessedFaceZOffset + insetDepth / 2 - 0.004)
+const backInsetLinePosition = new Vector3(0, 0, -recessedFaceZOffset - 0.008)
+const maxTextWidth = computed(() => coinRadius.value * 1.5)
 
 const coinGroupRef = ref()
-const font = ref<Font | null>(null)
-
-const cylinderGeometry = shallowRef()
-const frontRingGeometry = shallowRef()
-const backRingGeometry = shallowRef()
-
-watch([coinRadius], () => {
-  cylinderGeometry.value = new CylinderGeometry(coinRadius.value, coinRadius.value, coinThickness, 64)
-}, { immediate: true })
-
-watch(ringShape, () => {
-  frontRingGeometry.value = new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 })
-  backRingGeometry.value = new ExtrudeGeometry(ringShape.value, { depth: 0.025, bevelEnabled: false, curveSegments: 64 })
-}, { immediate: true })
+const font = shallowRef<Font | null>(null)
 
 const frontTextGeometry = shallowRef<TextGeometry | null>(null)
 const backTextGeometry = shallowRef<TextGeometry | null>(null)
 
 function createTextGeometry(text: string) {
   if (!font.value) return null
-  const geometry = new TextGeometry(text, { font: font.value, size: 0.1, depth: 0.025 })
+  const geometry = new TextGeometry(text.trim().toUpperCase(), {
+    bevelEnabled: false,
+    curveSegments: 8,
+    depth: 0.018,
+    font: font.value,
+    size: coinRadius.value * 0.15,
+  })
 
   geometry.computeBoundingBox()
   if (geometry.boundingBox) {
@@ -128,17 +142,28 @@ function createTextGeometry(text: string) {
   return geometry
 }
 
+function getTextScale(geometry: TextGeometry | null) {
+  if (!geometry?.boundingBox) return 1
+  const width = geometry.boundingBox.max.x - geometry.boundingBox.min.x
+  return Math.min(1, maxTextWidth.value / Math.max(width, 0.001))
+}
+
 function updateTextGeometries() {
   if (font.value && props.names) {
     frontTextGeometry.value = createTextGeometry(props.names[0])
     backTextGeometry.value = createTextGeometry(props.names[1])
+    const frontScale = getTextScale(frontTextGeometry.value)
+    const backScale = getTextScale(backTextGeometry.value)
+
+    frontTextGeometry.value?.scale(frontScale, frontScale, 1)
+    backTextGeometry.value?.scale(backScale, backScale, 1)
   }
 }
 
 onMounted(async () => {
   try {
     const loader = new TTFLoader()
-    const json = await loader.loadAsync('../../assets/LexendMega.ttf')
+    const json = await loader.loadAsync('/assets/Lexend-Black.ttf')
     font.value = new Font(json)
 
     updateTextGeometries()
