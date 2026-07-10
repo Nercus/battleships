@@ -12,6 +12,14 @@
 </template>
 
 <script setup lang="ts">
+definePage({
+  name: 'Coinflip',
+  path: '/coin-flip',
+  meta: {
+    requiresConnection: true,
+  },
+})
+
 const router = useRouter()
 
 const { playersTurn, switchTurn, playerName, opponentName, playerColor, opponentColor } = useGame()

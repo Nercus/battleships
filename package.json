@@ -14,49 +14,40 @@
     "lint": "eslint --cache ."
   },
   "dependencies": {
-    "@tresjs/core": "^5.3.1",
-    "@vueuse/core": "^14.1.0",
+    "@tresjs/core": "^5.8.3",
+    "@vueuse/core": "^14.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "grid-layout-plus": "^1.1.1",
-    "motion-v": "^1.9.0",
+    "motion-v": "^2.3.0",
     "notivue": "^2.4.5",
-    "reka-ui": "^2.7.0",
+    "reka-ui": "^2.10.1",
     "simple-peer": "^9.11.1",
-    "tailwind-merge": "^3.4.0",
-    "three": "^0.182.0",
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.185.1",
+    "vue": "^3.5.39",
+    "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.0.1",
-    "@iconify-json/fluent": "^1.2.36",
-    "@iconify/tailwind4": "^1.2.1",
-    "@stylistic/eslint-plugin": "^5.7.0",
-    "@tailwindcss/vite": "^4.1.18",
-    "@types/node": "^25.0.9",
+    "@antfu/eslint-config": "^9.1.0",
+    "@iconify-json/fluent": "^1.2.52",
+    "@iconify/tailwind4": "^1.2.3",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@tailwindcss/vite": "^4.3.2",
+    "@types/node": "^26.1.1",
     "@types/simple-peer": "^9.11.9",
-    "@types/three": "^0.182.0",
-    "@vitejs/plugin-vue": "^6.0.3",
-    "@vue/tsconfig": "^0.8.1",
-    "eslint": "^9.39.2",
-    "eslint-plugin-format": "^1.3.1",
+    "@types/three": "^0.185.1",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/tsconfig": "^0.9.1",
+    "eslint": "^10.6.0",
+    "eslint-plugin-format": "^2.0.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "tailwindcss": "^4.1.18",
+    "lint-staged": "^17.0.8",
+    "tailwindcss": "^4.3.2",
     "typescript": "~5.9.3",
     "unplugin-auto-import": "^21.0.0",
-    "unplugin-vue-components": "^31.0.0",
-    "vite": "^7.3.1",
-    "vue-tsc": "^3.2.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "core-js",
-      "esbuild",
-      "unrs-resolver",
-      "vue-demi"
-    ]
+    "unplugin-vue-components": "^32.1.0",
+    "vite": "^8.1.4",
+    "vue-tsc": "^3.3.7"
   }
 }

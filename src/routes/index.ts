@@ -1,74 +1,42 @@
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteMap } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
+import { routes } from 'vue-router/auto-routes'
 
-export const routes: RouteRecordRaw[] = [
-  {
-    beforeEnter: () => {
-      useGame().reset()
-      useConnection().reset()
-    },
-    component: () => import('../pages/Home.vue'),
-    name: 'Home',
-    path: '/',
-  },
-  {
-    beforeEnter: () => {
-      const { gameState } = useGame()
-      gameState.value = 'setup'
-      return gameState.value === 'setup'
-    },
-    component: () => import('../pages/Setup.vue'),
-    meta: {
-      requiresConnection: true,
-    },
-    name: 'Setup',
-    path: '/setup',
-  },
-  {
-    beforeEnter: () => {
-      const { gameState } = useGame()
-      gameState.value = 'coin-flip'
-      return gameState.value === 'coin-flip'
-    },
-    component: () => import('../pages/Coinflip.vue'),
-    meta: {
-      requiresConnection: true,
-    },
-    name: 'Coinflip',
-    path: '/coin-flip',
-  },
-  {
-    beforeEnter: () => {
-      const { gameState } = useGame()
-      gameState.value = 'active'
-      return gameState.value === 'active'
-    },
-    component: () => import('../pages/Play.vue'),
-    meta: {
-      requiresConnection: true,
-    },
-    name: 'Play',
-    path: '/play',
-  },
-  {
-    beforeEnter: () => {
-      const { gameState } = useGame()
-      gameState.value = 'ended'
-      return gameState.value === 'ended'
-    },
-    component: () => import('../pages/End.vue'),
-    meta: {
-      requiresConnection: true,
-    },
-    name: 'End',
-    path: '/end',
-  },
-]
+for (const route of routes) {
+  switch (route.name) {
+    case 'Home':
+      route.beforeEnter = () => {
+        useGame().reset()
+        useConnection().reset()
+      }
+      break
+    case 'Setup':
+      route.beforeEnter = createGameStateGuard('setup')
+      break
+    case 'Coinflip':
+      route.beforeEnter = createGameStateGuard('coin-flip')
+      break
+    case 'Play':
+      route.beforeEnter = createGameStateGuard('active')
+      break
+    case 'End':
+      route.beforeEnter = createGameStateGuard('ended')
+      break
+  }
+}
+
+function createGameStateGuard(state: 'setup' | 'coin-flip' | 'active' | 'ended') {
+  return () => {
+    const { gameState } = useGame()
+    gameState.value = state
+    return gameState.value === state
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
 
-export type Routes = typeof routes[number]['path']
+export type Routes = RouteMap[keyof RouteMap]['path']
 export default router

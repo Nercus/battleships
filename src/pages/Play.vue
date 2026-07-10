@@ -10,6 +10,14 @@
 </template>
 
 <script setup lang="ts">
+definePage({
+  name: 'Play',
+  path: '/play',
+  meta: {
+    requiresConnection: true,
+  },
+})
+
 const { gameState, winner, playerBoardHitStates, shipLayout, opponentBoardLayout, opponentBoardHitStates } = useGame()
 const router = useRouter()
 const { onEvent, sendEvent } = useEvent()

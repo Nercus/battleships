@@ -9,5 +9,13 @@
 </template>
 
 <script setup lang="ts">
+definePage({
+  name: 'End',
+  path: '/end',
+  meta: {
+    requiresConnection: true,
+  },
+})
+
 const { winner } = useGame()
 </script>

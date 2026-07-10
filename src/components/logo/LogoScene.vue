@@ -1,12 +1,12 @@
 <template>
   <TresGroup ref="coinGroupRef">
     <TresGroup v-for="(shape, index) in logoShapes" :key="`shape-${index}`">
-      <TresMesh :position="[-0.75, 0.75, -0.05]" :scale="[0.003, -0.003, 1]">
+      <TresMesh :position="logoPosition" :scale="logoScale">
         <TresExtrudeGeometry :args="[shape, { depth: 0.1, bevelEnabled: false }]" />
         <TresMeshBasicMaterial color="white" />
       </TresMesh>
 
-      <TresLineSegments :position="[-0.75, 0.75, -0.05]" :scale="[0.003, -0.003, 1]">
+      <TresLineSegments :position="logoPosition" :scale="logoScale">
         <TresEdgesGeometry :args="[new ExtrudeGeometry(shape, { depth: 0.1, bevelEnabled: false })]" />
         <TresLineBasicMaterial color="black" />
       </TresLineSegments>
@@ -16,10 +16,12 @@
 
 <script setup lang="ts">
 import { useLoader, useLoop } from '@tresjs/core'
-import { ExtrudeGeometry } from 'three'
+import { ExtrudeGeometry, Vector3 } from 'three'
 import { SVGLoader } from 'three/examples/jsm/Addons.js'
 
 const { state: svgData } = useLoader(SVGLoader, '/assets/logo.svg')
+const logoPosition = new Vector3(-0.75, 0.75, -0.05)
+const logoScale = new Vector3(0.003, -0.003, 1)
 
 const logoShapes = computed(() => {
   if (!svgData.value) return []

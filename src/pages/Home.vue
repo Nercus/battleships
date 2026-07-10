@@ -17,5 +17,10 @@
 </template>
 
 <script setup lang="ts">
+definePage({
+  name: 'Home',
+  path: '/',
+})
+
 const role = ref<'host' | 'client' | null>(null)
 </script>

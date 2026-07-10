@@ -27,6 +27,14 @@
 </template>
 
 <script setup lang="ts">
+definePage({
+  name: 'Setup',
+  path: '/setup',
+  meta: {
+    requiresConnection: true,
+  },
+})
+
 const { playerColor, shipLayout, getRandomLayout } = useGame()
 
 function randomizeLayout() {

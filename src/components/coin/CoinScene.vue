@@ -10,44 +10,44 @@
       <TresLineBasicMaterial color="#000000" :line-width="3" />
     </TresLineSegments>
 
-    <TresMesh v-if="font && props.names && frontTextGeometry" :position="[0, 0, faceZOffset + 0.02]" :geometry="frontTextGeometry">
+    <TresMesh v-if="font && props.names && frontTextGeometry" :position="frontTextPosition" :geometry="frontTextGeometry">
       <TresMeshBasicMaterial :color="props.colors[0]" />
     </TresMesh>
 
     <!-- Front text outline -->
-    <TresLineSegments v-if="font && props.names && frontTextGeometry" :position="[0, 0, faceZOffset + 0.02]">
+    <TresLineSegments v-if="font && props.names && frontTextGeometry" :position="frontTextPosition">
       <TresEdgesGeometry :args="[frontTextGeometry]" />
       <TresLineBasicMaterial color="#000000" :line-width="2" />
     </TresLineSegments>
 
-    <TresMesh :position="[0, 0, faceZOffset]">
+    <TresMesh :position="frontFacePosition">
       <TresExtrudeGeometry :args="[ringShape, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }]" />
       <TresMeshBasicMaterial :color="props.colors[0]" />
     </TresMesh>
-    <TresLineSegments :position="[0, 0, faceZOffset]">
+    <TresLineSegments :position="frontFacePosition">
       <TresEdgesGeometry :args="[frontRingGeometry]" />
       <TresLineBasicMaterial color="#000000" :line-width="2" />
     </TresLineSegments>
 
     <TresMesh
-      v-if="font && props.names && backTextGeometry" :position="[0, 0, -faceZOffset - 0.02]"
+      v-if="font && props.names && backTextGeometry" :position="backTextPosition"
       :rotation="[0, Math.PI, 0]" :geometry="backTextGeometry">
       <TresMeshBasicMaterial :color="props.colors[1]" />
     </TresMesh>
 
     <TresLineSegments
-      v-if="font && props.names && backTextGeometry" :position="[0, 0, -faceZOffset - 0.02]"
+      v-if="font && props.names && backTextGeometry" :position="backTextPosition"
       :rotation="[0, Math.PI, 0]">
       <TresEdgesGeometry :args="[backTextGeometry]" />
       <TresLineBasicMaterial color="#000000" :line-width="2" />
     </TresLineSegments>
 
-    <TresMesh :position="[0, 0, -faceZOffset - 0.025]">
+    <TresMesh :position="backFacePosition">
       <TresExtrudeGeometry :args="[ringShape, { depth: 0.025, bevelEnabled: false, curveSegments: 64 }]" />
       <TresMeshBasicMaterial :color="props.colors[1]" />
     </TresMesh>
 
-    <TresLineSegments :position="[0, 0, -faceZOffset - 0.025]">
+    <TresLineSegments :position="backFacePosition">
       <TresEdgesGeometry :args="[backRingGeometry]" />
       <TresLineBasicMaterial color="#000000" :line-width="2" />
     </TresLineSegments>
@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { useLoop, useTres } from '@tresjs/core'
-import { CylinderGeometry, ExtrudeGeometry, Shape } from 'three'
+import { CylinderGeometry, ExtrudeGeometry, Shape, Vector3 } from 'three'
 import { Font, TextGeometry, TTFLoader } from 'three/examples/jsm/Addons.js'
 
 const props = defineProps<{
@@ -90,6 +90,10 @@ const ringShape = computed(() => {
 
 const coinThickness = 0.12
 const faceZOffset = coinThickness / 2
+const frontTextPosition = new Vector3(0, 0, faceZOffset + 0.02)
+const frontFacePosition = new Vector3(0, 0, faceZOffset)
+const backTextPosition = new Vector3(0, 0, -faceZOffset - 0.02)
+const backFacePosition = new Vector3(0, 0, -faceZOffset - 0.025)
 
 const coinGroupRef = ref()
 const font = ref<Font | null>(null)

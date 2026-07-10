@@ -5,6 +5,7 @@ import RekaUIResolver from 'reka-ui/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
+import VueRouter from 'vue-router/vite'
 
 export default defineConfig({
   build: {
@@ -15,6 +16,9 @@ export default defineConfig({
   },
   clearScreen: false,
   plugins: [
+    VueRouter({
+      dts: 'src/types/route-map.d.ts',
+    }),
     vue({
       ...templateCompilerOptions,
     }),
