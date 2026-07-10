@@ -45,9 +45,19 @@ const opponentBoardHitStates = ref<Board>(Array.from({ length: 10 }, () => Array
 const destroyedShips = ref<Layout>([])
 const lostShips = ref<Layout>([])
 
-const opponentBoardLayout = ref<Layout | null>()
+const opponentBoardLayout = ref<Layout | null>(null)
 
-const { sendEvent } = useEvent()
+const { onEvent, sendEvent } = useEvent()
+
+// Keep end-game board information outside page components so it cannot be
+// missed while the router is unmounting /play and mounting /end.
+onEvent((event) => {
+  if (event.type !== 'game-info') return
+
+  opponentBoardHitStates.value = event.data.board
+  opponentBoardLayout.value = event.data.layout
+})
+
 export function useGame() {
   const boardShipMap = computed(() => {
     const hitMap = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill(false)) as Length10Array<Length10Array<typeof AVAILABLE_SHIPS[number]['name'] | false>>
@@ -136,6 +146,7 @@ export function useGame() {
     shipLayout.value = []
     playerBoardHitStates.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
     opponentBoardHitStates.value = Array.from({ length: 10 }, () => Array.from({ length: 10 }).fill('none')) as Board
+    opponentBoardLayout.value = null
 
     destroyedShips.value = []
     playerColor.value = null

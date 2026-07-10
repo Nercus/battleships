@@ -32,24 +32,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Layout } from 'grid-layout-plus'
+const { sendEvent } = useEvent()
+const { opponentColor, playerBoardHitStates, shipLayout, opponentBoardHitStates, opponentBoardLayout } = useGame()
 
-const { onEvent, sendEvent } = useEvent()
-const { opponentColor, gameState, playerBoardHitStates, shipLayout, opponentBoardHitStates, opponentBoardLayout } = useGame()
-
-let removeListener: () => void
 onMounted(() => {
   sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })
-
-  removeListener = onEvent((event) => {
-    if (event.type === 'game-info' && gameState.value === 'ended') {
-      const { board, layout } = event.data as { board: Board, layout: Layout }
-      opponentBoardHitStates.value = board
-      opponentBoardLayout.value = layout
-    }
-  })
-})
-onUnmounted(() => {
-  if (removeListener) removeListener()
 })
 </script>

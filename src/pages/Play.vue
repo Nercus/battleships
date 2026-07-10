@@ -37,10 +37,10 @@ onMounted(() => {
         type: 'game-info',
         data: { board: playerBoardHitStates.value, layout: shipLayout.value },
       })
-      gameState.value = 'ended'
-      winner.value = 'player'
       opponentBoardHitStates.value = board
       opponentBoardLayout.value = layout
+      winner.value = 'player'
+      gameState.value = 'ended'
     }
   })
 })
