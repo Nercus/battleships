@@ -7,7 +7,7 @@
         : 'md:opacity-30 md:cursor-not-allowed opacity-0 translate-x-full pointer-events-none left-full md:left-auto md:transform-none',
     ]">
     <template #header>
-      Opponent's turn!
+      {{ opponentName }}'s turn!
     </template>
     <template #layer1>
       <ShipGrid
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-const { playerColor, shipLayout, playersTurn, playerBoardHitStates, getHitStateForAttack, opponentTarget, switchTurn } = useGame()
+const { playerColor, shipLayout, playersTurn, playerBoardHitStates, getHitStateForAttack, opponentTarget, switchTurn, opponentName } = useGame()
 const { onEvent, sendEvent } = useEvent()
 
 let removeListener: () => void

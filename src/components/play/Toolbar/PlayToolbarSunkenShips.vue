@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col mb-2">
     <h2 class="mb-1 text-sm text-center">
-      Sunken Ships
+      {{ opponentName }}'s ships
     </h2>
     <div class="flex flex-row landscape:max-lg:flex-col flex-wrap justify-evenly gap-2">
       <AircraftCarrier orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: aircraftCarrierDestroyed })" />
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { cva } from 'class-variance-authority'
 
-const { destroyedShips, opponentColor } = useGame()
+const { destroyedShips, opponentColor, opponentName } = useGame()
 
 const aircraftCarrierDestroyed = computed(() => {
   return destroyedShips.value.some(
