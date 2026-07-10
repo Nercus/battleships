@@ -4,7 +4,7 @@
       <CommonButton size="icon" class="relative w-8" :class="radioItemVariant({ color: c })" :disabled="c === opponentColor">
         <Icon v-if="opponentColor === c" class="text-error fluent--presence-blocked-20-regular" />
         <RadioGroupIndicator>
-          <Icon class="absolute inset-0 bg-base-100 size-full fluent--checkmark-12-filled" />
+          <Icon class="absolute inset-0 bg-base-content size-full fluent--checkmark-12-filled" />
         </RadioGroupIndicator>
       </CommonButton>
     </RadioGroupItem>
