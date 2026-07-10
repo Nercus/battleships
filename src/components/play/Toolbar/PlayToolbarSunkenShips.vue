@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col mb-2">
-    <h2 class="mb-1 text-sm text-center">
+  <div class="flex flex-col mb-2 p-y1 px-4">
+    <h2 class="mb-1 text-sm text-left">
       {{ opponentName }}'s ships
     </h2>
-    <div class="flex flex-row landscape:max-lg:flex-col flex-wrap justify-evenly gap-2">
+    <div class="flex flex-row landscape:max-lg:flex-col flex-wrap justify-between gap-2">
       <AircraftCarrier orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: aircraftCarrierDestroyed })" />
       <Battleship orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: battleshipDestroyed })" />
       <Destroyer orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: destroyersDestroyed >= 1 })" />
