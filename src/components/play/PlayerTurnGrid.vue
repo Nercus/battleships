@@ -16,7 +16,9 @@
         class="absolute inset-0 size-full pointer-events-none" />
     </template>
     <template #layer2>
-      <IndicatorGrid class="absolute inset-0" :board="opponentBoardHitStates" board-type="opponent" @shoot="onShoot" />
+      <IndicatorGrid
+        class="absolute inset-0" :board="opponentBoardHitStates" board-type="opponent"
+        :disabled="targetingBlocked" @shoot="onShoot" />
     </template>
     <template #footer />
   </GridLayers>
@@ -27,6 +29,9 @@ const { playersTurn, destroyedShips, opponentColor, setHitStateForOpponent, swit
 const { onEvent, sendEvent } = useEvent()
 
 const attackBlocked = ref(false)
+const sunkAnimationBlocked = ref(false)
+const targetingBlocked = computed(() => attackBlocked.value || sunkAnimationBlocked.value)
+let sunkAnimationTimer: ReturnType<typeof setTimeout> | undefined
 let removeListener: () => void
 onMounted(() => {
   removeListener = onEvent((event) => {
@@ -46,6 +51,15 @@ onMounted(() => {
       sendEvent({ type: 'acknowledge' }) // acknowledge the attack response so the opponent can switch turn
     }
     else if (event.type === 'ship-destroyed') {
+      const shipLength = Math.max(event.data.w, event.data.h)
+      const animationDuration = (shipLength - 1) * 250 + 500
+
+      sunkAnimationBlocked.value = true
+      clearTimeout(sunkAnimationTimer)
+      sunkAnimationTimer = setTimeout(() => {
+        sunkAnimationBlocked.value = false
+      }, animationDuration)
+
       // convert the received data back to a layout entry
       destroyedShips.value.push(event.data)
     }
@@ -53,11 +67,12 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  clearTimeout(sunkAnimationTimer)
   if (removeListener) removeListener()
 })
 
 function onShoot(x: number, y: number) {
-  if (attackBlocked.value) return
+  if (targetingBlocked.value) return
   if (!playerTarget.value) return
   if (playerTarget.value.x !== x || playerTarget.value.y !== y) return
   sendEvent({ data: { x, y }, type: 'attack' })

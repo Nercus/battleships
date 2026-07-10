@@ -10,6 +10,7 @@
 const props = defineProps<{
   board?: Board
   boardType?: 'opponent' | 'player'
+  disabled?: boolean
 }>()
 const emit = defineEmits<{
   (e: 'shoot', x: number, y: number): void
@@ -18,7 +19,7 @@ const { playerTarget, playersTurn } = useGame()
 const { sendEvent } = useEvent()
 
 const isDisabled = computed(() => {
-  return !props.board || !(props.boardType === 'opponent' && playersTurn.value)
+  return props.disabled || !props.board || !(props.boardType === 'opponent' && playersTurn.value)
 })
 
 const flatBoard = computed(() => {
@@ -26,6 +27,7 @@ const flatBoard = computed(() => {
 })
 
 function shootTarget(hitType: HitType, index: number) {
+  if (isDisabled.value) return
   if (hitType !== 'none') return
   if (!playerTarget.value) return
   const x = Math.floor(index / 10)
@@ -35,6 +37,7 @@ function shootTarget(hitType: HitType, index: number) {
 }
 
 function setTarget(hitType: HitType, index: number) {
+  if (isDisabled.value) return
   if (hitType !== 'none') return
 
   const x = Math.floor(index / 10)
