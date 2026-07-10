@@ -1,7 +1,10 @@
 <template>
-  <div class="flex flex-row justify-between items-center shadow-shadow p-1 border-2 w-full landscape:max-lg:w-fit max-w-sm md:max-w-lg">
-    <PlayToolbarSunkenShips  />
+  <div class="flex flex-row justify-between items-center shadow-shadow p-1 border-2 w-full landscape:max-lg:w-fit max-w-sm md:max-w-xl">
+    <PlayToolbarSunkenShips />
     <Separator class="bg-base-700 mx-2 w-px h-full" orientation="vertical" />
+    <div class="flex flex-col justify-evenly h-full">
+    <PlayToolbarReactions />
     <PlayToolbarHelp />
+    </div>
   </div>
 </template>

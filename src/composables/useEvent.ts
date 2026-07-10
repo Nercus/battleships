@@ -15,6 +15,7 @@ type GameEvent = | { type: 'ready', data: boolean }
   | { type: 'game-over', data: { board: Board, layout: Layout } } // notify the opponent that the game is over, because all the player's ships have been destroyed
   | { type: 'new-game' } // used to notify to play a new game
   | { type: 'game-info', data: { board: Board, layout: Layout } } // when the game is over send the own board to the opponent for review
+  | { type: 'reaction', data: string } // show a short emoji reaction on the opponent's screen
 
 const eventBus = useEventBus<GameEvent>('game-event')
 

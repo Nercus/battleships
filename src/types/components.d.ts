@@ -57,6 +57,7 @@ declare module 'vue' {
     PlayerWon: typeof import('./../components/end/PlayerWon.vue')['default']
     PlayToolbar: typeof import('./../components/play/Toolbar/PlayToolbar.vue')['default']
     PlayToolbarHelp: typeof import('./../components/play/Toolbar/PlayToolbarHelp.vue')['default']
+    PlayToolbarReactions: typeof import('./../components/play/Toolbar/PlayToolbarReactions.vue')['default']
     PlayToolbarSunkenShips: typeof import('./../components/play/Toolbar/PlayToolbarSunkenShips.vue')['default']
     RadioGroupIndicator: typeof import('reka-ui')['RadioGroupIndicator']
     RadioGroupItem: typeof import('reka-ui')['RadioGroupItem']
