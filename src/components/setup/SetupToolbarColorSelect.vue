@@ -16,7 +16,7 @@ import type { Color } from '../../composables/useGame'
 import { cva } from 'class-variance-authority'
 import { AVAILABLE_COLORS } from '../../composables/useGame'
 
-const { onEvent, sendEvent } = useEvent()
+const { sendEvent } = useEvent()
 const { opponentColor } = useGame()
 
 const color = defineModel<Color | null>()
@@ -40,17 +40,5 @@ watch(color, (newColor) => {
   if (newColor) {
     sendEvent({ data: newColor, type: 'color' })
   }
-})
-
-let removeListener: () => void
-onMounted(() => {
-  removeListener = onEvent((event) => {
-    if (event.type === 'color') {
-      opponentColor.value = event.data
-    }
-  })
-})
-onUnmounted(() => {
-  if (removeListener) removeListener()
-})
+}, { immediate: true })
 </script>

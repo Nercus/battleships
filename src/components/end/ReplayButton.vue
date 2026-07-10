@@ -43,7 +43,7 @@ function newGame() {
 
 watch(() => newGameRequested.value && opponentRequestsNewGame.value, (newVal) => {
   if (!newVal) return
-  reset()
+  reset({ preservePlayerIdentity: true })
   playerWon.value = false
   opponentRequestsNewGame.value = false
   newGameRequested.value = false

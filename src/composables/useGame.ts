@@ -52,10 +52,13 @@ const { onEvent, sendEvent } = useEvent()
 // Keep end-game board information outside page components so it cannot be
 // missed while the router is unmounting /play and mounting /end.
 onEvent((event) => {
-  if (event.type !== 'game-info') return
-
-  opponentBoardHitStates.value = event.data.board
-  opponentBoardLayout.value = event.data.layout
+  if (event.type === 'game-info') {
+    opponentBoardHitStates.value = event.data.board
+    opponentBoardLayout.value = event.data.layout
+  }
+  else if (event.type === 'color') {
+    opponentColor.value = event.data
+  }
 })
 
 export function useGame() {
@@ -136,7 +139,9 @@ export function useGame() {
     }
   }
 
-  function reset() {
+  function reset(options: { preservePlayerIdentity?: boolean } = {}) {
+    const { preservePlayerIdentity = false } = options
+
     gameState.value = 'idle'
     playersTurn.value = false
     isTurnPending.value = false
@@ -149,8 +154,10 @@ export function useGame() {
     opponentBoardLayout.value = null
 
     destroyedShips.value = []
-    playerColor.value = null
-    playerName.value = null
+    if (!preservePlayerIdentity) {
+      playerColor.value = null
+      playerName.value = null
+    }
     opponentColor.value = null
     opponentName.value = null
     lostShips.value = []
