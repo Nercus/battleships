@@ -70,6 +70,7 @@ declare module 'vue' {
     SetupToolbarColorSelect: typeof import('./../components/setup/SetupToolbarColorSelect.vue')['default']
     ShipGrid: typeof import('./../components/grid/ship/ShipGrid.vue')['default']
     ShipGridElement: typeof import('./../components/grid/ship/ShipGridElement.vue')['default']
+    ShipSunkIndicator: typeof import('./../components/grid/ship/ShipSunkIndicator.vue')['default']
     ShipSVG: typeof import('./../components/end/icons/ShipSVG.vue')['default']
     TooltipArrow: typeof import('reka-ui')['TooltipArrow']
     TooltipContent: typeof import('reka-ui')['TooltipContent']

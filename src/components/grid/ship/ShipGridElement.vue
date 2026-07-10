@@ -6,8 +6,11 @@
     @mouseup.prevent="onUp"
     @touchstart.prevent="onDown"
     @touchend.prevent="onUp">
-    <div :class="shipVariants({ flipped: rotation >= 180 })" class="relative size-full">
+    <div
+      :class="[shipVariants({ flipped: rotation >= 180, sunk })]"
+      class="relative size-full">
       <component :is="shipComponent" :orientation="orientation" class="size-full" :class="shipVariants({ color })" />
+      <ShipSunkIndicator v-if="sunk" :length="length" :orientation="orientation" />
     </div>
   </div>
 </template>
@@ -27,6 +30,7 @@ const props = defineProps<{
   color: Color | null
   disabled: boolean
   size: number
+  sunk?: boolean
 }>()
 
 const emit = defineEmits(['turnElement', 'dragStart', 'dragEnd'])
@@ -70,6 +74,10 @@ const shipVariants = cva(
       flipped: {
         false: 'rotate-0',
         true: 'rotate-180',
+      },
+      sunk: {
+        false: 'opacity-100',
+        true: 'opacity-30',
       },
     },
   },

@@ -4,11 +4,26 @@
       {{ opponentName }}'s ships
     </h2>
     <div class="flex flex-row landscape:max-lg:flex-col flex-wrap justify-between gap-2">
-      <AircraftCarrier orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: aircraftCarrierDestroyed })" />
-      <Battleship orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: battleshipDestroyed })" />
-      <Destroyer orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: destroyersDestroyed >= 1 })" />
-      <Destroyer orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: destroyersDestroyed === 2 })" />
-      <Gunship orientation="horizontal" class="h-6.5 landscape:max-lg:h-5 md:h-10" :class="shipVariants({ color: opponentColor, destroyed: gunshipDestroyed })" />
+      <div class="relative h-6.5 landscape:max-lg:h-5 md:h-10">
+        <AircraftCarrier orientation="horizontal" class="w-auto h-full" :class="shipVariants({ color: opponentColor, destroyed: aircraftCarrierDestroyed })" />
+        <ShipSunkIndicator v-if="aircraftCarrierDestroyed" :length="5" orientation="horizontal" />
+      </div>
+      <div class="relative h-6.5 landscape:max-lg:h-5 md:h-10">
+        <Battleship orientation="horizontal" class="w-auto h-full" :class="shipVariants({ color: opponentColor, destroyed: battleshipDestroyed })" />
+        <ShipSunkIndicator v-if="battleshipDestroyed" :length="4" orientation="horizontal" />
+      </div>
+      <div class="relative h-6.5 landscape:max-lg:h-5 md:h-10">
+        <Destroyer orientation="horizontal" class="w-auto h-full" :class="shipVariants({ color: opponentColor, destroyed: destroyersDestroyed >= 1 })" />
+        <ShipSunkIndicator v-if="destroyersDestroyed >= 1" :length="3" orientation="horizontal" />
+      </div>
+      <div class="relative h-6.5 landscape:max-lg:h-5 md:h-10">
+        <Destroyer orientation="horizontal" class="w-auto h-full" :class="shipVariants({ color: opponentColor, destroyed: destroyersDestroyed === 2 })" />
+        <ShipSunkIndicator v-if="destroyersDestroyed === 2" :length="3" orientation="horizontal" />
+      </div>
+      <div class="relative h-6.5 landscape:max-lg:h-5 md:h-10">
+        <Gunship orientation="horizontal" class="w-auto h-full" :class="shipVariants({ color: opponentColor, destroyed: gunshipDestroyed })" />
+        <ShipSunkIndicator v-if="gunshipDestroyed" :length="2" orientation="horizontal" />
+      </div>
     </div>
   </div>
 </template>

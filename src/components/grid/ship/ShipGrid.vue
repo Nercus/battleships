@@ -6,6 +6,7 @@
     <GridItem v-for="item in layout" :key="item.i" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :is-resizable="false" @moved="layoutUpdated()">
       <ShipGridElement
         :item="item" :color="color" :disabled="!isDraggable" :size="rowHeight"
+        :sunk="sunk || sunkShipIds?.includes(item.i)"
         @turn-element="turnElement(item.i)" />
     </GridItem>
   </GridLayout>
@@ -19,6 +20,8 @@ import { GridItem, GridLayout } from 'grid-layout-plus'
 const props = defineProps<{
   color: Color | null
   isDraggable: boolean
+  sunk?: boolean
+  sunkShipIds?: (number | string)[]
 }>()
 
 const layout = defineModel('layout', {

@@ -15,6 +15,7 @@
         <div v-if="opponentBoardLayout && opponentBoardHitStates" class="relative shadow-shadow border-2 border-black size-80 landscape:max-lg:size-60 md:size-100">
           <ShipGrid
             v-model:layout="opponentBoardLayout" :color="opponentColor" :is-draggable="false"
+            :sunk-ship-ids="destroyedShips.map(ship => ship.i)"
             class="absolute inset-0 size-full pointer-events-none" />
           <IndicatorGrid class="absolute inset-0" :board="opponentBoardHitStates" board-type="player" />
         </div>
@@ -33,7 +34,7 @@
 
 <script setup lang="ts">
 const { sendEvent } = useEvent()
-const { opponentColor, playerBoardHitStates, shipLayout, opponentBoardHitStates, opponentBoardLayout } = useGame()
+const { destroyedShips, opponentColor, playerBoardHitStates, shipLayout, opponentBoardHitStates, opponentBoardLayout } = useGame()
 
 onMounted(() => {
   sendEvent({ type: 'game-info', data: { board: playerBoardHitStates.value, layout: shipLayout.value } })

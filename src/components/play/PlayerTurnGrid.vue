@@ -12,6 +12,7 @@
     <template #layer1>
       <ShipGrid
         v-model:layout="destroyedShips" :color="opponentColor" :is-draggable="false"
+        sunk
         class="absolute inset-0 size-full pointer-events-none" />
     </template>
     <template #layer2>

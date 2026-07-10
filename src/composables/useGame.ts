@@ -202,6 +202,7 @@ export function useGame() {
     getHitStateForAttack,
     getRandomLayout,
     isTurnPending,
+    lostShips,
     opponentBoardHitStates,
     opponentColor,
     opponentTarget,

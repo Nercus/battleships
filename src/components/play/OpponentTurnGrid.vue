@@ -12,6 +12,7 @@
     <template #layer1>
       <ShipGrid
         v-model:layout="shipLayout" :color="playerColor" :is-draggable="false"
+        :sunk-ship-ids="lostShips.map(ship => ship.i)"
         class="absolute inset-0 size-full pointer-events-none" />
     </template>
     <template #layer2>
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-const { playerColor, shipLayout, playersTurn, playerBoardHitStates, getHitStateForAttack, opponentTarget, switchTurn, opponentName } = useGame()
+const { playerColor, shipLayout, lostShips, playersTurn, playerBoardHitStates, getHitStateForAttack, opponentTarget, switchTurn, opponentName } = useGame()
 const { onEvent, sendEvent } = useEvent()
 
 let removeListener: () => void
